@@ -13,18 +13,18 @@ export class EditProfileComponent implements OnInit {
   editForm!: FormGroup;
   _Email!: string;
   Company_Name!: string;
-  Last_Name!: string;
+  Email!: string;
   First_Name!: string;
-  index:number;
+  // index:number;
 
   constructor(private fb: FormBuilder, private ls: LoginService, private _dialogRef: MatDialogRef<EditProfileComponent>) {
-    let temp: any = localStorage.getItem('LoginUser');
+    let temp: any = localStorage.getItem('EditUser');
     const data = JSON.parse(temp);
-    this.index = this.findData(data.Email);
+    // this.index = this.findData(data.Email);
     // console.log(this.index)
-    this.First_Name = data.FirstName;
-    this.Last_Name = data.LastName;
-    this.Company_Name = data.CompanyName;
+    this.First_Name = data.name;
+    this.Email = data.email;
+    this.Company_Name = data._org.name;
     // this._Email = data.Email;
     console.log(this.First_Name);
   }
@@ -32,13 +32,13 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.editForm = this.fb.group({
       FirstName: ['', [Validators.required]],
-      LastName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       CompanyName: ['', [Validators.required]],
       // Email: ['', [Validators.required, Validators.email]],
     });
     this.editForm.setValue({
       FirstName: this.First_Name,
-      LastName: this.Last_Name,
+      email: this.Email,
       CompanyName: this.Company_Name,
       //  Email : this._Email,
     });
@@ -46,8 +46,8 @@ export class EditProfileComponent implements OnInit {
   get FirstName() {
     return this.editForm.get('FirstName');
   }
-  get LastName() {
-    return this.editForm.get('LastName');
+  get email() {
+    return this.editForm.get('email');
   }
   get CompanyName() {
     return this.editForm.get('CompanyName');
@@ -56,43 +56,46 @@ export class EditProfileComponent implements OnInit {
   //   return this.editForm.get('Email');
   // }
   submited = false;
+  update(){
+
+  }
   // emailExist = false;
-  update() {
-    if (this.editForm.valid && this.editForm.dirty) {
-      // if (this.ls.emailValid(this.Email?.value)) {
-      //   this.emailExist = true;
-      // }
-      this.submited = false;
-      // console.log('dirty');
-      let temp = this.ls.getData();
-      temp[this.index].FirstName = this.FirstName?.value;
-      temp[this.index].LastName = this.LastName?.value;
-      temp[this.index].CompanyName = this.CompanyName?.value;
-      localStorage.setItem('registeredUser', JSON.stringify(temp)); 
+  // update() {
+  //   if (this.editForm.valid && this.editForm.dirty) {
+  //     // if (this.ls.emailValid(this.Email?.value)) {
+  //     //   this.emailExist = true;
+  //     // }
+  //     this.submited = false;
+  //     // console.log('dirty');
+  //     let temp = this.ls.getData();
+  //     temp[this.index].FirstName = this.FirstName?.value;
+  //     temp[this.index].LastName = this.LastName?.value;
+  //     temp[this.index].CompanyName = this.CompanyName?.value;
+  //     localStorage.setItem('registeredUser', JSON.stringify(temp)); 
 
-      let loginT:any = localStorage.getItem('LoginUser');
-      let loginTemp = JSON.parse(loginT);
-      loginTemp.FirstName = this.FirstName?.value;
-      loginTemp.LastName = this.LastName?.value;
-      loginTemp.CompanyName = this.CompanyName?.value;
-      localStorage.setItem('LoginUser', JSON.stringify(loginTemp));
-      // this.ls.setLogin(temp[this.index].Email);
-      this.ls.setLogin(loginTemp);
+  //     let loginT:any = localStorage.getItem('LoginUser');
+  //     let loginTemp = JSON.parse(loginT);
+  //     loginTemp.FirstName = this.FirstName?.value;
+  //     loginTemp.LastName = this.LastName?.value;
+  //     loginTemp.CompanyName = this.CompanyName?.value;
+  //     localStorage.setItem('LoginUser', JSON.stringify(loginTemp));
+  //     // this.ls.setLogin(temp[this.index].Email);
+  //     this.ls.setLogin(loginTemp);
       
-      this._dialogRef.close();
+  //     this._dialogRef.close();
 
-    } else if (this.editForm.invalid) {
-      this.submited = true;
-    }
-  }
-  findData(email: any): number {
-    let temp = this.ls.getData();
-    let index : number = -1;
-    for (let i = 0; i < temp.length; i++) {
-      if (temp[i].Email == email) {
-        index = i;
-      }
-    }
-    return index;
-  }
+  //   } else if (this.editForm.invalid) {
+  //     this.submited = true;
+  //   }
+  // }
+  // findData(email: any): number {
+  //   let temp = this.ls.getData();
+  //   let index : number = -1;
+  //   for (let i = 0; i < temp.length; i++) {
+  //     if (temp[i].Email == email) {
+  //       index = i;
+  //     }
+  //   }
+  //   return index;
+  // }
 }

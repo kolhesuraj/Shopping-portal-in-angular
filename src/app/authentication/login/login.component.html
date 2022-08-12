@@ -1,6 +1,14 @@
-<div class="heder">
+<div class="heder container">
   <h1 class="text-center p-3">Login</h1>
+  <div
+      [class.d-none]="tocken == 0"
+      class="p-3 mt-1 float-right bg-success text-white ms-5"
+      style="width: 165px"
+    >
+      login successfully
+    </div>
 </div>
+
 <div class="container login">
   <form [formGroup]="loginForm" class="p-5">
     <div class="container w-50 border border-primary pb-5" style="margin: auto">

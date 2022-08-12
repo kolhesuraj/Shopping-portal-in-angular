@@ -19,21 +19,21 @@
       >
     </div>
 
-    <div class="mt-3">
-      <label class="d-inline w-25 me-5">Last Name</label>
+    <div class="mt-3 p-3">
+      <label class="d-inline w-25 me-4">Email</label>
       <input
         type="text"
-        formControlName="LastName"
-        name="LastName"
-        class="form-control d-inline w-75 ms-2"
+        formControlName="email"
+        name="email"
+        class="form-control d-inline w-75 ms-5"
         [class.is-invalid]="
-          (LastName?.invalid && LastName?.touched) ||
-          (submited && LastName?.touched)
+          (email?.invalid && email?.touched) ||
+          (submited && email?.touched)
         "
       />
       <small
         class="ms-5 ps-5 text-danger"
-        *ngIf="LastName?.invalid && LastName?.touched"
+        *ngIf="email?.invalid && email?.touched"
         >Last Name required</small
       >
     </div>
