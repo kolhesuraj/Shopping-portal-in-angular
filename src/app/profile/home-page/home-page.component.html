@@ -1,0 +1,41 @@
+<div>
+  <nav
+    class="navbar navbar-expand-lg bg-light border border-dark container mt-3 rounded"
+  >
+    <a class="navbar-brand w-75 ps-5">Home Page</a>
+    <div (click)="editProfile()" class="me-5" style="cursor:pointer ;">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example edit icon"
+        fontIcon="edit"
+      ></mat-icon>
+      <div >Edit Profile</div>
+    </div>
+
+    <div class="me-5">
+      <a href="" (click)="logout()">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example logout icon"
+          fontIcon="logout"
+          class=""
+        ></mat-icon>
+        <div class="">logout</div>
+      </a>
+    </div>
+  </nav>
+  <div class="container p-5 mt-5 border border-dark rounded w-50">
+    <div class="m-auto w-75 text-center">
+      <img
+        src="../../../../assets/profile.webp"
+        alt="Profile"
+        class="w-25 rounded-circle"
+      />
+    </div>
+    <div class="m-auto w-50 mt-5">
+      <div class="fs-5 mt-3">Name: {{ FirstName }} {{ LastName }}</div>
+      <div class="fs-5 mt-3">Company Name: {{ CompanyName }}</div>
+      <div class="fs-5 mt-3">Email: {{ Email }}</div>
+    </div>
+  </div>
+</div>
