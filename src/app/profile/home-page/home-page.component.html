@@ -1,15 +1,13 @@
 <div>
-  <nav
-    class="navbar navbar-expand-lg bg-light border border-dark container mt-3 rounded"
-  >
-    <a class="navbar-brand w-75 ps-5">Home Page</a>
-    <div (click)="editProfile()" class="me-5" style="cursor:pointer ;">
+  <nav class="navbar border border-dark bg-dark text-white">
+    <a class="navbar-brand w-75 ms-3 text-white">Home Page</a>
+    <div (click)="editProfile()" class="" style="cursor: pointer">
       <mat-icon
         aria-hidden="false"
         aria-label="Example edit icon"
         fontIcon="edit"
       ></mat-icon>
-      <div >Edit Profile</div>
+      <div>Edit Profile</div>
     </div>
 
     <div class="me-5">
@@ -24,18 +22,24 @@
       </a>
     </div>
   </nav>
-  <div class="container p-5 mt-5 border border-dark rounded w-50">
-    <div class="m-auto w-75 text-center">
+  <div class="pt-5 profile text-white ">
+    <div class="m-auto w-50 text-center">
       <img
         src="../../../../assets/profile.webp"
         alt="Profile"
         class="w-25 rounded-circle"
       />
     </div>
-    <div class="m-auto w-50 mt-5">
-      <div class="fs-5 mt-3">Name: {{ FirstName }} {{ LastName }}</div>
-      <div class="fs-5 mt-3">Company Name: {{ CompanyName }}</div>
-      <div class="fs-5 mt-3">Email: {{ Email }}</div>
+    <div class="m-auto w-25 mt-5">
+      <div class="fs-5 mt-3">
+        Name: <span class="ms-5">{{ FirstName }} {{ LastName }}</span>
+      </div>
+      <div class="fs-5 mt-3">
+        Company Name: <span class="ms-2">{{ CompanyName }}</span>
+      </div>
+      <div class="fs-5 mt-3">
+        Email: <span class="ms-5">{{ Email }}</span>
+      </div>
     </div>
   </div>
 </div>

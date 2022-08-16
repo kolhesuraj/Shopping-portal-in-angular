@@ -3,3 +3,19 @@ header{
     background-color: rgb(46, 45, 45);
     color: azure;
 }
+
+.login{
+    background-color: #22577a;
+    height: 810px;
+}
+.form{
+    width: 500px;
+    background-color: #FFFFFF;
+}
+img{
+    margin-left: 180px;
+    margin-top: 20px;
+}
+input{
+    width: 300px;
+}

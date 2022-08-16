@@ -67,7 +67,7 @@ export class HomePageComponent implements OnInit {
   setData() {
     this.httpService.profileView().subscribe({
       next: (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.ls.LogIndata.next(res);
       },
       error: (err: any) => {

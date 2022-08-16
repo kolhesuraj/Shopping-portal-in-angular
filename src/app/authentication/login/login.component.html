@@ -1,61 +1,66 @@
-<div class="heder container">
-  <h1 class="text-center p-3">Login</h1>
-  <div
+<div class="login">
+  <div class="header container">
+    <h1 class="text-center pt-5">Login</h1>
+    <div
       [class.d-none]="tocken == 0"
       class="p-3 mt-1 float-right bg-success text-white ms-5"
       style="width: 165px"
     >
       login successfully
     </div>
-</div>
+  </div>
+  <div class="form m-auto border rounded-5 p-2">
+    <img
+      class="border rounded-circle w-25"
+      src="../../../../assets/login.png"
+      alt=" login.png"
+    />
+    <form [formGroup]="loginForm" class="">
+      <div class="  pb-5 m-auto">
+        <div class="block m-5">
+          <label class="d-inline w-25">Email</label>
+          <input
+            type="email"
+            formControlName="emailControl"
+            name="email"
+            class="ms-5 form-control d-inline "
+          />
+        </div>
+        <div class="mt-5 ms-5 mb-3">
+          <label class="d-inline w-25">Password</label>
+          <input
+            type="password"
+            formControlName="passwordFormControl"
+            name="password"
+            class="ms-4 form-control d-inline "
+          />
+        </div>
+        <div class="ms-5 mb-2">
+          <small *ngIf="massage" class="text-danger ms-5"
+            >Please enter id and password</small
+          >
+          <small *ngIf="loginFaildMssage" class="text-danger ms-5"
+            >Please enter valid id and password</small
+          >
+        </div>
 
-<div class="container login">
-  <form [formGroup]="loginForm" class="p-5">
-    <div class="container w-50 border border-primary pb-5" style="margin: auto">
-      <div class="block m-5">
-        <label class="d-inline w-25">Email</label>
-        <input
-          type="email"
-          formControlName="emailControl"
-          name="email"
-          class="ms-5 form-control d-inline w-75"
-        />
-      </div>
-      <div class="mt-5 ms-5 mb-3">
-        <label class="d-inline w-25">Password</label>
-        <input
-          type="password"
-          formControlName="passwordFormControl"
-          name="password"
-          class="ms-4 form-control d-inline w-75"
-        />
-      </div>
-      <div class="ms-5 mb-2">
-        <small *ngIf="massage" class="text-danger ms-5"
-          >Please enter id and password</small
+        <button
+          mat-raised-button
+          color="primary"
+          class="ms-5 w-50"
+          (click)="submit()"
         >
-        <small *ngIf="loginFaildMssage" class="text-danger ms-5"
-          >Please enter valid id and password</small
-        >
+          Login
+        </button>
+        <p class="ms-5 w-75 mt-3">
+          Doesn't have an account
+          <span
+            ><button mat-button color="primary" (click)="register()">
+              registred here!
+            </button></span
+          >
+        </p>
       </div>
-
-      <button
-        mat-raised-button
-        color="primary"
-        class="ms-5 d-inline w-25"
-        style="display: block"
-        (click)="submit()"
-      >
-        Login
-      </button>
-      <p class="ms-5 d-inline w-75">
-        Doesn't have an account
-        <span
-          ><button mat-button color="primary" (click)="register()">
-            registred here!
-          </button></span
-        >
-      </p>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
