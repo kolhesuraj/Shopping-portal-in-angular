@@ -3,9 +3,11 @@ import { Token } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { switchAll } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { passwordValidator } from './password.Validator';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-registration',
@@ -80,14 +82,15 @@ export class RegistrationComponent implements OnInit {
       this.httpService.register(dataSent).subscribe({
         next: (res) => {
           localStorage.setItem('registrationToken',res.token);
-          console.log(res);
-          this.httpService.sendVarrification(res.token).subscribe({
+          // console.log(res);
+          this.httpService.sendVerrification(res.token).subscribe({
             next: (res: any) => {
-              console.log(res);
+              // console.log(res);
+              Swal.fire("registerd Successfully")
               this.route.navigate(['/auth/email-varify']);
             },
             error: (err) => {
-              console.log(err);
+              // console.log(err);
               this.errorFromserver = err.error.message;
             },
           });
@@ -101,7 +104,7 @@ export class RegistrationComponent implements OnInit {
           // }, 1500);
         },
         error: (err) => {
-          console.log(err);
+          // console.log(err);
           this.errorFromserver = err.error.message;
         },
       });

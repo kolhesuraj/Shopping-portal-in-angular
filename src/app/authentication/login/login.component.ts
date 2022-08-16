@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 // import { LoginService } from 'src/app/services/login.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-login',
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit {
   massage = false;
   loginFaildMssage = false;
   tocken = 0;
+  errMassage!: string;
   submit() {
     console.log(this.loginForm.value);
     if (
@@ -63,7 +66,7 @@ export class LoginComponent implements OnInit {
       };
       this.httpservice.login(dataSent).subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           localStorage.setItem('LoginUser', res.token);
           this.tocken = 1;
           if (res.user.isEmailVerified == true) {
@@ -77,6 +80,8 @@ export class LoginComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+          Swal.fire(err.error.message);
+          // alert(err.error.message)
         },
       });
     }

@@ -12,16 +12,16 @@ export class VarifyEmailComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private httpservice: HttpServiceService
   ) {}
-  varificationToken: string = '';
-  verify!:number;
+  verificationToken: string = '';
+  verify:number =2;
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params) => {
-      this.varificationToken = params['token'];
+      this.verificationToken = params['token'];
     });
-    // console.log(this.varificationToken);
-    this.httpservice.finalVarifyEmail(this.varificationToken).subscribe({
+    console.log(this.verificationToken);
+    this.httpservice.finalVerifyEmail(this.verificationToken).subscribe({
       next: (res) => {
-        console.warn(res);
+        // console.warn(res);
         this.verify = 1;
       },
       error: (err) => {

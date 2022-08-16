@@ -26,7 +26,7 @@ export class HttpServiceService {
 
   profileView(): Observable<any> {
     let tocken = this.ls.gettoken();
-    console.log(tocken);
+    // console.log(tocken);
 
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export class HttpServiceService {
     return this.http.get(this.url + 'auth/self', { headers: header });
   }
 
-  sendVarrification(tokenGet: any): Observable<any> {
+  sendVerrification(tokenGet: any): Observable<any> {
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${tokenGet}`,
@@ -49,8 +49,8 @@ export class HttpServiceService {
     );
   }
 
-  finalVarifyEmail(varificationToken: string):Observable<any> {
+  finalVerifyEmail(verificationToken: string):Observable<any> {
     // console.log(varificationToken);
-    return this.http.post(`${this.url}auth/verify-email?token=${varificationToken}`,''); 
+    return this.http.post(`${this.url}auth/verify-email?token=${verificationToken}`,null); 
   }
 }
