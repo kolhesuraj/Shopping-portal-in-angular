@@ -1,5 +1,5 @@
-<div class="mainDiv pt-5">
-  <div class="container  m-auto w-50">
+<div class="mainDiv pt-5 ">
+  <div class="container  m-auto " style="width: 650px;">
     <div class="container pt-2 mt-5 secondDiv rounded-5">
       <div
         [class.d-none]="tocken == 0"
@@ -9,10 +9,10 @@
         Register successfully
       </div>
       <!-- <img src="../../../assets/register.jpeg" alt="register.png"> -->
-      <h1 class="text-center">Registration</h1>
+      <h1 class="text-center text-white">Registration</h1>
       <form
         [formGroup]="register"
-        class="w-100 border border-dark p-5"
+        class="w-100  p-5"
         (ngSubmit)="registerLogin()"
       >
         <div>
@@ -21,7 +21,7 @@
             type="text"
             formControlName="Name"
             name="Name"
-            class="form-control d-inline w-75 ms-2"
+            class="form-control d-inline  ms-2"
             [class.is-invalid]="
               (Name?.invalid && Name?.touched) || (submited && Name?.untouched)
             "
@@ -40,7 +40,7 @@
             type="text"
             formControlName="CompanyName"
             name="Cname"
-            class="form-control d-inline w-75 ms-4"
+            class="form-control d-inline  ms-4"
             [class.is-invalid]="
               (CompanyName?.invalid && CompanyName?.touched) ||
               (submited && CompanyName?.untouched)
@@ -59,7 +59,7 @@
             type="email"
             formControlName="Email"
             name="email"
-            class="form-control d-inline w-75"
+            class="form-control d-inline "
             style="margin-left: 40px"
             [class.is-invalid]="
               (Email?.invalid && Email?.touched) ||
@@ -81,7 +81,7 @@
             type="password"
             formControlName="Password"
             name="password"
-            class="form-control d-inline w-75 ms-3"
+            class="form-control d-inline  ms-3"
             [class.is-invalid]="
               (Password?.invalid && Password?.touched) ||
               (submited && Password?.untouched)
@@ -104,7 +104,7 @@
             type="password"
             formControlName="ConfirmPassword"
             name="Cpassword"
-            class="form-control d-inline w-75 ms-2"
+            class="form-control d-inline  ms-2"
             [class.is-invalid]="register.errors?.['misMatch'] || submited && ConfirmPassword?.untouched"
           />
           <small
@@ -133,7 +133,7 @@
           >
             cancle
           </button>
-          <p class="mt-2">
+          <p class="mt-2 text-white">
             already have an account!<span
               ><button mat-button color="primary" (click)="signIn()">
                 Sign in

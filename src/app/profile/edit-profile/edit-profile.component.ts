@@ -57,7 +57,7 @@ export class EditProfileComponent implements OnInit {
   // }
   submited = false;
   update(){
-
+    console.log(this.editForm.value);
   }
   // emailExist = false;
   // update() {

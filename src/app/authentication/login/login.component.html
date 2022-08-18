@@ -1,4 +1,4 @@
-<div class="login">
+<div class="login text-white">
   <div class="header container">
     <h1 class="text-center pt-5">Login</h1>
     <div
@@ -9,30 +9,30 @@
       login successfully
     </div>
   </div>
-  <div class="form m-auto border rounded-5 p-2">
+  <div class="form m-auto  rounded-5 p-2">
     <img
-      class="border rounded-circle w-25"
+      class=" rounded-circle w-25"
       src="../../../../assets/login.png"
       alt=" login.png"
     />
-    <form [formGroup]="loginForm" class="">
-      <div class="  pb-5 m-auto">
-        <div class="block m-5">
-          <label class="d-inline w-25">Email</label>
+    <form [formGroup]="loginForm" class="mt-4">
+      <div class="pb-5 m-auto">
+        <div class="block ms-5">
+          <label class="d-inline ms-1 w-25">Email</label>
           <input
             type="email"
             formControlName="emailControl"
             name="email"
-            class="ms-5 form-control d-inline "
+            class="ms-5 form-control d-inline"
           />
         </div>
-        <div class="mt-5 ms-5 mb-3">
+        <div class="ms-5 mt-4 mb-3">
           <label class="d-inline w-25">Password</label>
           <input
             type="password"
             formControlName="passwordFormControl"
             name="password"
-            class="ms-4 form-control d-inline "
+            class="ms-4 form-control d-inline"
           />
         </div>
         <div class="ms-5 mb-2">
@@ -47,19 +47,21 @@
         <button
           mat-raised-button
           color="primary"
-          class="ms-5 w-50"
+          class="submit"
           (click)="submit()"
         >
           Login
         </button>
-        <p class="ms-5 w-75 mt-3">
-          Doesn't have an account
-          <span
-            ><button mat-button color="primary" (click)="register()">
-              registred here!
-            </button></span
-          >
-        </p>
+        <div class="" style="margin-left:90px;">
+          <p class="ms-5 mt-3">
+            Doesn't have an account
+            <span class=""
+              ><button mat-button color="primary" (click)="register()">
+                registred here!
+              </button></span
+            >
+          </p>
+        </div>
       </div>
     </form>
   </div>

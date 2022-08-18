@@ -22,8 +22,8 @@ const routes: Routes = [
     canActivate: [LoginGuard],
   },
   {
-    path:'verify-email',
-    component:VarifyEmailComponent,
+    path: 'verify-email',
+    component: VarifyEmailComponent,
   },
   {
     path: '**',

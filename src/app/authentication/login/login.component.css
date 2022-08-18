@@ -5,17 +5,23 @@ header{
 }
 
 .login{
-    background-color: #22577a;
-    height: 810px;
+    /* background-color: #22577a; */
+    background-image:  url('../../../assets/bluePlane.jpg');
+    height: 804px;
 }
 .form{
     width: 500px;
-    background-color: #FFFFFF;
+    /* background-color: #FFFFFF; */
+    background-image: url('../../../assets/blue with black.jpg');
 }
 img{
     margin-left: 180px;
     margin-top: 20px;
 }
-input{
+input, .submit{
     width: 300px;
+}
+.submit{
+    margin-left: 130px;
+    margin-top: 10px;
 }

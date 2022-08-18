@@ -6,7 +6,7 @@
         type="text"
         formControlName="FirstName"
         name="FirstName"
-        class="form-control d-inline w-75 ms-2"
+        class="form-control d-inline  ms-2"
         [class.is-invalid]="
           (FirstName?.invalid && FirstName?.touched) ||
           (submited && FirstName?.touched)
@@ -25,7 +25,7 @@
         type="text"
         formControlName="email"
         name="email"
-        class="form-control d-inline w-75 ms-5"
+        class="form-control d-inline  ms-5"
         [class.is-invalid]="
           (email?.invalid && email?.touched) ||
           (submited && email?.touched)
@@ -44,7 +44,7 @@
         type="text"
         formControlName="CompanyName"
         name="Cname"
-        class="form-control d-inline w-75 ms-4"
+        class="form-control d-inline  ms-4"
         [value]="Company_Name"
         [class.is-invalid]="
           (CompanyName?.invalid && CompanyName?.touched) ||
