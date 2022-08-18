@@ -6,7 +6,7 @@ import { LoginGuard } from './services/login.guard';
 import { VarifyEmailComponent } from './varify-email/varify-email.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
   {
     path: 'auth',
     loadChildren: () =>
