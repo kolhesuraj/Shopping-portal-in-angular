@@ -23,19 +23,18 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.ls.loadData();
     this.setData();
-      let data: any;
-     this.ls.LogIndata.subscribe((result: any) => {
-       data = result;
-       // console.log(result)
-       // console.log(data);
-       localStorage.setItem('EditUser', JSON.stringify(data));
-       this.FirstName = data.name;
-       this.Email = data.email;
-       setTimeout(() => {
-         this.CompanyName = data._org.name;
-       }, 500);
-       
-     });
+    let data: any;
+    this.ls.LogIndata.subscribe((result: any) => {
+      data = result;
+      // console.log(result)
+      // console.log(data);
+      localStorage.setItem('EditUser', JSON.stringify(data));
+      this.FirstName = data.name;
+      this.Email = data.email;
+      setTimeout(() => {
+        this.CompanyName = data._org.name;
+      }, 500);
+    });
   }
   logout() {
     localStorage.removeItem('LoginUser');
@@ -44,6 +43,7 @@ export class HomePageComponent implements OnInit {
   editProfile() {
     const dialogRef = this._dialog.open(EditProfileComponent, {
       width: '37%',
+      backdropClass: 'dialog-bg-trans',
     });
     this.setData();
   }
@@ -74,7 +74,5 @@ export class HomePageComponent implements OnInit {
         console.log(err);
       },
     });
-  
-   
   }
 }

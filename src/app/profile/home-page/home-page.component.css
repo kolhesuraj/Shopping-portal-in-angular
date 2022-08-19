@@ -1,5 +1,9 @@
 .profile{
-    background-image: url('src/assets/download4.webp') ;
+    background-image: url('../../../assets/download3.webp') ;
     background-repeat: no-repeat;
     height: 737px;
+
+}
+dialog-bg-trans{
+    background-color: rgb(240, 248, 255,0.5);
 }

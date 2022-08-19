@@ -17,7 +17,11 @@ export class EditProfileComponent implements OnInit {
   First_Name!: string;
   // index:number;
 
-  constructor(private fb: FormBuilder, private ls: LoginService, private _dialogRef: MatDialogRef<EditProfileComponent>) {
+  constructor(
+    private fb: FormBuilder,
+    private ls: LoginService,
+    private _dialogRef: MatDialogRef<EditProfileComponent>
+  ) {
     let temp: any = localStorage.getItem('EditUser');
     const data = JSON.parse(temp);
     // this.index = this.findData(data.Email);
@@ -56,7 +60,7 @@ export class EditProfileComponent implements OnInit {
   //   return this.editForm.get('Email');
   // }
   submited = false;
-  update(){
+  update() {
     console.log(this.editForm.value);
   }
   // emailExist = false;
@@ -71,7 +75,7 @@ export class EditProfileComponent implements OnInit {
   //     temp[this.index].FirstName = this.FirstName?.value;
   //     temp[this.index].LastName = this.LastName?.value;
   //     temp[this.index].CompanyName = this.CompanyName?.value;
-  //     localStorage.setItem('registeredUser', JSON.stringify(temp)); 
+  //     localStorage.setItem('registeredUser', JSON.stringify(temp));
 
   //     let loginT:any = localStorage.getItem('LoginUser');
   //     let loginTemp = JSON.parse(loginT);
@@ -81,7 +85,7 @@ export class EditProfileComponent implements OnInit {
   //     localStorage.setItem('LoginUser', JSON.stringify(loginTemp));
   //     // this.ls.setLogin(temp[this.index].Email);
   //     this.ls.setLogin(loginTemp);
-      
+
   //     this._dialogRef.close();
 
   //   } else if (this.editForm.invalid) {
