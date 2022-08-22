@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   tocken = 0;
   errMassage!: string;
   submit() {
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     if (
       this.emailControl?.value == '' &&
       this.passwordFormControl?.value == ''

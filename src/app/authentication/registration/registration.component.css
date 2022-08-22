@@ -1,21 +1,20 @@
-.secondDiv{
-    /* background-color: #FFFFFF; */
-    background-image: url('../../../assets/blue with black.jpg');
-    color: #03131E ; 
-    /* margin-top: 25px; */
-    padding-bottom: 20px;
+.secondDiv {
+  /* background-color: #FFFFFF; */
+  background-image: url("../../../assets/blue with black.jpg");
+  color: #03131e;
+  /* margin-top: 25px; */
+  padding-bottom: 20px;
 }
-.mainDiv{
-    /* background-color: #22577a; */
-    background-image: url('../../../assets/bluePlane.jpg');
-    height: 804px;
-    margin-top: 0;
-    padding-top: 0;
+.mainDiv {
+  /* background-color: #22577a; */
+  background-image: url("../../../assets/bluePlane.jpg");
+  height: 804px;
+  margin-top: 0;
+  padding-top: 0;
 }
-label{
-    color: white;
+label {
+  color: white;
 }
-input{
-    width: 350px;
+input {
+  width: 350px;
 }
-

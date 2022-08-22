@@ -1,13 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Token } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { switchAll } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http-service.service';
-import { LoginService } from 'src/app/services/login.service';
 import { passwordValidator } from './password.Validator';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registration',
@@ -56,17 +52,17 @@ export class RegistrationComponent implements OnInit {
   }
   submited = false;
   // url = 'https://ngminds.herokuapp.com/auth/register?captcha=false';
-  
-  errorFromserver:any;
+
+  errorFromserver: any;
   registerLogin() {
     if (this.register.valid) {
       this.submited = false;
-     const dataSent = {
-       name: this.register?.value.Name,
-       email: this.register?.value.Email,
-       company: this.register?.value.CompanyName,
-       password: this.register?.value.Password,
-     };
+      const dataSent = {
+        name: this.register?.value.Name,
+        email: this.register?.value.Email,
+        company: this.register?.value.CompanyName,
+        password: this.register?.value.Password,
+      };
       // this.http
       //   .post(
       //     this.url,
@@ -81,12 +77,12 @@ export class RegistrationComponent implements OnInit {
 
       this.httpService.register(dataSent).subscribe({
         next: (res) => {
-          localStorage.setItem('registrationToken',res.token);
+          localStorage.setItem('registrationToken', res.token);
           // console.log(res);
           this.httpService.sendVerrification(res.token).subscribe({
             next: (res: any) => {
               // console.log(res);
-              Swal.fire("registerd Successfully")
+              Swal.fire('registerd Successfully');
               this.route.navigate(['/auth/email-varify']);
             },
             error: (err) => {
@@ -112,7 +108,7 @@ export class RegistrationComponent implements OnInit {
       this.submited = true;
     }
   }
-  reset(){
+  reset() {
     this.errorFromserver = '';
     this.submited = false;
   }
