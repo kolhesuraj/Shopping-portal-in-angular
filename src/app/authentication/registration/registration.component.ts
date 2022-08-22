@@ -57,12 +57,6 @@ export class RegistrationComponent implements OnInit {
   registerLogin() {
     if (this.register.valid) {
       this.submited = false;
-      const dataSent = {
-        name: this.register?.value.Name,
-        email: this.register?.value.Email,
-        company: this.register?.value.CompanyName,
-        password: this.register?.value.Password,
-      };
       // this.http
       //   .post(
       //     this.url,
@@ -74,7 +68,12 @@ export class RegistrationComponent implements OnInit {
       //     // company: this.register?.value.CompanyName,
       //     // }
       //   )
-
+      const dataSent = {
+        name: this.register?.value.Name,
+        email: this.register?.value.Email,
+        company: this.register?.value.CompanyName,
+        password: this.register?.value.Password,
+      };
       this.httpService.register(dataSent).subscribe({
         next: (res) => {
           localStorage.setItem('registrationToken', res.token);
