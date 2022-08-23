@@ -49,8 +49,30 @@ export class HttpServiceService {
     );
   }
 
-  finalVerifyEmail(verificationToken: string):Observable<any> {
+  finalVerifyEmail(verificationToken: string): Observable<any> {
     // console.log(varificationToken);
-    return this.http.post(`${this.url}auth/verify-email?token=${verificationToken}`,null); 
+    return this.http.post(
+      `${this.url}auth/verify-email?token=${verificationToken}`,
+      null
+    );
   }
+
+  addOrgUser(data: any): Observable<any> {
+    let tocken = this.ls.gettoken();
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tocken}`,
+    });
+    return this.http.post(`${this.url}users`, data, { headers: header });
+  }
+
+  orgUsers():Observable<any> {
+    let tocken = this.ls.gettoken();
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tocken}`,
+    });
+    return this.http.get(`${this.url}users`, { headers: header });
+  }
+
 }

@@ -101,4 +101,9 @@ export class LoginService {
 
   //   return token;
   // }
+
+  orgProfile() {
+    const orgdata:any = localStorage.getItem('data');
+    return JSON.parse(orgdata)
+  }
 }

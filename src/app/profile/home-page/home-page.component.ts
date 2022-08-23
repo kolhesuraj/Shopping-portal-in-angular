@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import {  Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
@@ -11,15 +12,17 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 })
 export class HomePageComponent implements OnInit {
   constructor(
-    private _dialog: MatDialog,
+    // private _dialog: MatDialog,
     private ls: LoginService,
-    private httpService: HttpServiceService
+    private httpService: HttpServiceService,
+    private route: Router
   ) {}
 
   FirstName!: string;
   LastName!: string;
   CompanyName!: string;
   Email!: string;
+  Role!: string;
   ngOnInit(): void {
     this.ls.loadData();
     this.setData();
@@ -34,19 +37,25 @@ export class HomePageComponent implements OnInit {
       setTimeout(() => {
         this.CompanyName = data._org.name;
       }, 500);
+      this.Role = data.role;
     });
   }
   logout() {
     localStorage.removeItem('LoginUser');
+    this.route.navigate(['/auth'])
   }
 
-  editProfile() {
-    const dialogRef = this._dialog.open(EditProfileComponent, {
-      width: '37%',
-      backdropClass: 'dialog-bg-trans',
-    });
-    this.setData();
+  org() {
+    this.route.navigate(['profile/org'])
   }
+
+  // editProfile() {
+  //   const dialogRef = this._dialog.open(EditProfileComponent, {
+  //     width: '37%',
+  //     backdropClass: 'dialog-bg-trans',
+  //   });
+  //   this.setData();
+  // }
   // setData(){
   //   // console.log("refresh");
 
@@ -75,4 +84,9 @@ export class HomePageComponent implements OnInit {
       },
     });
   }
+
+  addProfile(){
+    this.route.navigate(['profile/org/addUser'])
+  }
+
 }

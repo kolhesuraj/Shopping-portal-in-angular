@@ -1,0 +1,9 @@
+.navbar-brand {
+    width: 100px;
+    height: 100px;
+}
+td,th{
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid black;
+}

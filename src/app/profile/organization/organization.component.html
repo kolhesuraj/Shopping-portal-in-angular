@@ -1,0 +1,85 @@
+<nav class="navbar navbar-light bg-dark text-light">
+  <div class="container-fluid">
+    <div
+      class="navbar-brand text-light d-flex justify-content-center align-items-center bg-info m-3"
+    >
+      <span class="display-2">{{ org }}</span>
+    </div>
+    <div class="me-auto">
+      <div
+        class=""
+        style="
+          font-size: 25px;
+          font-weight: lighter;
+          font-family: 'Times New Roman', Times, serif;
+        "
+      >
+        {{ orgEmail }}
+      </div>
+      <div
+        class="mt-3"
+        style="font-size: 20px; font-family: 'Times New Roman', Times, serif"
+      >
+        {{ orgName }}
+      </div>
+      <div></div>
+    </div>
+  </div>
+</nav>
+
+<div class="mt-5">
+  <table class="container w-75">
+    <tr class="">
+      <th>index</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>role</th>
+      <th>edit</th>
+      <th>delete</th>
+    </tr>
+    <tr *ngFor="let result of list.results; index as i">
+      <td>{{ i + 1 }}</td>
+      <td>{{ result.name }}</td>
+      <td>{{ result.email }}</td>
+      <td>{{ result.role }}</td>
+      <td>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example edit icon"
+          fontIcon="edit"
+          style="cursor: pointer"
+          (click)="updateUser(result._id)"
+        ></mat-icon>
+      </td>
+      <td>
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example edit icon"
+          fontIcon="delete"
+          style="cursor: pointer"
+          (click)="deleteUser(result._id)"
+        ></mat-icon>
+      </td>
+    </tr>
+  </table>
+  <div class="container w-75">
+    <div class="text-secondary mt-3 d-flex flex-row-reverse">
+      showing result {{ list.results.length }} out of {{ list.totalResults }}
+    </div>
+    <div class="">
+      <nav aria-label="page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link">&laquo;</a>
+          </li>
+          <li class="page-item" [hidden]="list.page-1 < 1"><a class="page-link">{{list.page-1}}</a></li>
+          <li class="page-item"><a class="page-link">{{list.page}}</a></li>
+          <li class="page-item" [hidden]="list.page+1 > list.totalPages" ><a class="page-link">{{list.page+1}}</a></li>
+           <li class="page-item">
+            <a class="page-link">&raquo;</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
