@@ -3,9 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { AddUserComponent } from '../add-user/add-user.component';
-import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { UpdateOrgComponent } from '../update-org/update-org.component';
+import swal from 'sweetalert2';
+import { EditUserComponent } from '../edit-user/edit-user.component';
 
 @Component({
   selector: 'app-organization',
@@ -17,25 +18,29 @@ export class OrganizationComponent implements OnInit {
     private httpService: HttpServiceService,
     private ls: LoginService,
     private _dialog: MatDialog,
-    private route: Router,
+    private route: Router
   ) {}
 
-  orgData: any;
   orgName!: string;
   orgEmail!: string;
   org!: string;
   list: any;
   pagenumber: number = 0;
+  limit: number = 10;
   ngOnInit(): void {
     this.profile();
   }
   profile() {
-    this.orgData = this.ls.orgProfile();
-    console.log(this.orgData);
-    this.orgName = this.orgData.user._org.name;
-    this.orgEmail = this.orgData.user._org.email;
-    this.org = this.orgName.slice(0, 2).toUpperCase();
-    this.httpService.orgUsers(this.pagenumber).subscribe({
+    this.httpService.profileView().subscribe({
+      next: (orgData: any) => {
+        console.log(orgData);
+        this.orgName = orgData._org.name;
+        this.orgEmail = orgData._org.email;
+        this.org = this.orgName.slice(0, 2).toUpperCase();
+      },
+    });
+
+    this.httpService.orgUsers(this.pagenumber,this.limit).subscribe({
       next: (res: any) => {
         console.log(res);
         this.list = res;
@@ -58,6 +63,13 @@ export class OrganizationComponent implements OnInit {
   updateOrg() {
     const dialogRef = this._dialog.open(UpdateOrgComponent, {
       width: '30%',
+      data: {
+        name: this.orgName,
+        email: this.orgEmail,
+      },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.profile();
     });
   }
 
@@ -75,12 +87,29 @@ export class OrganizationComponent implements OnInit {
       },
     });
   }
-  updateUser(id: any) {
-    console.log(id);
+  updateUser(id: any, name: string, email: String) {
+    console.log(id, name, email);
+    const dialogRef = this._dialog.open(EditUserComponent, {
+      width: '30%',
+      data: {
+        id: id,
+        name: name,
+        email: email,
+      },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.profile();
+    });
   }
 
   gotoPage(number: number) {
-    this.pagenumber = number;
+    if (number <= this.list.totalPages) {
+      this.pagenumber = number;
+      this.profile();
+    }
+  }
+  pagelimit(event: any) {
+    this.limit =parseInt( (event.target as HTMLSelectElement).value);
     this.profile();
   }
 }

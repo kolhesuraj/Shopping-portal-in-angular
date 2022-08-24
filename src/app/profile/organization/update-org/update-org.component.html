@@ -22,18 +22,18 @@
       <label class="d-inline w-25">Company Name</label>
       <input
         type="text"
-        formControlName="CompanyName"
+        formControlName="name"
         name="Cname"
         class="form-control d-inline ms-4"
-        [value]="Company_Name"
+        [value]="Name"
         [class.is-invalid]="
-          (CompanyName?.invalid && CompanyName?.touched) ||
-          (submited && CompanyName?.touched)
+          (name?.invalid && name?.touched) ||
+          (submited && name?.touched)
         "
       />
       <small
         class="ms-5 ps-5 text-danger"
-        *ngIf="CompanyName?.invalid && CompanyName?.touched"
+        *ngIf="name?.invalid && name?.touched"
         >Company Name required</small
       >
     </div>

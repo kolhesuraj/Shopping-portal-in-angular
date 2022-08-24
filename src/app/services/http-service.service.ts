@@ -26,15 +26,12 @@ export class HttpServiceService {
 
   profileView(): Observable<any> {
     let tocken = this.ls.gettoken();
-    // console.log(tocken);
-
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${tocken}`,
-      // Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MmY0OWMyNzg2MTIwZDk4NzRiYmQwMjQiLCJpYXQiOjE2NjAyMTEzMzgsImV4cCI6MTY2MDI5NzczOCwidHlwZSI6ImFjY2VzcyJ9.0R5lwzSAxjkpD5JkFTZx-uGOgCTrCSAgqZqWiMi75eA`,
     });
 
-    return this.http.get(this.url + 'auth/self', { headers: header });
+    return this.http.get(`${this.url}auth/self`, { headers: header });
   }
 
   sendVerrification(tokenGet: any): Observable<any> {
@@ -66,21 +63,49 @@ export class HttpServiceService {
     return this.http.post(`${this.url}users`, data, { headers: header });
   }
 
-  orgUsers(pagenumber:number): Observable<any> {
+  orgUsers(pagenumber: number, limit: number): Observable<any> {
     let tocken = this.ls.gettoken();
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${tocken}`,
     });
-    return this.http.get(`${this.url}users?page=${pagenumber}`, { headers: header });
+    const data = `page=${pagenumber}&limit=${limit}`;
+    return this.http.get(`${this.url}users?${data}`, { headers: header });
   }
 
-  deleteUser(id:any):Observable<any> {
+  deleteUser(id: any): Observable<any> {
     let tocken = this.ls.gettoken();
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${tocken}`,
     });
     return this.http.delete(`${this.url}users/${id}`, { headers: header });
+  }
+  updateOrg(data: any): Observable<any> {
+    let tocken = this.ls.gettoken();
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tocken}`,
+    });
+    return this.http.patch(`${this.url}users/org`, data, { headers: header });
+  }
+
+  updateUser(
+    id: string,
+    name: string,
+    email: string,
+    password: string
+  ): Observable<any> {
+    const data = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    let tocken = this.ls.gettoken();
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tocken}`,
+    });
+    return this.http.patch(`${this.url}users/${id}`, data, { headers: header });
   }
 }

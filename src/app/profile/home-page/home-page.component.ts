@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {  Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
-import { AddUserComponent } from '../add-user/add-user.component';
+import { AddUserComponent } from '../organization/add-user/add-user.component';
 
 @Component({
   selector: 'app-home-page',
@@ -28,17 +28,19 @@ export class HomePageComponent implements OnInit {
     this.ls.loadData();
     this.setData();
     let data: any;
-    this.ls.LogIndata.subscribe((result: any) => {
-      data = result;
-      // console.log(result)
-      // console.log(data);
-      localStorage.setItem('EditUser', JSON.stringify(data));
-      this.FirstName = data.name;
-      this.Email = data.email;
-      setTimeout(() => {
-        this.CompanyName = data._org.name;
-      }, 500);
-      this.Role = data.role;
+    this.ls.LogIndata.subscribe({
+      next: (result: any) => {
+        data = result;
+        this.FirstName = data.name;
+        this.Email = data.email;
+        setTimeout(() => {
+          this.CompanyName = data._org.name;
+        }, 500);
+        this.Role = data.role;
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
     });
   }
   logout() {

@@ -26,7 +26,11 @@
       ></mat-icon>
       <div>home</div>
     </div>
-    <div class="mt-3 me-5 d-flex flex-column" style="cursor: pointer" (click)="updateOrg()">
+    <div
+      class="mt-3 me-5 d-flex flex-column"
+      style="cursor: pointer"
+      (click)="updateOrg()"
+    >
       <mat-icon
         class="ms-2"
         aria-hidden="false"
@@ -70,7 +74,7 @@
       <th>delete</th>
     </tr>
     <tr *ngFor="let result of list.results; index as i">
-      <td>{{ list.page * list.limit - 9 + i }}</td>
+      <td>{{ list.page * list.limit - list.limit + i + 1 }}</td>
       <td>{{ result.name }}</td>
       <td>{{ result.email }}</td>
       <td>{{ result.role }}</td>
@@ -80,7 +84,7 @@
           aria-label="Example edit icon"
           fontIcon="edit"
           style="cursor: pointer"
-          (click)="updateUser(result._id)"
+          (click)="updateUser(result._id, result.name, result.email)"
         ></mat-icon>
       </td>
       <td>
@@ -101,12 +105,23 @@
     <div class="">
       <nav aria-label="page navigation example">
         <ul class="pagination">
-          <li class="page-item" (click)="gotoPage(list.page - 1)">
+          <li
+            class="page-item"
+            (click)="gotoPage(list.page - 1)"
+            [class.disabled]="list.page - 1 < 1"
+          >
             <a class="page-link" style="cursor: pointer">&laquo;</a>
           </li>
           <li
             class="page-item"
-            [hidden]="list.page - 1 < 1"
+            [hidden]="list.page - 2 <= 0"
+            (click)="gotoPage(list.page - 2)"
+          >
+            <a class="page-link" style="cursor: pointer">{{ list.page - 2 }}</a>
+        </li>
+          <li
+            class="page-item"
+            [hidden]="list.page - 1 <= 0"
             (click)="gotoPage(list.page - 1)"
           >
             <a class="page-link" style="cursor: pointer">{{ list.page - 1 }}</a>
@@ -121,8 +136,33 @@
           >
             <a class="page-link" style="cursor: pointer">{{ list.page + 1 }}</a>
           </li>
-          <li class="page-item" (click)="gotoPage(list.page + 1)">
+          <li
+            class="page-item"
+            [hidden]="list.page + 2 > list.totalPages"
+            (click)="gotoPage(list.page + 2)"
+          >
+            <a class="page-link" style="cursor: pointer">{{ list.page + 2 }}</a>
+          </li>
+          <li
+            class="page-item"
+            [class.disabled]="list.page + 1 > this.list.totalPages"
+            (click)="gotoPage(list.page + 1)"
+          >
             <a class="page-link" style="cursor: pointer">&raquo;</a>
+          </li>
+          <li class="page-item ms-5 d-flex flex-row">
+            <div class="w-75">users per page</div>
+            <select
+              id="page"
+              name="page"
+              class="form-select w-50"
+              (change)="pagelimit($event)"
+            >
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
           </li>
         </ul>
       </nav>

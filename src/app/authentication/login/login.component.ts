@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
         next: (res: any) => {
           console.log(res);
           localStorage.setItem('LoginUser', res.token);
-          localStorage.setItem('data', JSON.stringify(res));
+          // localStorage.setItem('data', JSON.stringify(res));
           this.tocken = 1;
           if (res.user.isEmailVerified == true) {
             setTimeout(() => {
