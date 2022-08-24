@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { HomePageComponent } from './home-page/home-page.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { UpdateOrgComponent } from './update-org/update-org.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -12,7 +12,12 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { OrganizationComponent } from './organization/organization.component';
 
 @NgModule({
-  declarations: [HomePageComponent, EditProfileComponent, AddUserComponent, OrganizationComponent],
+  declarations: [
+    HomePageComponent,
+    UpdateOrgComponent,
+    AddUserComponent,
+    OrganizationComponent,
+  ],
   imports: [
     CommonModule,
     ProfileRoutingModule,
@@ -20,7 +25,7 @@ import { OrganizationComponent } from './organization/organization.component';
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
   ],
 })
 export class ProfileModule {}

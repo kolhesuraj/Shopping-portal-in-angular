@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { LoginService } from 'src/app/services/login.service';
-import { HomePageComponent } from '../home-page/home-page.component';
 
 @Component({
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.css'],
+  selector: 'app-update-org',
+  templateUrl: './update-org.component.html',
+  styleUrls: ['./update-org.component.css'],
 })
-export class EditProfileComponent implements OnInit {
+export class UpdateOrgComponent implements OnInit {
   editForm!: FormGroup;
   _Email!: string;
   Company_Name!: string;
@@ -20,35 +19,24 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ls: LoginService,
-    private _dialogRef: MatDialogRef<EditProfileComponent>
+    private _dialogRef: MatDialogRef<UpdateOrgComponent>
   ) {
-    let temp: any = localStorage.getItem('EditUser');
+    let temp: any = localStorage.getItem('data');
     const data = JSON.parse(temp);
-    // this.index = this.findData(data.Email);
-    // console.log(this.index)
-    this.First_Name = data.name;
-    this.Email = data.email;
-    this.Company_Name = data._org.name;
-    // this._Email = data.Email;
+    this.Email = data.user._org.email;
+    this.Company_Name = data.user._org.name;
     console.log(this.First_Name);
   }
 
   ngOnInit(): void {
     this.editForm = this.fb.group({
-      FirstName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       CompanyName: ['', [Validators.required]],
-      // Email: ['', [Validators.required, Validators.email]],
     });
     this.editForm.setValue({
-      FirstName: this.First_Name,
       email: this.Email,
       CompanyName: this.Company_Name,
-      //  Email : this._Email,
     });
-  }
-  get FirstName() {
-    return this.editForm.get('FirstName');
   }
   get email() {
     return this.editForm.get('email');
@@ -56,13 +44,13 @@ export class EditProfileComponent implements OnInit {
   get CompanyName() {
     return this.editForm.get('CompanyName');
   }
-  // get Email() {
-  //   return this.editForm.get('Email');
-  // }
+
   submited = false;
   update() {
     console.log(this.editForm.value);
   }
+}
+
   // emailExist = false;
   // update() {
   //   if (this.editForm.valid && this.editForm.dirty) {
@@ -102,4 +90,3 @@ export class EditProfileComponent implements OnInit {
   //   }
   //   return index;
   // }
-}

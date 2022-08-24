@@ -1,9 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
+import { AddUserComponent } from '../add-user/add-user.component';
 import swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { UpdateOrgComponent } from '../update-org/update-org.component';
 
 @Component({
   selector: 'app-organization',
@@ -14,8 +16,8 @@ export class OrganizationComponent implements OnInit {
   constructor(
     private httpService: HttpServiceService,
     private ls: LoginService,
+    private _dialog: MatDialog,
     private route: Router,
-    private http: HttpClient
   ) {}
 
   orgData: any;
@@ -43,9 +45,20 @@ export class OrganizationComponent implements OnInit {
       },
     });
   }
-
+  logout() {
+    localStorage.removeItem('LoginUser');
+    this.route.navigate(['/auth']);
+  }
   addProfile() {
-    this.route.navigate(['profile/org/addUser']);
+    const dialogRef = this._dialog.open(AddUserComponent, {
+      width: '50%',
+    });
+  }
+
+  updateOrg() {
+    const dialogRef = this._dialog.open(UpdateOrgComponent, {
+      width: '30%',
+    });
   }
 
   deleteUser(id: any) {
@@ -66,9 +79,8 @@ export class OrganizationComponent implements OnInit {
     console.log(id);
   }
 
-
   gotoPage(number: number) {
-    this.pagenumber = number
+    this.pagenumber = number;
     this.profile();
   }
 }

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {  Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
-import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+import { AddUserComponent } from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-home-page',
@@ -15,7 +15,8 @@ export class HomePageComponent implements OnInit {
     // private _dialog: MatDialog,
     private ls: LoginService,
     private httpService: HttpServiceService,
-    private route: Router
+    private route: Router,
+    private _dialog: MatDialog,
   ) {}
 
   FirstName!: string;
@@ -42,11 +43,11 @@ export class HomePageComponent implements OnInit {
   }
   logout() {
     localStorage.removeItem('LoginUser');
-    this.route.navigate(['/auth'])
+    this.route.navigate(['/auth']);
   }
 
   org() {
-    this.route.navigate(['profile/org'])
+    this.route.navigate(['profile/org']);
   }
 
   // editProfile() {
@@ -85,8 +86,10 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  addProfile(){
-    this.route.navigate(['profile/org/addUser'])
+  addProfile() {
+    const dialogRef = this._dialog.open(AddUserComponent, {
+      width: '50%',
+      // backdropClass: 'dialog-bg-trans',
+    });
   }
-
 }

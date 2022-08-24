@@ -1,24 +1,5 @@
-<div>
+<div class="border p-2">
   <form [formGroup]="editForm" (ngSubmit)="update()">
-    <div>
-      <label class="d-inline w-25 me-5">First Name</label>
-      <input
-        type="text"
-        formControlName="FirstName"
-        name="FirstName"
-        class="form-control d-inline ms-2"
-        [class.is-invalid]="
-          (FirstName?.invalid && FirstName?.touched) ||
-          (submited && FirstName?.touched)
-        "
-      />
-      <small
-        class="ms-5 ps-5 text-danger"
-        *ngIf="FirstName?.invalid && FirstName?.touched"
-        >Name required</small
-      >
-    </div>
-
     <div class="mt-3 p-3">
       <label class="d-inline w-25 me-4">Email</label>
       <input

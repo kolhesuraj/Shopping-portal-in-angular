@@ -14,7 +14,6 @@ export class AddUserComponent implements OnInit {
 register!: FormGroup;
   data: any = [];
   tocken: number = 0;
-  emailExist = false;
   constructor(
      private fb: FormBuilder,
     private route: Router,
@@ -80,8 +79,4 @@ register!: FormGroup;
     this.submited = false;
     this.register.reset();
   }
-   goback() {
-    this.route.navigate(['profile/org']);
-  }
-
 }
