@@ -66,13 +66,21 @@ export class HttpServiceService {
     return this.http.post(`${this.url}users`, data, { headers: header });
   }
 
-  orgUsers():Observable<any> {
+  orgUsers(pagenumber:number): Observable<any> {
     let tocken = this.ls.gettoken();
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${tocken}`,
     });
-    return this.http.get(`${this.url}users`, { headers: header });
+    return this.http.get(`${this.url}users?page=${pagenumber}`, { headers: header });
   }
 
+  deleteUser(id:any):Observable<any> {
+    let tocken = this.ls.gettoken();
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tocken}`,
+    });
+    return this.http.delete(`${this.url}users/${id}`, { headers: header });
+  }
 }

@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -59,7 +60,7 @@ export class LoginService {
     this.LogIndata.next(data);
   }
 
-   gettoken() {
+  gettoken() {
     // console.log(localStorage.getItem('LoginUser'))
     return localStorage.getItem('LoginUser');
   }
@@ -103,7 +104,7 @@ export class LoginService {
   // }
 
   orgProfile() {
-    const orgdata:any = localStorage.getItem('data');
-    return JSON.parse(orgdata)
+    const orgdata: any = localStorage.getItem('data');
+    return JSON.parse(orgdata);
   }
 }

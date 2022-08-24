@@ -1,6 +1,9 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-organization',
@@ -10,7 +13,9 @@ import { LoginService } from 'src/app/services/login.service';
 export class OrganizationComponent implements OnInit {
   constructor(
     private httpService: HttpServiceService,
-    private ls: LoginService
+    private ls: LoginService,
+    private route: Router,
+    private http: HttpClient
   ) {}
 
   orgData: any;
@@ -18,9 +23,17 @@ export class OrganizationComponent implements OnInit {
   orgEmail!: string;
   org!: string;
   list: any;
+  pagenumber: number = 0;
   ngOnInit(): void {
     this.profile();
-    this.httpService.orgUsers().subscribe({
+  }
+  profile() {
+    this.orgData = this.ls.orgProfile();
+    console.log(this.orgData);
+    this.orgName = this.orgData.user._org.name;
+    this.orgEmail = this.orgData.user._org.email;
+    this.org = this.orgName.slice(0, 2).toUpperCase();
+    this.httpService.orgUsers(this.pagenumber).subscribe({
       next: (res: any) => {
         console.log(res);
         this.list = res;
@@ -30,19 +43,32 @@ export class OrganizationComponent implements OnInit {
       },
     });
   }
-  profile() {
-    this.orgData = this.ls.orgProfile();
-    console.log(this.orgData);
-    this.orgName = this.orgData.user._org.name;
-    this.orgEmail = this.orgData.user._org.email;
-    this.org = this.orgName.slice(0, 2).toUpperCase();
+
+  addProfile() {
+    this.route.navigate(['profile/org/addUser']);
   }
 
   deleteUser(id: any) {
-    console.log(id)
+    console.log(id);
+    this.httpService.deleteUser(id).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        swal.fire('user deleted successfully');
+        this.profile();
+      },
+      error: (err: any) => {
+        console.log(err);
+        swal.fire('error from server');
+      },
+    });
   }
   updateUser(id: any) {
     console.log(id);
-    
+  }
+
+
+  gotoPage(number: number) {
+    this.pagenumber = number
+    this.profile();
   }
 }
