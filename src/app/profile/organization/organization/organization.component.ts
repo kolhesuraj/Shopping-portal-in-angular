@@ -29,6 +29,7 @@ export class OrganizationComponent implements OnInit {
   limit: number = 10;
   sortBy: string = 'role';
   Role: string = 'all';
+  search: string = 'no';
 
   rolearray = ['all', 'user', 'admin'];
   sortarray = ['name', 'email', 'ceatedAt', 'updated'];
@@ -53,7 +54,13 @@ export class OrganizationComponent implements OnInit {
 
   getUsers() {
     this.httpService
-      .orgUsers(this.pagenumber, this.limit, this.sortBy, this.Role)
+      .orgUsers(
+        this.pagenumber,
+        this.limit,
+        this.sortBy,
+        this.Role,
+        this.search
+      )
       .subscribe({
         next: (res: any) => {
           console.log(res);
@@ -144,6 +151,11 @@ export class OrganizationComponent implements OnInit {
   role(event: any) {
     this.Role = (event.target as HTMLSelectElement).value;
     this.pagenumber = 1;
+    this.getUsers();
+  }
+  searchinput(value: string) {
+    console.log(value);
+    this.search = value;
     this.getUsers();
   }
 }

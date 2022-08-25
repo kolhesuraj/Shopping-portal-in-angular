@@ -67,9 +67,10 @@ export class HttpServiceService {
     pagenumber: number,
     limit: number,
     sortBy: string,
-    Role: string
+    Role: string,
+    search: string
   ): Observable<any> {
-  let data: string;
+    let data: string;
     let tocken = this.ls.gettoken();
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -80,6 +81,10 @@ export class HttpServiceService {
     } else {
       data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}&role=${Role}`;
     }
+    if (search != 'no') {
+      data = `${data}&name=${search}`;
+    }
+    console.log(data);
     return this.http.get(`${this.url}users?${data}`, { headers: header });
   }
 
