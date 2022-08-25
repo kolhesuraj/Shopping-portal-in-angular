@@ -1,14 +1,27 @@
 .navbar-brand {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
 }
-td,th{
-    text-align: center;
-    padding: 10px;
-    border-bottom: 1px solid black;
+td,
+th {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid black;
 }
 
-.form-select{
-    border: none;
-    border-bottom: 1px solid black;
+.form-select {
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+th {
+  position: sticky;
+  top: 116px;
+  color: aliceblue;
+  background-color: rgb(0, 0, 0);
+}
+
+.bottom{
+    color: aliceblue;
+    background-color: rgba(0, 0, 0, 0.904);
 }

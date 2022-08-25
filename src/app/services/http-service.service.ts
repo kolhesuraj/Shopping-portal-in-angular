@@ -63,13 +63,23 @@ export class HttpServiceService {
     return this.http.post(`${this.url}users`, data, { headers: header });
   }
 
-  orgUsers(pagenumber: number, limit: number): Observable<any> {
+  orgUsers(
+    pagenumber: number,
+    limit: number,
+    sortBy: string,
+    Role: string
+  ): Observable<any> {
+  let data: string;
     let tocken = this.ls.gettoken();
     let header = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${tocken}`,
     });
-    const data = `page=${pagenumber}&limit=${limit}`;
+    if (Role == 'all') {
+      data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}`;
+    } else {
+      data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}&role=${Role}`;
+    }
     return this.http.get(`${this.url}users?${data}`, { headers: header });
   }
 

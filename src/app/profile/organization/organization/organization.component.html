@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-dark text-light">
+<nav class="navbar navbar-light bg-dark text-light sticky-top">
   <div class="container-fluid">
     <div
       class="navbar-brand text-light d-flex justify-content-center align-items-center bg-info"
@@ -7,10 +7,10 @@
     </div>
     <div class="me-auto">
       <div class="fs-4">
-        {{ orgEmail }}
+        {{ orgName }}
       </div>
       <div class="mt-2">
-        {{ orgName }}
+        {{ orgEmail }}
       </div>
     </div>
 
@@ -67,8 +67,30 @@
   <table class="container w-75">
     <tr class="">
       <th>index</th>
-      <th>Name</th>
-      <th>Email</th>
+      <th (click)="sortby('name')">
+        Name<span class="ms-2"
+          ><mat-icon
+            fontIcon="sort"
+            [style.color]="sortBy == 'name' ? 'blue' : 'white'"
+          ></mat-icon
+        ></span>
+      </th>
+      <th (click)="sortby('email')">
+        Email<span class="ms-2"
+          ><mat-icon
+            fontIcon="sort"
+            [style.color]="sortBy == 'email' ? 'blue' : 'white'"
+          ></mat-icon
+        ></span>
+      </th>
+      <th (click)="sortby('updatedAt')">
+        updated<span class="ms-2"
+          ><mat-icon
+            fontIcon="sort"
+            [style.color]="sortBy == 'updatedAt' ? 'blue' : 'white'"
+          ></mat-icon
+        ></span>
+      </th>
       <th>role</th>
       <th>edit</th>
       <th>delete</th>
@@ -77,6 +99,7 @@
       <td>{{ list.page * list.limit - list.limit + i + 1 }}</td>
       <td>{{ result.name }}</td>
       <td>{{ result.email }}</td>
+      <td>{{ result.updatedAt }}</td>
       <td>{{ result.role }}</td>
       <td>
         <mat-icon
@@ -118,7 +141,7 @@
             (click)="gotoPage(list.page - 2)"
           >
             <a class="page-link" style="cursor: pointer">{{ list.page - 2 }}</a>
-        </li>
+          </li>
           <li
             class="page-item"
             [hidden]="list.page - 1 <= 0"
@@ -158,10 +181,44 @@
               class="form-select w-50"
               (change)="pagelimit($event)"
             >
-              <option value="5">5</option>
-              <option value="10" selected>10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
+              <option value="5" [selected]="limit == 5">5</option>
+              <option value="10" [selected]="limit == 10">10</option>
+              <option value="15" [selected]="limit == 15">15</option>
+              <option value="20" [selected]="limit == 20">20</option>
+            </select>
+          </li>
+          <!-- <li class="page-item ms-5 d-flex flex-row">
+            <div class="w-75 mt-3 me-1">sortBy</div>
+            <select
+              id="sortBy"
+              name="sortBy"
+              class="form-select"
+              style="width:140px;"
+              (change)="sortby($event)"
+            >
+            <option *ngFor="let sort of sortarray" [value]="sort">{{sort}}</option>
+               <option value="name" [selected]="sortBy == 'name'">name</option>
+              <option value="email" [selected]="sortBy == 'email' ">email</option>
+              <option value="role" [selected]="sortBy == 'role' ">role</option>
+              <option value="createdAt" [selected]="sortBy == 'createdAt' ">createdAt</option>
+              <option value="updated" [selected]="sortBy == 'updated' ">updated</option>
+            </select>
+          </li> -->
+
+          <li class="page-item ms-5 d-flex flex-row">
+            <div class="w-75 mt-3">show</div>
+            <select
+              id="sortBy"
+              name="sortBy"
+              class="form-select"
+              style="width: 140px"
+              (change)="role($event)"
+            >
+              <option *ngFor="let ro of rolearray" [value]="ro">
+                {{ ro }}
+              </option>
+              <!-- <option value="user" [selected]="sortBy == 'user'">user</option>
+              <option value="admin" [selected]="sortBy == 'admin' ">admin</option> -->
             </select>
           </li>
         </ul>

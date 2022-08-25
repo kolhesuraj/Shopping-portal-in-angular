@@ -25,12 +25,22 @@ export class OrganizationComponent implements OnInit {
   orgEmail!: string;
   org!: string;
   list: any;
-  pagenumber: number = 0;
+  pagenumber: number = 1;
   limit: number = 10;
+  sortBy: string = 'role';
+  Role: string = 'all';
+
+  rolearray = ['all', 'user', 'admin'];
+  sortarray = ['name', 'email', 'ceatedAt', 'updated'];
   ngOnInit(): void {
     this.profile();
   }
   profile() {
+    this.getProfile();
+    this.getUsers();
+  }
+
+  getProfile() {
     this.httpService.profileView().subscribe({
       next: (orgData: any) => {
         console.log(orgData);
@@ -39,17 +49,22 @@ export class OrganizationComponent implements OnInit {
         this.org = this.orgName.slice(0, 2).toUpperCase();
       },
     });
-
-    this.httpService.orgUsers(this.pagenumber,this.limit).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.list = res;
-      },
-      error: (err: any) => {
-        console.error();
-      },
-    });
   }
+
+  getUsers() {
+    this.httpService
+      .orgUsers(this.pagenumber, this.limit, this.sortBy, this.Role)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.list = res;
+        },
+        error: (err: any) => {
+          console.error();
+        },
+      });
+  }
+
   logout() {
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/auth']);
@@ -69,7 +84,7 @@ export class OrganizationComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.profile();
+      this.getProfile();
     });
   }
 
@@ -79,7 +94,7 @@ export class OrganizationComponent implements OnInit {
       next: (res: any) => {
         console.log(res);
         swal.fire('user deleted successfully');
-        this.profile();
+        this.getUsers();
       },
       error: (err: any) => {
         console.log(err);
@@ -87,6 +102,7 @@ export class OrganizationComponent implements OnInit {
       },
     });
   }
+
   updateUser(id: any, name: string, email: String) {
     console.log(id, name, email);
     const dialogRef = this._dialog.open(EditUserComponent, {
@@ -98,18 +114,36 @@ export class OrganizationComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.profile();
+      this.getUsers();
     });
   }
 
   gotoPage(number: number) {
     if (number <= this.list.totalPages) {
       this.pagenumber = number;
-      this.profile();
+      this.getUsers();
     }
   }
+
   pagelimit(event: any) {
-    this.limit =parseInt( (event.target as HTMLSelectElement).value);
-    this.profile();
+    this.limit = parseInt((event.target as HTMLSelectElement).value);
+    this.pagenumber = 1;
+    this.getUsers();
+  }
+
+  // sortby(event: any) {
+  //   this.sortBy = (event.target as HTMLSelectElement).value;
+  //   this.getUsers();
+  // }
+
+  sortby(by: string) {
+    this.sortBy = by;
+    this.pagenumber = 1;
+    this.getUsers();
+  }
+  role(event: any) {
+    this.Role = (event.target as HTMLSelectElement).value;
+    this.pagenumber = 1;
+    this.getUsers();
   }
 }
