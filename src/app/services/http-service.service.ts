@@ -76,13 +76,21 @@ export class HttpServiceService {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${tocken}`,
     });
-    if (Role == 'all') {
-      data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}`;
+
+    if (search == '') {
+      if (Role == 'all') {
+        data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}`;
+      } else {
+        data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}&role=${Role}`;
+      }
     } else {
-      data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}&role=${Role}`;
-    }
-    if (search != undefined) {
+      if (Role == 'all') {
+        data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}`;
+      } else {
+        data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}&role=${Role}`;
+      }
       data = `${data}&name=${search}`;
+
     }
     console.log(data);
     return this.http.get(`${this.url}users?${data}`, { headers: header });

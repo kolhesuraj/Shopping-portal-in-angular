@@ -30,7 +30,7 @@ export class OrganizationComponent implements OnInit {
   limit: number = 10;
   sortBy: string = 'role';
   Role: string = 'all';
-  search!: string;
+  search: string = '';
 
   rolearray = ['all', 'user', 'admin'];
   sortarray = ['name', 'email', 'ceatedAt', 'updated'];
@@ -186,8 +186,12 @@ export class OrganizationComponent implements OnInit {
   }
 
   searchinput(value: string) {
-    // console.log(value);
-    this.search = value;
+    console.log(value);
+    if (value) {
+      this.search = value;
+    } else {
+      this.search = '';
+    }
     this.getUsers();
   }
 

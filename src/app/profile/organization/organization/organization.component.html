@@ -72,10 +72,8 @@
       aria-label="Search"
       aria-describedby="search-addon"
       #search
+      (keyup)="searchinput(search.value)"
     />
-    <span class="input-group-text border-0" (click)="searchinput(search.value)">
-      <mat-icon fontIcon="search"></mat-icon>
-    </span>
   </div>
   <table class="container">
     <tr class="">
@@ -145,7 +143,7 @@
     </tr>
   </table>
 
-  <div class="">
+  <div class="pb-3">
     <div class="container w-75">
       <div class="text-secondary mt-3 d-flex flex-row-reverse">
         showing result {{ list.results.length }} out of {{ list.totalResults }}
