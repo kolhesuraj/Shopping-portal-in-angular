@@ -4,30 +4,28 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
-interface dialogdata{
-  name: string,
-  email:string
+interface dialogdata {
+  name: string;
+  email: string;
 }
-  
 
 @Component({
   selector: 'app-update-org',
   templateUrl: './update-org.component.html',
   styleUrls: ['./update-org.component.css'],
 })
-  
 export class UpdateOrgComponent implements OnInit {
   editForm!: FormGroup;
   Name!: string;
   Email!: string;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data:dialogdata,
+    @Inject(MAT_DIALOG_DATA) public data: dialogdata,
     private fb: FormBuilder,
     private ls: LoginService,
     private _dialogRef: MatDialogRef<UpdateOrgComponent>,
-    private httpservice: HttpServiceService,
-  ) {  }
+    private httpservice: HttpServiceService
+  ) {}
 
   ngOnInit(): void {
     // console.log(this.data);
@@ -38,7 +36,7 @@ export class UpdateOrgComponent implements OnInit {
     // console.log(this.Email);
     this.editForm.setValue({
       email: this.data.email,
-      name: this.data.name
+      name: this.data.name,
     });
   }
   get email() {
@@ -64,6 +62,7 @@ export class UpdateOrgComponent implements OnInit {
         },
         error: (err: any) => {
           console.log(err);
+          Swal.fire(err.error.message);
         },
       });
     }

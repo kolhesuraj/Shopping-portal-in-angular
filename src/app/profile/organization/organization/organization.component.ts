@@ -85,62 +85,74 @@ export class OrganizationComponent implements OnInit {
   }
 
   updateOrg() {
-    const dialogRef = this._dialog.open(UpdateOrgComponent, {
-      width: '30%',
-      data: {
-        name: this.orgName,
-        email: this.orgEmail,
-      },
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.getProfile();
-    });
+    if (this.loginRole == 'admin') {
+      const dialogRef = this._dialog.open(UpdateOrgComponent, {
+        width: '30%',
+        data: {
+          name: this.orgName,
+          email: this.orgEmail,
+        },
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        this.getProfile();
+      });
+    } else {
+      Swal.fire("user cann't change company credintial");
+    }
   }
 
   deleteUser(id: any) {
-    console.log(id);
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.httpService.deleteUser(id).subscribe({
-          next: (res: any) => {
-            // console.log(res);
-            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-            this.getUsers();
-          },
-          error: (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
-          },
-        });
-      }
-    });
+    // console.log(id);
+    if (this.loginRole == 'admin') {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.httpService.deleteUser(id).subscribe({
+            next: (res: any) => {
+              // console.log(res);
+              Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+              this.getUsers();
+            },
+            error: (err: any) => {
+              console.log(err);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `Something went wrong! ${err}`,
+              });
+            },
+          });
+        }
+      });
+    } else {
+      Swal.fire("user cann't delet login");
+    }
   }
 
   updateUser(id: any, name: string, email: String) {
-    console.log(id, name, email);
-    const dialogRef = this._dialog.open(EditUserComponent, {
-      width: '35%',
-      data: {
-        id: id,
-        name: name,
-        email: email,
-      },
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.getUsers();
-    });
+    // console.log(id, name, email);
+    if (this.loginRole == 'admin') {
+      const dialogRef = this._dialog.open(EditUserComponent, {
+        width: '35%',
+        data: {
+          id: id,
+          name: name,
+          email: email,
+        },
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        this.getUsers();
+      });
+    } else {
+      Swal.fire("users cann't update user");
+    }
   }
 
   gotoPage(number: number) {
@@ -183,7 +195,7 @@ export class OrganizationComponent implements OnInit {
     if (this.loginRole == 'admin') {
       Swal.fire({
         title: 'Edit Role',
-        html: '<h1>Role must be Admin or User</h1> ,<input type="text" id="role">',
+        html: '<h1>Role must be Admin or User</h1> ,<input class="form-control w-50 m-auto" type="text" id="role">',
         preConfirm: () => {
           return (document.getElementById('role') as HTMLInputElement).value;
         },
@@ -203,7 +215,7 @@ export class OrganizationComponent implements OnInit {
               },
             });
           } else {
-            Swal.fire('role must be admin or user')
+            Swal.fire('role must be admin or user');
           }
         }
       });
