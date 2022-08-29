@@ -55,23 +55,32 @@ export class OrganizationComponent implements OnInit {
   }
 
   getUsers() {
-    this.httpService
-      .orgUsers(
-        this.pagenumber,
-        this.limit,
-        this.sortBy,
-        this.Role,
-        this.search
-      )
-      .subscribe({
-        next: (res: any) => {
-          // console.log(res);
-          this.list = res;
-        },
-        error: (err: any) => {
-          Swal.fire(err);
-        },
-      });
+    let data: any;
+    if (this.search == '') {
+      data = this.setdata();
+    } else {
+      data = this.setdata();
+      data = `${data}&name=${this.search}`;
+    }
+    this.httpService.orgUsers(data).subscribe({
+      next: (res: any) => {
+        // console.log(res);
+        this.list = res;
+      },
+      error: (err: any) => {
+        Swal.fire(err);
+      },
+    });
+  }
+
+  setdata() {
+    let data
+     if (this.Role == 'all') {
+       data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}`;
+     } else {
+       data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}&role=${this.Role}`;
+     }
+    return data
   }
 
   logout() {
