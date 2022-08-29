@@ -5,7 +5,6 @@ import { HttpServiceService } from 'src/app/services/http-service.service';
 // import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -75,7 +74,7 @@ export class LoginComponent implements OnInit {
               this.route.navigate(['/profile']);
               this.tocken = 0;
             }, 1500);
-          }else{
+          } else {
             this.route.navigate(['/auth/email-varify']);
           }
         },

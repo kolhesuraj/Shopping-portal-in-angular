@@ -81,7 +81,7 @@ export class HttpServiceService {
     } else {
       data = `page=${pagenumber}&limit=${limit}&sortBy=${sortBy}&role=${Role}`;
     }
-    if (search != 'no') {
+    if (search != undefined) {
       data = `${data}&name=${search}`;
     }
     console.log(data);
@@ -122,5 +122,16 @@ export class HttpServiceService {
       Authorization: `Bearer ${tocken}`,
     });
     return this.http.patch(`${this.url}users/${id}`, data, { headers: header });
+  }
+
+  updateRole(role: any, id: any) {
+    let tocken = this.ls.gettoken();
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tocken}`,
+    });
+    return this.http.patch(`${this.url}users/role/${id}`, role, {
+      headers: header,
+    });
   }
 }

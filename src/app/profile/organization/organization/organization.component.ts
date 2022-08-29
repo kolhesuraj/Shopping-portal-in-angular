@@ -5,8 +5,8 @@ import { LoginService } from 'src/app/services/login.service';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { Router } from '@angular/router';
 import { UpdateOrgComponent } from '../update-org/update-org.component';
-import swal from 'sweetalert2';
 import { EditUserComponent } from '../edit-user/edit-user.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-organization',
@@ -24,12 +24,13 @@ export class OrganizationComponent implements OnInit {
   orgName!: string;
   orgEmail!: string;
   org!: string;
+  loginRole: any;
   list: any;
   pagenumber: number = 1;
   limit: number = 10;
   sortBy: string = 'role';
   Role: string = 'all';
-  search: string = 'no';
+  search!: string;
 
   rolearray = ['all', 'user', 'admin'];
   sortarray = ['name', 'email', 'ceatedAt', 'updated'];
@@ -47,6 +48,7 @@ export class OrganizationComponent implements OnInit {
         console.log(orgData);
         this.orgName = orgData._org.name;
         this.orgEmail = orgData._org.email;
+        this.loginRole = orgData.role;
         this.org = this.orgName.slice(0, 2).toUpperCase();
       },
     });
@@ -63,11 +65,11 @@ export class OrganizationComponent implements OnInit {
       )
       .subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           this.list = res;
         },
         error: (err: any) => {
-          console.error();
+          Swal.fire(err);
         },
       });
   }
@@ -97,23 +99,39 @@ export class OrganizationComponent implements OnInit {
 
   deleteUser(id: any) {
     console.log(id);
-    this.httpService.deleteUser(id).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        swal.fire('user deleted successfully');
-        this.getUsers();
-      },
-      error: (err: any) => {
-        console.log(err);
-        swal.fire('error from server');
-      },
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.httpService.deleteUser(id).subscribe({
+          next: (res: any) => {
+            // console.log(res);
+            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            this.getUsers();
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Something went wrong! ${err}`,
+            });
+          },
+        });
+      }
     });
   }
 
   updateUser(id: any, name: string, email: String) {
     console.log(id, name, email);
     const dialogRef = this._dialog.open(EditUserComponent, {
-      width: '30%',
+      width: '35%',
       data: {
         id: id,
         name: name,
@@ -148,14 +166,49 @@ export class OrganizationComponent implements OnInit {
     this.pagenumber = 1;
     this.getUsers();
   }
+
   role(event: any) {
     this.Role = (event.target as HTMLSelectElement).value;
     this.pagenumber = 1;
     this.getUsers();
   }
+
   searchinput(value: string) {
-    console.log(value);
+    // console.log(value);
     this.search = value;
     this.getUsers();
+  }
+
+  editRole(id: any) {
+    if (this.loginRole == 'admin') {
+      Swal.fire({
+        title: 'Edit Role',
+        html: '<h1>Role must be Admin or User</h1> ,<input type="text" id="role">',
+        preConfirm: () => {
+          return (document.getElementById('role') as HTMLInputElement).value;
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (result.value == 'admin' || result.value == 'user') {
+            console.log(result);
+            const roleget = { role: result.value };
+            console.log(id, roleget);
+            this.httpService.updateRole(roleget, id).subscribe({
+              next: (res: any) => {
+                console.log(res);
+                this.getUsers();
+              },
+              error: (err: any) => {
+                console.log(err);
+              },
+            });
+          } else {
+            Swal.fire('role must be admin or user')
+          }
+        }
+      });
+    } else {
+      Swal.fire("users cann't change role");
+    }
   }
 }

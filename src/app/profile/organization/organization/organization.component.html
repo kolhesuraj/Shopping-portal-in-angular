@@ -63,30 +63,31 @@
   </div>
 </nav>
 
-<div class="mt-3">
-  <table class="container w-75">
-    <div class="input-group rounded w-75 mb-3 d-flex justify-content-end">
-      <input
-        type="search"
-        class="form-control rounded"
-        placeholder="Search"
-        aria-label="Search"
-        aria-describedby="search-addon"
-        #search
-      />
-      <span class="input-group-text border-0" (click)="searchinput(search.value)">
-        <mat-icon fontIcon="search"></mat-icon>
-      </span>
-    </div>
+<div class="mt-3 container">
+  <div class="input-group rounded w-25 mb-3 ms-auto">
+    <input
+      type="search"
+      class="form-control rounded"
+      placeholder="Search"
+      aria-label="Search"
+      aria-describedby="search-addon"
+      #search
+    />
+    <span class="input-group-text border-0" (click)="searchinput(search.value)">
+      <mat-icon fontIcon="search"></mat-icon>
+    </span>
+  </div>
+  <table class="container">
     <tr class="">
       <th>index</th>
       <th (click)="sortby('name')">
-        Name<span class="ms-2"
-          ><mat-icon
+        Name<span class="ms-2">
+          <mat-icon
             fontIcon="sort"
             [style.color]="sortBy == 'name' ? 'blue' : 'white'"
-          ></mat-icon
-        ></span>
+          >
+          </mat-icon>
+        </span>
       </th>
       <th (click)="sortby('email')">
         Email<span class="ms-2"
@@ -113,7 +114,16 @@
       <td>{{ result.name }}</td>
       <td>{{ result.email }}</td>
       <td>{{ result.updatedAt }}</td>
-      <td>{{ result.role }}</td>
+      <td>
+        {{ result.role }}
+        <mat-icon
+          aria-label="edit"
+          aria-hidden="false"
+          fontIcon="edit"
+          style="cursor: pointer"
+          (click)="editRole(result._id)"
+        ></mat-icon>
+      </td>
       <td>
         <mat-icon
           aria-hidden="false"

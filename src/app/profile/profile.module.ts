@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AddUserComponent } from './organization/add-user/add-user.component';
 import { OrganizationComponent } from './organization/organization/organization.component';
 import { EditUserComponent } from './organization/edit-user/edit-user.component';
+import { EditRoleComponent } from './organization/edit-role/edit-role.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { EditUserComponent } from './organization/edit-user/edit-user.component'
     AddUserComponent,
     OrganizationComponent,
     EditUserComponent,
+    EditRoleComponent,
   ],
   imports: [
     CommonModule,
