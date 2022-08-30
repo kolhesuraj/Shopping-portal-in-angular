@@ -64,16 +64,31 @@
 </nav>
 
 <div class="mt-3 container">
-  <div class="input-group rounded w-25 mb-3 ms-auto">
-    <input
-      type="search"
-      class="form-control rounded"
-      placeholder="Search"
-      aria-label="Search"
-      aria-describedby="search-addon"
-      #search
-      (keyup)="searchinput(search.value)"
-    />
+  <div class="d-flex mb-2">
+    <div class="w-50">
+      <select
+        id="sortBy"
+        name="sortBy"
+        class="form-select w-25"
+        (change)="role($event)"
+      >
+        <option *ngFor="let ro of rolearray" [value]="ro">
+          {{ ro }}
+        </option>
+      </select>
+    </div>
+
+    <div class="input-group rounded w-25 ms-auto">
+      <input
+        type="search"
+        class="form-control rounded"
+        placeholder="Search"
+        aria-label="Search"
+        aria-describedby="search-addon"
+        #search
+        (keyup)="searchinput(search.value)"
+      />
+    </div>
   </div>
   <table class="container">
     <tr class="">
@@ -142,11 +157,11 @@
       </td>
     </tr>
   </table>
-  <div class="text-secondary mt-3 d-flex flex-row-reverse">
-    showing result {{ list.results.length }} out of {{ list.totalResults }}
-  </div>
-  <div class="sticky-bottom bg-body">
-    <div class="container w-75">
+  <div
+    class="sticky-bottom bg-body pt-2 border-top"
+    style="padding-bottom: 1px"
+  >
+    <div class="container w-100">
       <nav aria-label="page navigation example">
         <ul class="pagination">
           <li
@@ -226,21 +241,12 @@
             </select>
           </li> -->
 
-          <li class="page-item ms-5 d-flex flex-row">
-            <div class="w-75 mt-3">show</div>
-            <select
-              id="sortBy"
-              name="sortBy"
-              class="form-select"
-              style="width: 140px"
-              (change)="role($event)"
-            >
-              <option *ngFor="let ro of rolearray" [value]="ro">
-                {{ ro }}
-              </option>
-              <!-- <option value="user" [selected]="sortBy == 'user'">user</option>
-              <option value="admin" [selected]="sortBy == 'admin' ">admin</option> -->
-            </select>
+          <li class="page-item ms-5 d-flex flex-row"></li>
+          <li class="ms-5 ps-5">
+            <div class="text-secondary mt-3">
+              showing result {{ list.results.length }} out of
+              {{ list.totalResults }}
+            </div>
           </li>
         </ul>
       </nav>

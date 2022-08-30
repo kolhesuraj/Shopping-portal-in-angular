@@ -30,10 +30,10 @@ export class OrganizationComponent implements OnInit {
   pagenumber: number = 1;
   limit: number = 10;
   sortBy: string = 'role';
-  Role: string = 'all';
+  Role: string = 'All Employes';
   search: string = '';
 
-  rolearray = ['all', 'user', 'admin'];
+  rolearray = ['All Employes', 'user', 'admin'];
   sortarray = ['name', 'email', 'ceatedAt', 'updated'];
   ngOnInit(): void {
     this.profile();
@@ -54,7 +54,15 @@ export class OrganizationComponent implements OnInit {
       },
     });
   }
-
+  setdata() {
+    let data;
+    if (this.Role == 'All Employes') {
+      data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}`;
+    } else {
+      data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}&role=${this.Role}`;
+    }
+    return data;
+  }
   getUsers() {
     let data: any;
     if (this.search == '') {
@@ -65,23 +73,13 @@ export class OrganizationComponent implements OnInit {
     }
     this.httpService.orgUsers(data).subscribe({
       next: (res: any) => {
-        // console.log(res);
+        console.log(res);
         this.list = res;
       },
       error: (err: any) => {
         Swal.fire(err);
       },
     });
-  }
-
-  setdata() {
-    let data;
-    if (this.Role == 'all') {
-      data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}`;
-    } else {
-      data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}&role=${this.Role}`;
-    }
-    return data;
   }
 
   logout() {
@@ -94,7 +92,7 @@ export class OrganizationComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(() => {
       this.getUsers();
-    })
+    });
   }
 
   updateOrg() {
