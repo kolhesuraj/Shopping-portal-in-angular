@@ -72,7 +72,7 @@
         class="form-select w-25"
         (change)="role($event)"
       >
-        <option *ngFor="let ro of rolearray" [value]="ro">
+        <option *ngFor="let ro of rolearray" [value]="ro" class="bg-body">
           {{ ro }}
         </option>
       </select>
@@ -210,11 +210,11 @@
             <a class="page-link" style="cursor: pointer">&raquo;</a>
           </li>
           <li class="page-item ms-5 d-flex flex-row">
-            <div class="w-75">users per page</div>
+            <span class="pt-2 me-2">users per page</span>
             <select
               id="page"
               name="page"
-              class="form-select w-50"
+              class="form-select w-auto"
               (change)="pagelimit($event)"
             >
               <option value="5" [selected]="limit == 5">5</option>
@@ -241,8 +241,7 @@
             </select>
           </li> -->
 
-          <li class="page-item ms-5 d-flex flex-row"></li>
-          <li class="ms-5 ps-5">
+          <li class="ms-auto">
             <div class="text-secondary mt-3">
               showing result {{ list.results.length }} out of
               {{ list.totalResults }}
