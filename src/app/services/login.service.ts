@@ -10,6 +10,7 @@ export class LoginService {
   dataGet: any;
   varify: boolean = false;
   LogIndata = new BehaviorSubject({});
+  loader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {}
 

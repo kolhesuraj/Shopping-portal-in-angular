@@ -1,4 +1,5 @@
-<div class="d-flex justify-content-center" *ngIf="show">
+
+<router-outlet></router-outlet>
+<div class="d-flex justify-content-center" *ngIf="ls.loader.value">
   <div class="spinner-border text-danger" role="status"></div>
 </div>
-<router-outlet></router-outlet>

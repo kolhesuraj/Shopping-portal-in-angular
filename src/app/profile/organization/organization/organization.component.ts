@@ -203,7 +203,7 @@ export class OrganizationComponent implements OnInit {
   }
 
   searchinput(value: string) {
-    console.log(value);
+    // console.log(value);
     if (value) {
       this.search = value;
     } else {
