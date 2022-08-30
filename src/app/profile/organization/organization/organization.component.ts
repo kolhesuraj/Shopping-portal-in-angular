@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { UpdateOrgComponent } from '../update-org/update-org.component';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import Swal from 'sweetalert2';
+import { LowerCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-organization',
@@ -64,7 +65,7 @@ export class OrganizationComponent implements OnInit {
     }
     this.httpService.orgUsers(data).subscribe({
       next: (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.list = res;
       },
       error: (err: any) => {
@@ -91,12 +92,15 @@ export class OrganizationComponent implements OnInit {
     const dialogRef = this._dialog.open(AddUserComponent, {
       width: '50%',
     });
+    dialogRef.afterClosed().subscribe(() => {
+      this.getUsers();
+    })
   }
 
   updateOrg() {
     if (this.loginRole == 'admin') {
       const dialogRef = this._dialog.open(UpdateOrgComponent, {
-        width: '30%',
+        width: '31%',
         data: {
           name: this.orgName,
           email: this.orgEmail,
@@ -222,13 +226,14 @@ export class OrganizationComponent implements OnInit {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          if (result.value == 'admin' || result.value == 'user') {
-            console.log(result);
-            const roleget = { role: result.value };
-            console.log(id, roleget);
+          const roleselect = result.value?.toLowerCase();
+          if (roleselect == 'admin' || roleselect == 'user') {
+            // console.log(result);
+            const roleget = { role: roleselect };
+            // console.log(id, roleget);
             this.httpService.updateRole(roleget, id).subscribe({
               next: (res: any) => {
-                console.log(res);
+                // console.log(res);
                 this.getUsers();
               },
               error: (err: any) => {

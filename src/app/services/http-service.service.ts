@@ -69,7 +69,7 @@ export class HttpServiceService {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${tocken}`,
     });
-    console.log(data);
+    // console.log(data);
     return this.http.get(`${this.url}users?${data}`, { headers: header });
   }
 
