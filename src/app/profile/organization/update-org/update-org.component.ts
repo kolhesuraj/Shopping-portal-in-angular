@@ -56,7 +56,7 @@ export class UpdateOrgComponent implements OnInit {
       };
       this.httpservice.updateOrg(data).subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           Swal.fire('organization details updated');
           this._dialogRef.close();
         },

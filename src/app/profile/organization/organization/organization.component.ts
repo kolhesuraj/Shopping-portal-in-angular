@@ -64,7 +64,7 @@ export class OrganizationComponent implements OnInit {
     }
     this.httpService.orgUsers(data).subscribe({
       next: (res: any) => {
-        // console.log(res);
+        console.log(res);
         this.list = res;
       },
       error: (err: any) => {
@@ -74,13 +74,13 @@ export class OrganizationComponent implements OnInit {
   }
 
   setdata() {
-    let data
-     if (this.Role == 'all') {
-       data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}`;
-     } else {
-       data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}&role=${this.Role}`;
-     }
-    return data
+    let data;
+    if (this.Role == 'all') {
+      data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}`;
+    } else {
+      data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sortBy}&role=${this.Role}`;
+    }
+    return data;
   }
 
   logout() {
@@ -183,7 +183,11 @@ export class OrganizationComponent implements OnInit {
   // }
 
   sortby(by: string) {
-    this.sortBy = by;
+    if (this.sortBy == by) {
+      this.sortBy = 'role';
+    } else {
+      this.sortBy = by;
+    }
     this.pagenumber = 1;
     this.getUsers();
   }
@@ -208,7 +212,11 @@ export class OrganizationComponent implements OnInit {
     if (this.loginRole == 'admin') {
       Swal.fire({
         title: 'Edit Role',
-        html: '<h1>Role must be Admin or User</h1> ,<input class="form-control w-50 m-auto" type="text" id="role">',
+        showCancelButton: true,
+        confirmButtonText: 'update',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        html: '<h4>Role must be Admin or User</h4>, <input class="form-control w-50 m-auto mb-1" type="text" id="role">',
         preConfirm: () => {
           return (document.getElementById('role') as HTMLInputElement).value;
         },

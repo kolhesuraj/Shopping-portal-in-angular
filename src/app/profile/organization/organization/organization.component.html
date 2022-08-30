@@ -142,12 +142,11 @@
       </td>
     </tr>
   </table>
-
-  <div class="pb-3">
+  <div class="text-secondary mt-3 d-flex flex-row-reverse">
+    showing result {{ list.results.length }} out of {{ list.totalResults }}
+  </div>
+  <div class="sticky-bottom bg-body">
     <div class="container w-75">
-      <div class="text-secondary mt-3 d-flex flex-row-reverse">
-        showing result {{ list.results.length }} out of {{ list.totalResults }}
-      </div>
       <nav aria-label="page navigation example">
         <ul class="pagination">
           <li
