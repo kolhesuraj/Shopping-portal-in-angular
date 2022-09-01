@@ -90,6 +90,7 @@ export class OrganizationComponent implements OnInit {
     const dialogRef = this._dialog.open(AddUserComponent, {
       width: '50%',
     });
+
     dialogRef.afterClosed().subscribe(() => {
       this.getUsers();
     });

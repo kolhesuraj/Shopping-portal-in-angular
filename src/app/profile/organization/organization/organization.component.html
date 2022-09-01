@@ -1,7 +1,7 @@
-<nav class="navbar navbar-light bg-dark text-light sticky-top">
+<nav class="navbar navbar-light bg-dark text-light sticky-top p-3">
   <div class="container-fluid">
     <div
-      class="navbar-brand text-light d-flex justify-content-center align-items-center bg-info"
+      class="navbar-brand text-light d-flex justify-content-center align-items-center border-end pe-4"
     >
       <span class="display-2">{{ org }}</span>
     </div>
@@ -16,7 +16,7 @@
 
     <div
       routerLink="/profile"
-      class="text-white mt-3 me-5"
+      class="text-white mt-3 me-5 border-start ps-5"
       style="cursor: pointer"
     >
       <mat-icon
@@ -78,11 +78,11 @@
       </select>
     </div>
 
-    <div class="input-group rounded w-25 ms-auto">
+    <div class="input-group rounded ms-auto" style="width: 200px;">
       <input
         type="search"
         class="form-control rounded"
-        placeholder="Search"
+        placeholder="Search by Name"
         aria-label="Search"
         aria-describedby="search-addon"
         #search
@@ -97,7 +97,7 @@
         Name<span class="ms-2">
           <mat-icon
             fontIcon="sort"
-            [style.color]="sortBy == 'name' ? 'blue' : 'white'"
+            [style.color]="sortBy == 'name' ? 'rgb(10,150,200)' : 'white'"
           >
           </mat-icon>
         </span>
@@ -106,7 +106,7 @@
         Email<span class="ms-2"
           ><mat-icon
             fontIcon="sort"
-            [style.color]="sortBy == 'email' ? 'blue' : 'white'"
+            [style.color]="sortBy == 'email' ? 'rgb(10,150,200)' : 'white'"
           ></mat-icon
         ></span>
       </th>
@@ -114,7 +114,7 @@
         updated<span class="ms-2"
           ><mat-icon
             fontIcon="sort"
-            [style.color]="sortBy == 'updatedAt' ? 'blue' : 'white'"
+            [style.color]="sortBy == 'updatedAt' ? 'rgb(10,150,200)' : 'white'"
           ></mat-icon
         ></span>
       </th>
@@ -127,7 +127,7 @@
       <td>{{ result.name }}</td>
       <td>{{ result.email }}</td>
       <td>{{ result.updatedAt }}</td>
-      <td>
+      <td class="text-capitalize">
         {{ result.role }}
         <mat-icon
           aria-label="edit"
