@@ -7,11 +7,10 @@ import { RegistrationComponent } from './registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-import { RegistrationVarifyEmailComponent } from './registration-varify-email/registration-varify-email.component';
-import { VarifyEmailComponent } from './varify-email/varify-email.component';
+import { VarifyEmailComponent } from '../varify-email/varify-email.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent, RegistrationVarifyEmailComponent,VarifyEmailComponent],
+  declarations: [LoginComponent, RegistrationComponent,VarifyEmailComponent],
   imports: [
     CommonModule,
     AuthenticationRoutingModule,

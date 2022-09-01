@@ -8,14 +8,14 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+  styleUrls: ['./add-user.component.css'],
 })
 export class AddUserComponent implements OnInit {
-register!: FormGroup;
+  register!: FormGroup;
   data: any = [];
   tocken: number = 0;
   constructor(
-     private fb: FormBuilder,
+    private fb: FormBuilder,
     private route: Router,
     private httpService: HttpServiceService
   ) {}
@@ -52,7 +52,7 @@ register!: FormGroup;
   addUser() {
     if (this.register.valid) {
       this.submited = false;
-       const dataSent = {
+      const dataSent = {
         name: this.register?.value.Name,
         email: this.register?.value.Email,
         role: this.register?.value.Role,
@@ -64,7 +64,7 @@ register!: FormGroup;
           console.log(res);
           Swal.fire('registerd Successfully');
           this.register.reset();
-          },
+        },
         error: (err) => {
           // console.log(err);
           this.errorFromserver = err.error.message;

@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
               this.tocken = 0;
             }, 1500);
           } else {
-            Swal.fire('email not varified', ' please varify')
+            Swal.fire('email not varified', ' please varify');
             setTimeout(() => {
               this.route.navigate(['/profile']);
               this.tocken = 0;

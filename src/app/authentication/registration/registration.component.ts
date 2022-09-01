@@ -82,8 +82,7 @@ export class RegistrationComponent implements OnInit {
           this.httpService.sendVerrification(res.token).subscribe({
             next: (res: any) => {
               // console.log(res);
-              Swal.fire('registerd Successfully');
-              this.route.navigate(['/auth/email-varify']);
+              Swal.fire('registerd Successfully','please check email to verify');
             },
             error: (err) => {
               // console.log(err);

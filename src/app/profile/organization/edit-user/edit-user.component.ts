@@ -59,16 +59,18 @@ export class EditUserComponent implements OnInit {
       const email = this.editForm.value.email;
       const password = this.editForm.value.password;
       console.log(this.editForm.value);
-      this.httpservice.updateUser(this.data.id, name, email, password).subscribe({
-        next: (res: any) => {
-          console.log(res);
-          Swal.fire("user details updated successfully");
-          this._dialogRef.close()
-        },
-        error: (err: any) => {
-          console.log(err);
-        }
-      })
+      this.httpservice
+        .updateUser(this.data.id, name, email, password)
+        .subscribe({
+          next: (res: any) => {
+            console.log(res);
+            Swal.fire('user details updated successfully');
+            this._dialogRef.close();
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+        });
     } else {
       this.submited = true;
     }

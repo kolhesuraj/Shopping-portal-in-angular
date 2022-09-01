@@ -14,7 +14,7 @@
     </div>
 
     <div
-      [class.d-none]="Role == 'user'"
+      [class.d-none]="data.role == 'user'"
       (click)="addProfile()"
       class=""
       style="cursor: pointer"
@@ -38,10 +38,7 @@
     </div>
   </nav>
   <div class="pt-5 profile">
-    <div
-      style="background-color: rgb(150, 174, 238)"
-      class="w-50 m-auto p-5 rounded"
-    >
+    <div class="w-50 m-auto p-5 rounded-3 shadow border">
       <div class="m-auto text-center">
         <img
           src="../../../../assets/profile.webp"
@@ -52,20 +49,37 @@
       <div class="m-auto w-75 mt-5">
         <div class="fs-5 mt-3">
           Name:
-          <span style="margin-left: 120px">{{ FirstName }} {{ LastName }}</span>
+          <span style="margin-left: 120px">{{ data.name }} </span>
+          <div
+            *ngIf="data.isEmailVerified; else notverified"
+            class="p-1 fs-6 rounded-3 bg-success d-inline"
+          >
+            Verified
+          </div>
+          <ng-template #notverified>
+            <div
+              class="bg-warning d-inline p-1 fs-6 rounded-3"
+              style="cursor: pointer;"
+              (click)="sendverificationemail()"
+            >
+              Not Verified
+            </div></ng-template
+          >
         </div>
         <div class="fs-5 mt-3">
-          Company Name: <span style="margin-left: 30px">{{ CompanyName }}</span>
+          Company Name:
+          <span style="margin-left: 30px">{{ data?._org.name }}</span>
         </div>
         <div class="fs-5 mt-3">
-          Email: <span style="margin-left: 122px">{{ Email }}</span>
+          Email: <span style="margin-left: 122px">{{ data?.email }}</span>
         </div>
         <div class="fs-5 mt-3">
           Role:
           <span style="margin-left: 133px" class="text-capitalize">{{
-            Role
+            data?.role
           }}</span>
         </div>
+        <div class="fs-5 mt-5"></div>
       </div>
     </div>
   </div>
