@@ -1,7 +1,10 @@
 <div>
-  <nav class="navbar text-white p-3 py-4" style="background-color: rgb(44, 43, 43)">
+  <nav
+    class="navbar text-white p-3 py-4"
+    style="background-color: rgb(44, 43, 43)"
+  >
     <a class="navbar-brand w-75 ms-3 text-white">Home Page</a>
-    <div (click)="org()" class=" ps-5 border-start" style="cursor: pointer">
+    <div (click)="org()" class="ps-5 border-start" style="cursor: pointer">
       <mat-icon
         aria-hidden="false"
         aria-label="Example edit icon"
@@ -10,7 +13,12 @@
       <div>Org Page</div>
     </div>
 
-    <div (click)="addProfile()" class="" style="cursor: pointer">
+    <div
+      [class.d-none]="Role == 'user'"
+      (click)="addProfile()"
+      class=""
+      style="cursor: pointer"
+    >
       <mat-icon
         aria-hidden="false"
         aria-label="Example add profile icon"
@@ -29,7 +37,7 @@
       <div class="">logout</div>
     </div>
   </nav>
-  <div class="pt-5 profile ">
+  <div class="pt-5 profile">
     <div
       style="background-color: rgb(150, 174, 238)"
       class="w-50 m-auto p-5 rounded"
@@ -43,16 +51,20 @@
       </div>
       <div class="m-auto w-75 mt-5">
         <div class="fs-5 mt-3">
-          Name: <span style="margin-left: 120px;">{{ FirstName }} {{ LastName }}</span>
+          Name:
+          <span style="margin-left: 120px">{{ FirstName }} {{ LastName }}</span>
         </div>
         <div class="fs-5 mt-3">
-          Company Name: <span style="margin-left: 30px;" >{{ CompanyName }}</span>
+          Company Name: <span style="margin-left: 30px">{{ CompanyName }}</span>
         </div>
         <div class="fs-5 mt-3">
-          Email: <span style="margin-left: 122px ;">{{ Email }}</span>
+          Email: <span style="margin-left: 122px">{{ Email }}</span>
         </div>
         <div class="fs-5 mt-3">
-          Role: <span style="margin-left: 133px;" class="text-capitalize">{{ Role }}</span>
+          Role:
+          <span style="margin-left: 133px" class="text-capitalize">{{
+            Role
+          }}</span>
         </div>
       </div>
     </div>

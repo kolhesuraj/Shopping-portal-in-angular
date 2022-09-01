@@ -27,6 +27,7 @@
       <div>home</div>
     </div>
     <div
+      [class.d-none]="loginRole == 'user'"
       class="mt-3 me-5 d-flex flex-column"
       style="cursor: pointer"
       (click)="updateOrg()"
@@ -40,6 +41,7 @@
       <div class="mt-1">update org</div>
     </div>
     <div
+      [class.d-none]="loginRole == 'user'"
       (click)="addProfile()"
       class="text-white mt-3 me-5"
       style="cursor: pointer"
@@ -78,7 +80,7 @@
       </select>
     </div>
 
-    <div class="input-group rounded ms-auto" style="width: 200px;">
+    <div class="input-group rounded ms-auto" style="width: 200px">
       <input
         type="search"
         class="form-control rounded"
@@ -119,8 +121,8 @@
         ></span>
       </th>
       <th>role</th>
-      <th>edit</th>
-      <th>delete</th>
+      <th [class.d-none]="loginRole == 'user'">edit</th>
+      <th [class.d-none]="loginRole == 'user'">delete</th>
     </tr>
     <tr *ngFor="let result of list.results; index as i">
       <td>{{ list.page * list.limit - list.limit + i + 1 }}</td>
@@ -130,6 +132,7 @@
       <td class="text-capitalize">
         {{ result.role }}
         <mat-icon
+          [class.d-none]="loginRole == 'user'"
           aria-label="edit"
           aria-hidden="false"
           fontIcon="edit"
@@ -137,7 +140,7 @@
           (click)="editRole(result._id)"
         ></mat-icon>
       </td>
-      <td>
+      <td [class.d-none]="loginRole == 'user'">
         <mat-icon
           aria-hidden="false"
           aria-label="Example edit icon"
@@ -146,7 +149,7 @@
           (click)="updateUser(result._id, result.name, result.email)"
         ></mat-icon>
       </td>
-      <td>
+      <td [class.d-none]="loginRole == 'user'">
         <mat-icon
           aria-hidden="false"
           aria-label="Example edit icon"
@@ -157,9 +160,9 @@
       </td>
     </tr>
   </table>
+  <div style="height: 64px;"></div>
   <div
-    class="sticky-bottom bg-body pt-2 border-top"
-    style="padding-bottom: 1px"
+    class="fixed-bottom bg-body pt-2 border-top"
   >
     <div class="container w-100">
       <nav aria-label="page navigation example">
