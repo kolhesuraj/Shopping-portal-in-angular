@@ -90,8 +90,15 @@ export class OrganizationComponent implements OnInit {
     const dialogRef = this._dialog.open(AddUserComponent, {
       width: '50%',
     });
+    dialogRef.afterOpened().subscribe(() => {
+      const first = document.querySelector('.navbar') as HTMLElement;
+      first.classList.remove('sticky-top');
+    });
 
     dialogRef.afterClosed().subscribe(() => {
+      const first = document.querySelector('.navbar') as HTMLElement;
+      first.classList.add('sticky-top');
+
       this.getUsers();
     });
   }
