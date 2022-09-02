@@ -71,7 +71,7 @@ export class OrganizationComponent implements OnInit {
     }
     this.httpService.orgUsers(data).subscribe({
       next: (res: any) => {
-        // console.log(res);
+        console.log(res);
         this.result = res.results;
         this.list = res;
       },

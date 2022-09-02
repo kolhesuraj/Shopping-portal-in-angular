@@ -49,22 +49,24 @@
       <div class="m-auto w-75 mt-5">
         <div class="fs-5 mt-3">
           Name:
-          <span style="margin-left: 120px">{{ data.name }} </span>
+          <span style="margin-left: 120px">{{ data.name }}</span>
           <div
             *ngIf="data.isEmailVerified; else notverified"
-            class="p-1 fs-6 rounded-3 bg-success d-inline"
+            class="ms-1 d-inline"
+             data-toggle="tooltip"  title="verified"
           >
-            Verified
+            <i class="fa-solid fa-check text-success rounded-circle"></i>
           </div>
           <ng-template #notverified>
-            <div
-              class="bg-warning d-inline p-1 fs-6 rounded-3"
-              style="cursor: pointer;"
+            <button
+              class="d-inline ms-1 border-0"
               (click)="sendverificationemail()"
+              data-toggle="tooltip"  title="click to verified"
             >
-              Not Verified
-            </div></ng-template
-          >
+              <i
+                class="fa-solid fa-circle-exclamation text-warning bg-dark rounded-circle"
+              ></i></button
+          ></ng-template>
         </div>
         <div class="fs-5 mt-3">
           Company Name:
