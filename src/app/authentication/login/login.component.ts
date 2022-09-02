@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
       };
       this.httpservice.login(dataSent).subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           localStorage.setItem('LoginUser', res.token);
           // localStorage.setItem('data', JSON.stringify(res));
           this.tocken = 1;

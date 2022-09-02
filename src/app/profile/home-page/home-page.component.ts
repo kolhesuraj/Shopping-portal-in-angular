@@ -12,46 +12,47 @@ import { AddUserComponent } from '../organization/add-user/add-user.component';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
+  data: any = {};
+  organization: any = {};
   constructor(
     // private _dialog: MatDialog,
     private ls: LoginService,
     private httpService: HttpServiceService,
     private route: Router,
     private _dialog: MatDialog
-  ) {}
-
-  data: any;
-  ngOnInit(): void {
+  ) {
     this.ls.loadData();
     this.setData();
     this.ls.LogIndata.subscribe({
       next: (result: any) => {
         // console.log(result);
         this.data = result;
+        this.organization = result._org
       },
       error: (err: any) => {
         console.log(err);
       },
     });
   }
+
+  ngOnInit(): void {}
   logout() {
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/auth']);
   }
 
   sendverificationemail() {
-    let token = this.ls.gettoken()
+    let token = this.ls.gettoken();
     console.log(token);
     this.httpService.sendVerrification(token).subscribe({
-      next: (res: any)=>{
+      next: (res: any) => {
         console.log(res);
-        Swal.fire("Email send successfully","please check email and verify");
+        Swal.fire('Email send successfully', 'please check email and verify');
       },
-      error: (err: any)=>{
+      error: (err: any) => {
         console.log(err);
         Swal.fire('Email send failed');
-
-      }
+      },
     });
   }
 
