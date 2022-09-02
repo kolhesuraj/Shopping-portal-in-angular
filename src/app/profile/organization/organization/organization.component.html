@@ -124,7 +124,7 @@
       <th [class.d-none]="loginRole == 'user'">edit</th>
       <th [class.d-none]="loginRole == 'user'">delete</th>
     </tr>
-    <tr *ngFor="let result of list.results; index as i">
+    <tr *ngFor="let result of result; index as i">
       <td>{{ list.page * list.limit - list.limit + i + 1 }}</td>
       <td>{{ result.name }}</td>
       <td>{{ result.email }}</td>
@@ -160,10 +160,8 @@
       </td>
     </tr>
   </table>
-  <div style="height: 64px;"></div>
-  <div
-    class="fixed-bottom bg-body pt-2 border-top"
-  >
+  <div style="height: 64px"></div>
+  <div class="fixed-bottom bg-body pt-2 border-top">
     <div class="container w-100">
       <nav aria-label="page navigation example">
         <ul class="pagination">
@@ -246,7 +244,7 @@
 
           <li class="ms-auto">
             <div class="text-secondary mt-3">
-              showing result {{ list.results.length }} out of
+              showing result {{ result ? result.length  : '0' }} out of
               {{ list.totalResults }}
             </div>
           </li>

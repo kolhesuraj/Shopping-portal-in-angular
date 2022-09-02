@@ -20,13 +20,17 @@ export class OrganizationComponent implements OnInit {
     private ls: LoginService,
     private _dialog: MatDialog,
     private route: Router
-  ) {}
+  ) {
+    this.getProfile();
+    this.getUsers();
+  }
 
   orgName!: string;
   orgEmail!: string;
   org!: string;
   loginRole: any;
-  list: any;
+  list: any = {};
+  result!: any[];
   pagenumber: number = 1;
   limit: number = 10;
   sortBy: string = 'role';
@@ -35,18 +39,12 @@ export class OrganizationComponent implements OnInit {
 
   rolearray = ['All Employes', 'user', 'admin'];
   sortarray = ['name', 'email', 'ceatedAt', 'updated'];
-  ngOnInit(): void {
-    this.profile();
-  }
-  profile() {
-    this.getProfile();
-    this.getUsers();
-  }
+  ngOnInit(): void {}
 
   getProfile() {
     this.httpService.profileView().subscribe({
       next: (orgData: any) => {
-        console.log(orgData);
+        // console.log(orgData);
         this.orgName = orgData._org.name;
         this.orgEmail = orgData._org.email;
         this.loginRole = orgData.role;
@@ -73,7 +71,8 @@ export class OrganizationComponent implements OnInit {
     }
     this.httpService.orgUsers(data).subscribe({
       next: (res: any) => {
-        console.log(res);
+        // console.log(res);
+        this.result = res.results;
         this.list = res;
       },
       error: (err: any) => {
