@@ -20,6 +20,7 @@
       style="cursor: pointer"
     >
       <mat-icon
+        class="ms-1"
         aria-hidden="false"
         aria-label="Example home icon"
         fontIcon="home"
@@ -33,7 +34,7 @@
       (click)="updateOrg()"
     >
       <mat-icon
-        class="ms-2"
+        class="ms-3"
         aria-hidden="false"
         aria-label="edit organization details"
         fontIcon="settings"
@@ -47,6 +48,7 @@
       style="cursor: pointer"
     >
       <mat-icon
+        class="ms-2"
         aria-hidden="false"
         aria-label="Example add profile icon"
         fontIcon="person_add"
@@ -145,8 +147,10 @@
             <i class="fa-solid fa-circle-exclamation text-warning"></i></div
         ></ng-template>
       </td>
-      <td>{{ result.email }}</td>
       <td data-toggle="tooltip" title="created on {{ result.createdAt }}">
+        {{ result.email }}
+      </td>
+      <td>
         {{ result.updatedAt }}
       </td>
       <td class="text-capitalize">
@@ -156,7 +160,7 @@
           aria-label="edit"
           aria-hidden="false"
           fontIcon="edit"
-          style="cursor: pointer"
+          style="cursor: pointer; color: rgb(52, 52, 211)"
           (click)="editRole(result._id)"
         ></mat-icon>
       </td>
@@ -165,12 +169,13 @@
           aria-hidden="false"
           aria-label="Example edit icon"
           fontIcon="edit"
-          style="cursor: pointer"
+          style="cursor: pointer; color: rgb(52, 52, 211)"
           (click)="updateUser(result._id, result.name, result.email)"
         ></mat-icon>
       </td>
       <td [class.d-none]="loginRole == 'user'">
         <mat-icon
+          class="text-danger"
           aria-hidden="false"
           aria-label="Example edit icon"
           fontIcon="delete"
@@ -181,7 +186,7 @@
     </tr>
   </table>
   <div style="height: 64px"></div>
-  <div class="fixed-bottom bg-body pt-2 border-top">
+  <div id="footer" class="fixed-bottom bg-body pt-2 border-top">
     <div class="container w-100">
       <nav aria-label="page navigation example">
         <ul class="pagination">

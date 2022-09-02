@@ -13,7 +13,6 @@ import { AddUserComponent } from '../organization/add-user/add-user.component';
 })
 export class HomePageComponent implements OnInit {
   data: any = {};
-  organization: any = {};
   constructor(
     // private _dialog: MatDialog,
     private ls: LoginService,
@@ -27,7 +26,6 @@ export class HomePageComponent implements OnInit {
       next: (result: any) => {
         // console.log(result);
         this.data = result;
-        this.organization = result._org
       },
       error: (err: any) => {
         console.log(err);

@@ -92,12 +92,16 @@ export class OrganizationComponent implements OnInit {
     dialogRef.afterOpened().subscribe(() => {
       const first = document.querySelector('.navbar') as HTMLElement;
       first.classList.remove('sticky-top');
+      const footer = document.querySelector('#footer') as HTMLElement;
+      footer.classList.remove('fixed-bottom');
+
     });
 
     dialogRef.afterClosed().subscribe(() => {
       const first = document.querySelector('.navbar') as HTMLElement;
       first.classList.add('sticky-top');
-
+      const footer = document.querySelector('#footer') as HTMLElement;
+      footer.classList.add('fixed-bottom');
       this.getUsers();
     });
   }

@@ -1,14 +1,15 @@
 <div>
   <nav
-    class="navbar text-white p-3 py-4"
-    style="background-color: rgb(44, 43, 43)"
+    class="navbar text-white p-3 py-4 bg-dark"
+
   >
     <a class="navbar-brand w-75 ms-3 text-white">Home Page</a>
     <div (click)="org()" class="ps-5 border-start" style="cursor: pointer">
       <mat-icon
+      class="ms-2"
         aria-hidden="false"
         aria-label="Example edit icon"
-        fontIcon="home"
+        fontIcon="group"
       ></mat-icon>
       <div>Org Page</div>
     </div>
@@ -20,6 +21,7 @@
       style="cursor: pointer"
     >
       <mat-icon
+      class="ms-2"
         aria-hidden="false"
         aria-label="Example add profile icon"
         fontIcon="person_add"
@@ -37,13 +39,14 @@
       <div class="">logout</div>
     </div>
   </nav>
-  <div class="pt-5 profile">
-    <div class="w-50 m-auto p-5 rounded-3 shadow border">
+  <div class="pt-5 profile" >
+    <div class="w-50 m-auto p-5 rounded-3 shadow border ">
       <div class="m-auto text-center">
         <img
           src="../../../../assets/profile.webp"
           alt="Profile"
           class="w-25 rounded-circle"
+          data-toggle="tooltip" title="Name {{data.name}} & created on {{data.createdAt}}"
         />
       </div>
       <div class="m-auto w-75 mt-5">
@@ -70,7 +73,7 @@
         </div>
         <div class="fs-5 mt-3">
           Company Name:
-          <span style="margin-left: 30px">{{ organization?.name }}</span>
+          <span style="margin-left: 30px">{{ data?._org?.name }}</span>
         </div>
         <div class="fs-5 mt-3">
           Email: <span style="margin-left: 122px">{{ data?.email }}</span>
