@@ -1,17 +1,16 @@
 <div>
-  <nav
-    class="navbar text-white p-3 py-4 bg-dark"
-
-  >
+  <nav class="navbar text-white p-3 py-4 bg-dark">
     <a class="navbar-brand w-75 ms-3 text-white">Home Page</a>
-    <div (click)="org()" class="ps-5 border-start" style="cursor: pointer">
-      <mat-icon
-      class="ms-2"
-        aria-hidden="false"
-        aria-label="Example edit icon"
-        fontIcon="group"
-      ></mat-icon>
-      <div>Org Page</div>
+    <div class="border-start ps-5">
+      <div (click)="org()" class="" style="cursor: pointer">
+        <mat-icon
+          class="ms-2"
+          aria-hidden="false"
+          aria-label="Example edit icon"
+          fontIcon="group"
+        ></mat-icon>
+        <div>Org Page</div>
+      </div>
     </div>
 
     <div
@@ -21,7 +20,7 @@
       style="cursor: pointer"
     >
       <mat-icon
-      class="ms-2"
+        class="ms-2"
         aria-hidden="false"
         aria-label="Example add profile icon"
         fontIcon="person_add"
@@ -39,14 +38,15 @@
       <div class="">logout</div>
     </div>
   </nav>
-  <div class="pt-5 profile" >
-    <div class="w-50 m-auto p-5 rounded-3 shadow border ">
+  <div class="pt-5 profile">
+    <div class="w-50 m-auto p-5 rounded-3 shadow border bg-body">
       <div class="m-auto text-center">
         <img
           src="../../../../assets/profile.webp"
           alt="Profile"
           class="w-25 rounded-circle"
-          data-toggle="tooltip" title="Name {{data.name}} & created on {{data.createdAt}}"
+          data-toggle="tooltip"
+          title="Name {{ data.name }} & created on {{ data.createdAt }}"
         />
       </div>
       <div class="m-auto w-75 mt-5">
@@ -56,7 +56,8 @@
           <div
             *ngIf="data.isEmailVerified; else notverified"
             class="ms-1 d-inline"
-             data-toggle="tooltip"  title="verified"
+            data-toggle="tooltip"
+            title="verified"
           >
             <i class="fa-solid fa-check text-success rounded-circle"></i>
           </div>
@@ -64,7 +65,8 @@
             <button
               class="d-inline ms-1 border-0"
               (click)="sendverificationemail()"
-              data-toggle="tooltip"  title="click to verified"
+              data-toggle="tooltip"
+              title="click to verified"
             >
               <i
                 class="fa-solid fa-circle-exclamation text-warning bg-dark rounded-circle"
