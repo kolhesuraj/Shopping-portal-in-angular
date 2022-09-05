@@ -77,8 +77,8 @@ export class RegistrationComponent implements OnInit {
       this.httpService.register(dataSent).subscribe({
         next: (res) => {
 
-          localStorage.setItem('registrationToken', res.token);
-          console.log(res);
+          // localStorage.setItem('registrationToken', res.token);
+          // console.log(res);
           this.httpService.sendVerrification(res.token).subscribe({
             next: (res: any) => {
               // console.log(res);

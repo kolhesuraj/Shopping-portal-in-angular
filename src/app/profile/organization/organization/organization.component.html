@@ -190,6 +190,10 @@
       </td>
     </tr>
   </table>
+  <div *ngIf="result?.length == 0" class="d-flex justify-content-center mt-5">
+    data not found
+  </div>
+
   <div style="height: 64px"></div>
   <div id="footer" class="fixed-bottom bg-body pt-2 border-top">
     <div class="container w-100">
@@ -197,8 +201,8 @@
         <ul class="pagination">
           <li
             class="page-item"
-            [class.disabled]="list.page - 1 < 1 "
-            (click)="list.page - 1 < 1 ? '': gotoPage(list.page - 1)"
+            [class.disabled]="list.page - 1 < 1"
+            (click)="list.page - 1 < 1 ? '' : gotoPage(list.page - 1)"
           >
             <a class="page-link" style="cursor: pointer">&laquo;</a>
           </li>
@@ -236,7 +240,11 @@
           <li
             class="page-item"
             [class.disabled]="list.page + 1 > this.list.totalPages"
-            (click)="list.page + 1 > this.list.totalPages ? '' :gotoPage(list.page + 1)"
+            (click)="
+              list.page + 1 > this.list.totalPages
+                ? ''
+                : gotoPage(list.page + 1)
+            "
           >
             <a class="page-link" style="cursor: pointer">&raquo;</a>
           </li>

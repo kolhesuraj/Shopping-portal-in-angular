@@ -11,9 +11,15 @@ import { LoginService } from './login.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
+import { HotToastService } from '@ngneat/hot-toast';
+
 @Injectable()
-export class LodderInterceptor implements HttpInterceptor {
-  constructor(private ls: LoginService, private route: Router) {}
+export class HttpsInterceptor implements HttpInterceptor {
+  constructor(
+    private ls: LoginService,
+    private route: Router,
+    private toster: HotToastService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -26,6 +32,7 @@ export class LodderInterceptor implements HttpInterceptor {
       }),
       catchError((error: HttpErrorResponse) => {
         let status = error.status;
+        this.toster.error(error.error.message);
         if (status == 401) {
           Swal.fire('token expire', ' please login again');
           localStorage.removeItem('LoginUser');

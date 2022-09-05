@@ -7,7 +7,9 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LodderInterceptor } from './services/lodder.interceptor';
+import { HttpsInterceptor } from './services/http.interceptor';
+
+import { HotToastModule } from '@ngneat/hot-toast';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
@@ -16,9 +18,10 @@ import { LodderInterceptor } from './services/lodder.interceptor';
     BrowserAnimationsModule,
     AppRoutingModule,
     AuthenticationModule,
+    HotToastModule.forRoot(),
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: LodderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
   ],
 
   bootstrap: [AppComponent],
