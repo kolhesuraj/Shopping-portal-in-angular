@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 import { AddUserComponent } from '../organization/add-user/add-user.component';

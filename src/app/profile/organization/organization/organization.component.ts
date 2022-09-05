@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpServiceService } from 'src/app/services/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { Router } from '@angular/router';
@@ -8,6 +7,7 @@ import { UpdateOrgComponent } from '../update-org/update-org.component';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import Swal from 'sweetalert2';
 import { LowerCasePipe } from '@angular/common';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 
 @Component({
   selector: 'app-organization',
@@ -94,7 +94,6 @@ export class OrganizationComponent implements OnInit {
       first.classList.remove('sticky-top');
       const footer = document.querySelector('#footer') as HTMLElement;
       footer.classList.remove('fixed-bottom');
-
     });
 
     dialogRef.afterClosed().subscribe(() => {

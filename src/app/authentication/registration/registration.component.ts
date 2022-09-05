@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpServiceService } from 'src/app/services/http-service.service';
 import { passwordValidator } from './password.Validator';
 import Swal from 'sweetalert2';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 
 @Component({
   selector: 'app-registration',

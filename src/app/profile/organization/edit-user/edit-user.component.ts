@@ -1,9 +1,7 @@
-import { Dialog } from '@angular/cdk/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HttpServiceService } from 'src/app/services/http-service.service';
-import { LoginService } from 'src/app/services/login.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 
 interface dataform {
@@ -27,7 +25,6 @@ export class EditUserComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: dataform,
     private fb: FormBuilder,
-    private ls: LoginService,
     private _dialogRef: MatDialogRef<EditUserComponent>,
     private httpservice: HttpServiceService
   ) {

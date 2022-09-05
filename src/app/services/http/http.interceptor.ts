@@ -7,11 +7,10 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError, finalize, Observable } from 'rxjs';
-import { LoginService } from './login.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
 import { HotToastService } from '@ngneat/hot-toast';
+import { LoginService } from '../login.service';
 
 @Injectable()
 export class HttpsInterceptor implements HttpInterceptor {

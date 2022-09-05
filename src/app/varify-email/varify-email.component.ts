@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpServiceService } from '../services/http-service.service';
+import { HttpServiceService } from '../services/http/http-service.service';
 
 @Component({
   selector: 'app-varify-email',
@@ -13,7 +13,7 @@ export class VarifyEmailComponent implements OnInit {
     private httpservice: HttpServiceService
   ) {}
   verificationToken: string = '';
-  verify:number =2;
+  verify: number = 2;
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe((params) => {
       this.verificationToken = params['token'];

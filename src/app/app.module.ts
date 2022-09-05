@@ -7,9 +7,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpsInterceptor } from './services/http.interceptor';
-
 import { HotToastModule } from '@ngneat/hot-toast';
+import { HttpsInterceptor } from './services/http/http.interceptor';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
