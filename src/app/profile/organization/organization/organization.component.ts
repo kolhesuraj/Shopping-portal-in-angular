@@ -38,7 +38,7 @@ export class OrganizationComponent implements OnInit {
   sortBy: string = 'role';
   Role: string = 'All Employes';
   search: string = '';
-  suggestion: string[] = [];
+  suggestion: string[] = ['',];
   filteredOptions: Observable<string[]> | undefined;
   flag = 0;
 
