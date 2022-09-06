@@ -85,7 +85,7 @@
     </div>
 
     <div class="input-group rounded ms-auto" style="width: 200px">
-      <input
+      <!-- <input
         type="search"
         class="form-control rounded"
         placeholder="Search by Name"
@@ -93,7 +93,28 @@
         aria-describedby="search-addon"
         #search
         (keyup)="searchinput(search.value)"
-      />
+      /> -->
+      <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <input
+            type="text"
+            placeholder="Pick one"
+            matInput
+            #search
+            [formControl]="myControl"
+            (keyup)="searchinput(search.value)"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredOptions | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
     </div>
   </div>
   <table class="container-fluid">

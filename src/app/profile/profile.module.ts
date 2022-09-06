@@ -12,6 +12,12 @@ import { AddUserComponent } from './organization/add-user/add-user.component';
 import { OrganizationComponent } from './organization/organization/organization.component';
 import { EditUserComponent } from './organization/edit-user/edit-user.component';
 import { EditRoleComponent } from './organization/edit-role/edit-role.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+
+
 
 @NgModule({
   declarations: [
@@ -30,6 +36,11 @@ import { EditRoleComponent } from './organization/edit-role/edit-role.component'
     FormsModule,
     MatDialogModule,
     MatIconModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
   ],
+  bootstrap: [OrganizationComponent],
 })
 export class ProfileModule {}

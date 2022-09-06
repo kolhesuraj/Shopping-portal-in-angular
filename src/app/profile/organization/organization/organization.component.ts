@@ -6,8 +6,9 @@ import { Router } from '@angular/router';
 import { UpdateOrgComponent } from '../update-org/update-org.component';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import Swal from 'sweetalert2';
-import { LowerCasePipe } from '@angular/common';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { map, Observable, startWith } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-organization',
@@ -15,6 +16,7 @@ import { HttpServiceService } from 'src/app/services/http/http-service.service';
   styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit {
+  myControl = new FormControl('');
   constructor(
     private httpService: HttpServiceService,
     private ls: LoginService,
@@ -36,10 +38,26 @@ export class OrganizationComponent implements OnInit {
   sortBy: string = 'role';
   Role: string = 'All Employes';
   search: string = '';
+  suggestion: string[] = [];
+  filteredOptions: Observable<string[]> | undefined;
+  flag = 0;
 
   rolearray = ['All Employes', 'user', 'admin'];
   sortarray = ['name', 'email', 'ceatedAt', 'updated'];
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(' '),
+      map((value: string | null) => this._filter(value || ''))
+    );
+  }
+
+  _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.suggestion.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
+  }
 
   getProfile() {
     this.httpService.profileView().subscribe({
@@ -48,7 +66,15 @@ export class OrganizationComponent implements OnInit {
         this.orgName = orgData._org.name;
         this.orgEmail = orgData._org.email;
         this.loginRole = orgData.role;
-        this.org = this.orgName.slice(0, 2).toUpperCase();
+        var splitted = this.orgName.split(' ', 3);
+        // console.log(splitted);
+        if (splitted.length > 1) {
+          this.org = splitted[0].slice(0, 1).toUpperCase();
+          this.org += splitted[1].slice(0, 1).toUpperCase();
+          // console.log(this.org);
+        } else {
+          this.org = this.orgName.slice(0, 2).toUpperCase();
+        }
       },
     });
   }
@@ -71,12 +97,29 @@ export class OrganizationComponent implements OnInit {
     }
     this.httpService.orgUsers(data).subscribe({
       next: (res: any) => {
-        console.log(res);
         this.result = res.results;
         this.list = res;
+        if (this.flag == 0) {
+          this.getSuggetion();
+          this.flag = 1;
+        }
       },
       error: (err: any) => {
         Swal.fire(err);
+      },
+    });
+  }
+
+  getSuggetion() {
+    const data = `limit=${this.list.totalResults}`;
+    this.httpService.orgUsers(data).subscribe({
+      next: (res) => {
+        res.results.forEach((element: any) => {
+          if (this.suggestion.includes(element.name)) {
+          } else {
+            this.suggestion.push(element.name);
+          }
+        });
       },
     });
   }
@@ -211,7 +254,6 @@ export class OrganizationComponent implements OnInit {
   }
 
   searchinput(value: string) {
-    // console.log(value);
     if (value) {
       this.search = value;
     } else {

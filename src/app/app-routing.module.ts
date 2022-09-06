@@ -12,8 +12,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./authentication/authentication.module').then(
         (m) => m.AuthenticationModule
-      ),
-    canActivate: [AuthGuard],
+      )
+   
   },
   {
     path: 'profile',
@@ -21,7 +21,6 @@ const routes: Routes = [
       import('./profile/profile.module').then((m) => m.ProfileModule),
     canActivate: [LoginGuard],
   },
-  { path: 'auth/verify-email', component: VarifyEmailComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 

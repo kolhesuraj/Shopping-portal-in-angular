@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { HttpsInterceptor } from './services/http/http.interceptor';
 
+
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
   imports: [
