@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -20,6 +21,8 @@ export class LoginService {
     // console.log(data);
     this.LogIndata.next(data);
   }
+  tocken: any;
+
 
   gettoken() {
     // console.log(localStorage.getItem('LoginUser'))

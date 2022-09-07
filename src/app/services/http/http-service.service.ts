@@ -18,11 +18,11 @@ export class HttpServiceService {
 
   register(data: any): Observable<any> {
     // console.log(data);
-    return this.http.post(this.url + 'auth/register?captcha=false', data);
+    return this.http.post(this.url + 'auth/register', data);
   }
 
-  login(dataSent: { email: any; password: any }): Observable<any> {
-    return this.http.post(this.url + 'auth/login?captcha=false', dataSent);
+  login(dataSent: any): Observable<any> {
+    return this.http.post(this.url + 'auth/login', dataSent);
   }
 
   profileView(): Observable<any> {

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { LoginService } from 'src/app/services/login.service';
 // import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 
@@ -15,24 +17,26 @@ export class LoginComponent implements OnInit {
   hide = true;
   constructor(
     private fb: FormBuilder,
-    // private ls: LoginService,
     private route: Router,
-    private httpservice: HttpServiceService
+    private ls: LoginService,
+    private httpservice: HttpServiceService,
+    private recaptchaV3Service: ReCaptchaV3Service
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      emailControl: ['', [Validators.required, Validators.email]],
-      passwordFormControl: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      captcha: [''],
     });
-    // console.log(this.loginForm.value)
+    this.refreshCaptcha();
   }
 
   get emailControl() {
-    return this.loginForm.get('emailControl');
+    return this.loginForm.get('email');
   }
   get passwordFormControl() {
-    return this.loginForm.get('passwordFormControl');
+    return this.loginForm.get('password');
   }
   massage = false;
   loginFaildMssage = false;
@@ -47,25 +51,10 @@ export class LoginComponent implements OnInit {
       this.massage = true;
       this.loginFaildMssage = false;
     } else {
-      // let varify = this.ls.login(
-      //   this.emailControl?.value,
-      //   this.passwordFormControl?.value
-      // );
-      // if (varify == true) {
-      //   this.route.navigate(['/profile']);
-      //   console.log('success');
-      // } else {
-      //   this.loginFaildMssage = true;
-      //   this.massage = false;
-      //   console.log('failed');
-      // }
-      const dataSent = {
-        email: this.loginForm?.value.emailControl,
-        password: this.loginForm?.value.passwordFormControl,
-      };
-      this.httpservice.login(dataSent).subscribe({
+      console.log(this.loginForm.value);
+      this.httpservice.login(this.loginForm.value).subscribe({
         next: (res: any) => {
-          // console.log(res);
+          console.log(res);
           localStorage.setItem('LoginUser', res.token);
           // localStorage.setItem('data', JSON.stringify(res));
           this.tocken = 1;
@@ -87,6 +76,7 @@ export class LoginComponent implements OnInit {
           console.log(err);
           Swal.fire(err.error.message);
           // alert(err.error.message)
+          this.refreshCaptcha();
         },
       });
     }
@@ -94,5 +84,14 @@ export class LoginComponent implements OnInit {
 
   register() {
     this.route.navigate(['/auth/register']);
+  }
+
+  refreshCaptcha() {
+    this.recaptchaV3Service
+      .execute('importantAction')
+      .subscribe((token: string) => {
+        console.debug(`Token [${token}] generated`);
+        this.loginForm.patchValue({captcha:token})
+      });
   }
 }

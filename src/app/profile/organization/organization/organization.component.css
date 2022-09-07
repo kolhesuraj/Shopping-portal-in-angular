@@ -34,6 +34,6 @@ th {
 .example-full-width {
   width: 100%;
 }
-mat-option::content{
+mat-option::content {
   background-color: rgb(238, 235, 235);
 }
