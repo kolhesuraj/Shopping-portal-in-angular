@@ -52,6 +52,25 @@
         >
           Login
         </button>
+        <div class="mt-4">
+          <asl-google-signin-button></asl-google-signin-button>
+
+          <!-- 
+          <cool-google-button
+            color="dark"
+            class="ms-5"
+            (click)="onGoogleLoginClicked()"
+          >
+            Login with Google
+          </cool-google-button>
+          <cool-facebook-button
+            color="dark"
+            class="ms-5"
+            (click)="onFacebookLoginClicked()"
+          >
+            Login with Facebook
+          </cool-facebook-button> -->
+        </div>
         <div class="" style="margin-left: 90px">
           <p class="ms-5 mt-3">
             Doesn't have an account
@@ -65,12 +84,7 @@
         <div class="" style="margin-left: 90px">
           <p class="ms-5">
             <span class=""
-              ><button
-                mat-button
-                color="warn"
-                class="ms-5"
-                (click)="forgot()"
-              >
+              ><button mat-button color="warn" class="ms-5" (click)="forgot()">
                 forgotten password!
               </button></span
             >

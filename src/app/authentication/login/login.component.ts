@@ -1,3 +1,4 @@
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,12 +16,16 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   hide = true;
+  user!: SocialUser;
+  loggedIn!: boolean;
+  accessToken!: string;
   constructor(
     private fb: FormBuilder,
     private route: Router,
     private ls: LoginService,
     private httpservice: HttpServiceService,
-    private recaptchaV3Service: ReCaptchaV3Service
+    private recaptchaV3Service: ReCaptchaV3Service,
+    private authService: SocialAuthService
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +33,11 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       captcha: [''],
+    });
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = user != null;
+      console.log(user)
     });
   }
 
@@ -89,17 +99,20 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-
-  
-
-
-
-
-
-
-
-
-
+  refreshToken(): void {
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+  }
+  getAccessToken(): void {
+    this.authService
+      .getAccessToken(GoogleLoginProvider.PROVIDER_ID)
+      .then((accessToken) => (this.accessToken = accessToken));
+  }
+  onGoogleLoginClicked() {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((data) => {
+      console.log('login successfully');
+    })
+  }
+  onFacebookLoginClicked() {}
 
   register() {
     this.route.navigate(['/auth/register']);
