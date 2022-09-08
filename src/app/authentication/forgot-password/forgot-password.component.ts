@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-forgot-password',
@@ -46,8 +47,10 @@ export class ForgotPasswordComponent implements OnInit {
   sendEmail() {
     this.httpservice.forgotPassword(this.forgotPasswordForm.value).subscribe({
       next: (res: any) => {
-        console.log(res);
-        console.log('emailsend');
+        // console.log(res);
+        // console.log('emailsend');
+        Swal.fire('Link send vai Email', 'please check email');
+        this.forgotPasswordForm.reset();
       },
       error: (err: any) => {
         console.log(err);
