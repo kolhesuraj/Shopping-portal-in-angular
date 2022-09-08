@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]],
       captcha: [''],
     });
-    this.refreshCaptcha();
   }
 
   get emailControl() {
@@ -44,6 +43,16 @@ export class LoginComponent implements OnInit {
   errMassage!: string;
   submit() {
     // console.log(this.loginForm.value);
+    this.recaptchaV3Service
+      .execute('importantAction')
+      .subscribe((token: string) => {
+        console.debug(`Token [${token}] generated`);
+        this.loginForm.patchValue({ captcha: token });
+        this.sendlogin();
+      });
+  }
+
+  sendlogin() {
     if (
       this.emailControl?.value == '' &&
       this.passwordFormControl?.value == ''
@@ -76,22 +85,26 @@ export class LoginComponent implements OnInit {
           console.log(err);
           Swal.fire(err.error.message);
           // alert(err.error.message)
-          this.refreshCaptcha();
         },
       });
     }
   }
 
+  
+
+
+
+
+
+
+
+
+
+
   register() {
     this.route.navigate(['/auth/register']);
   }
-
-  refreshCaptcha() {
-    this.recaptchaV3Service
-      .execute('importantAction')
-      .subscribe((token: string) => {
-        console.debug(`Token [${token}] generated`);
-        this.loginForm.patchValue({captcha:token})
-      });
+  forgot() {
+    this.route.navigate(['./auth/forgot-password']);
   }
 }

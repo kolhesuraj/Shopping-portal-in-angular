@@ -1,0 +1,62 @@
+import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
+
+@Component({
+  selector: 'app-forgot-password',
+  templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.css'],
+})
+export class ForgotPasswordComponent implements OnInit {
+  forgotPasswordForm!: FormGroup;
+  Message: boolean = false;
+  constructor(
+    private fb: FormBuilder,
+    private route: Router,
+    private recaptchaV3Service: ReCaptchaV3Service,
+    private httpservice: HttpServiceService
+  ) {}
+
+  ngOnInit(): void {
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      captcha: [''],
+    });
+  }
+  get Email() {
+    return this.forgotPasswordForm.get('email');
+  }
+  submit() {
+    if (this.forgotPasswordForm.valid) {
+      this.recaptchaV3Service
+        .execute('importantAction')
+        .subscribe((token: string) => {
+          console.debug(`Token [${token}] generated`);
+          this.forgotPasswordForm.patchValue({ captcha: token });
+          this.sendEmail();
+        });
+    } else {
+      this.Message = true;
+    }
+  }
+
+  sendEmail() {
+    this.httpservice.forgotPassword(this.forgotPasswordForm.value).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        console.log('emailsend');
+      },
+      error: (err: any) => {
+        console.log(err);
+        console.log('error');
+      },
+    });
+  }
+
+  goback() {
+    this.route.navigate(['./auth/login']);
+  }
+}

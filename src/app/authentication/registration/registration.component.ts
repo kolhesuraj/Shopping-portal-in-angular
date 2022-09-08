@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { passwordValidator } from './password.Validator';
 import Swal from 'sweetalert2';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-registration',
@@ -20,32 +21,35 @@ export class RegistrationComponent implements OnInit {
     private route: Router,
     // private ls: LoginService,
     // private http: HttpClient
-    private httpService: HttpServiceService
+    private httpService: HttpServiceService,
+    private recaptchaV3Service: ReCaptchaV3Service
   ) {}
 
   ngOnInit(): void {
     this.register = this.fb.group(
       {
-        Name: ['', [Validators.required]],
-        CompanyName: ['', [Validators.required]],
-        Email: ['', [Validators.required, Validators.email]],
-        Password: ['', [Validators.required, Validators.minLength(8)]],
+        name: ['', [Validators.required]],
+        company: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
         ConfirmPassword: [''],
+        captcha: [''],
       },
       { validator: passwordValidator }
     );
+    this.refreshCaptcha();
   }
   get Name() {
-    return this.register.get('Name');
+    return this.register.get('name');
   }
   get CompanyName() {
-    return this.register.get('CompanyName');
+    return this.register.get('company');
   }
   get Email() {
-    return this.register.get('Email');
+    return this.register.get('email');
   }
   get Password() {
-    return this.register.get('Password');
+    return this.register.get('password');
   }
   get ConfirmPassword() {
     return this.register.get('ConfirmPassword');
@@ -55,6 +59,7 @@ export class RegistrationComponent implements OnInit {
 
   errorFromserver: any;
   registerLogin() {
+    console.log(this.register.value);
     if (this.register.valid) {
       this.submited = false;
       // this.http
@@ -68,21 +73,25 @@ export class RegistrationComponent implements OnInit {
       //     // company: this.register?.value.CompanyName,
       //     // }
       //   )
-      const dataSent = {
-        name: this.register?.value.Name,
-        email: this.register?.value.Email,
-        company: this.register?.value.CompanyName,
-        password: this.register?.value.Password,
-      };
+      // const dataSent = {
+      //   name: this.register?.value.Name,
+      //   email: this.register?.value.Email,
+      //   company: this.register?.value.CompanyName,
+      //   password: this.register?.value.Password,
+      // };
+      const dataSent = this.register.value;
+      delete dataSent.ConfirmPassword;
       this.httpService.register(dataSent).subscribe({
         next: (res) => {
-
           // localStorage.setItem('registrationToken', res.token);
           // console.log(res);
           this.httpService.sendVerrification(res.token).subscribe({
             next: (res: any) => {
               // console.log(res);
-              Swal.fire('registerd Successfully','please check email to verify');
+              Swal.fire(
+                'registerd Successfully',
+                'please check email to verify'
+              );
             },
             error: (err) => {
               // console.log(err);
@@ -151,5 +160,13 @@ export class RegistrationComponent implements OnInit {
   // }
   signIn() {
     this.route.navigate(['/auth/login']);
+  }
+  refreshCaptcha() {
+    this.recaptchaV3Service
+      .execute('importantAction')
+      .subscribe((token: string) => {
+        console.debug(`Token [${token}] generated`);
+        this.register.patchValue({ captcha: token });
+      });
   }
 }

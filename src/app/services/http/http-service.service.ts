@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoginService } from '../login.service';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -120,4 +119,13 @@ export class HttpServiceService {
       headers: header,
     });
   }
+
+  forgotPassword(body: any) {
+    return this.http.post(`${this.url}auth/forgot-password`, body);
+  }
+
+  resetPassword(body: any) {
+    console.log(body);
+    return this.http.post(`${this.url}auth/reset-password`, body);
+  };
 }

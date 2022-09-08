@@ -9,9 +9,9 @@
       login successfully
     </div>
   </div>
-  <div class="form m-auto  rounded-5 p-2">
+  <div class="form m-auto rounded-5 p-2">
     <img
-      class=" rounded-circle w-25"
+      class="rounded-circle w-25"
       src="../../../../assets/login.png"
       alt=" login.png"
     />
@@ -52,12 +52,26 @@
         >
           Login
         </button>
-        <div class="" style="margin-left:90px;">
+        <div class="" style="margin-left: 90px">
           <p class="ms-5 mt-3">
             Doesn't have an account
             <span class=""
               ><button mat-button color="primary" (click)="register()">
                 registred here!
+              </button></span
+            >
+          </p>
+        </div>
+        <div class="" style="margin-left: 90px">
+          <p class="ms-5">
+            <span class=""
+              ><button
+                mat-button
+                color="warn"
+                class="ms-5"
+                (click)="forgot()"
+              >
+                forgotten password!
               </button></span
             >
           </p>

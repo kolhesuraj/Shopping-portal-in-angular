@@ -11,6 +11,14 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { HttpsInterceptor } from './services/http/http.interceptor';
 import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
@@ -20,9 +28,31 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     AuthenticationModule,
     HotToastModule.forRoot(),
-    RecaptchaV3Module
+    RecaptchaV3Module,
+    SocialLoginModule,
   ],
   providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              'clien893913805202-rg7o6somctq21ike6dk1u0d696t64e0q.apps.googleusercontent.com'
+            ),
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('365586852354146'),
+          },
+        ],
+        onError: (err) => {
+          console.error(err);
+        },
+      } as SocialAuthServiceConfig,
+    },
     { provide: HTTP_INTERCEPTORS, useClass: HttpsInterceptor, multi: true },
     {
       provide: RECAPTCHA_V3_SITE_KEY,
