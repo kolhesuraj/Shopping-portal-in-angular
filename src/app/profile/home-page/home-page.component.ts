@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { AddUserComponent } from '../organization/add-user/add-user.component';
 
 @Component({
@@ -105,6 +106,8 @@ export class HomePageComponent implements OnInit {
   }
 
   changePassword() {
-    
+    const dialogRef = this._dialog.open(ChangePasswordComponent, {
+      width: '35%',
+    })
   }
 }

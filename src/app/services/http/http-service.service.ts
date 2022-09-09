@@ -24,7 +24,7 @@ export class HttpServiceService {
     return this.http.post(`${this.url}auth/login`, dataSent);
   }
 
-  socialLogin(user: any,catpchaget:any): Observable<any> {
+  socialLogin(user: any, catpchaget: any): Observable<any> {
     let data: any;
     let provider!: String;
 
@@ -33,16 +33,16 @@ export class HttpServiceService {
       provider = 'google';
       data = {
         token: user.idToken,
-        captcha: catpchaget
+        captcha: catpchaget,
       };
     } else {
       provider = 'facebook';
       data = {
         token: user.authToken,
-        captcha: catpchaget
+        captcha: catpchaget,
       };
     }
-    console.log(data)
+    console.log(data);
     return this.http.post(`${this.url}auth/login/${provider}`, data);
   }
 
@@ -146,8 +146,22 @@ export class HttpServiceService {
     return this.http.post(`${this.url}auth/forgot-password`, body);
   }
 
-  resetPassword(body: any,token:any) {
+  resetPassword(body: any, token: any) {
+    // console.log(body);
+    return this.http.post(
+      `${this.url}auth/reset-password?token=${token}`,
+      body
+    );
+  }
+  changePassword(body: any) {
     console.log(body);
-    return this.http.post(`${this.url}auth/reset-password?token=${token}`, body);
+    let tocken = this.ls.gettoken();
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tocken}`,
+    });
+    return this.http.post(`${this.url}users/auth/change-password`, body, {
+      headers: header,
+    });
   }
 }

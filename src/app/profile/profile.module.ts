@@ -11,10 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { AddUserComponent } from './organization/add-user/add-user.component';
 import { OrganizationComponent } from './organization/organization/organization.component';
 import { EditUserComponent } from './organization/edit-user/edit-user.component';
-import { EditRoleComponent } from './organization/edit-role/edit-role.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
@@ -25,7 +25,7 @@ import { MatInputModule } from '@angular/material/input';
     AddUserComponent,
     OrganizationComponent,
     EditUserComponent,
-    EditRoleComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
