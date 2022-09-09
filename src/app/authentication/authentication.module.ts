@@ -10,6 +10,7 @@ import { VarifyEmailComponent } from '../varify-email/varify-email.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
+import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
 // import { SocialLoginModule } from '@abacritt/angularx-social-login';
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SocialLoginModule } from '@abacritt/angularx-social-login';
     ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
-    SocialLoginModule
+    SocialLoginModule,
+    CoolSocialLoginButtonsModule
   ],
 })
 export class AuthenticationModule {}

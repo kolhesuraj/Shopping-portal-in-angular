@@ -52,25 +52,22 @@
         >
           Login
         </button>
-        <div class="mt-4">
-          <asl-google-signin-button></asl-google-signin-button>
 
-          <!-- 
-          <cool-google-button
-            color="dark"
-            class="ms-5"
-            (click)="onGoogleLoginClicked()"
-          >
-            Login with Google
-          </cool-google-button>
-          <cool-facebook-button
-            color="dark"
-            class="ms-5"
-            (click)="onFacebookLoginClicked()"
-          >
-            Login with Facebook
-          </cool-facebook-button> -->
+        <hr />
+        <div class="d-flex ms-5 ps-5">
+          <div class="ms-5">
+            <asl-google-signin-button
+              type="icon"
+              size="medium"
+            ></asl-google-signin-button>
+          </div>
+          <div class="ms-5 mt-2">or</div>
+          <div class="fs-4 p-2 ms-5" style="cursor: pointer;" (click)="signInWithFB()">
+            <a class="fa fa-facebook"></a>
+          </div>
         </div>
+
+        <hr />
         <div class="" style="margin-left: 90px">
           <p class="ms-5 mt-3">
             Doesn't have an account

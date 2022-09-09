@@ -1,4 +1,9 @@
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  SocialAuthService,
+  SocialUser,
+} from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,6 +24,7 @@ export class LoginComponent implements OnInit {
   user!: SocialUser;
   loggedIn!: boolean;
   accessToken!: string;
+  captcha: any;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -34,11 +40,31 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]],
       captcha: [''],
     });
+    this.refreshCaptcha();
     this.authService.authState.subscribe((user) => {
+      this.refreshCaptcha();
+
+      console.log(user);
       this.user = user;
       this.loggedIn = user != null;
-      console.log(user)
+      this.httpservice.socialLogin(user, this.captcha).subscribe({
+        next: (res: any) => {
+          console.log(res);
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+      });
     });
+  }
+
+  refreshCaptcha() {
+    this.recaptchaV3Service
+      .execute('importantAction')
+      .subscribe((token: string) => {
+        console.debug(`Token [${token}] generated`);
+        this.captcha = token;
+      });
   }
 
   get emailControl() {
@@ -107,12 +133,11 @@ export class LoginComponent implements OnInit {
       .getAccessToken(GoogleLoginProvider.PROVIDER_ID)
       .then((accessToken) => (this.accessToken = accessToken));
   }
-  onGoogleLoginClicked() {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((data) => {
-      console.log('login successfully');
-    })
+
+  signInWithFB(): void {
+    this.refreshCaptcha();
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
-  onFacebookLoginClicked() {}
 
   register() {
     this.route.navigate(['/auth/register']);

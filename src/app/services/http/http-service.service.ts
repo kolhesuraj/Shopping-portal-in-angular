@@ -21,7 +21,29 @@ export class HttpServiceService {
   }
 
   login(dataSent: any): Observable<any> {
-    return this.http.post(this.url + 'auth/login', dataSent);
+    return this.http.post(`${this.url}auth/login`, dataSent);
+  }
+
+  socialLogin(user: any,catpchaget:any): Observable<any> {
+    let data: any;
+    let provider!: String;
+
+    // console.log(catpchaget)
+    if (user.provider == 'GOOGLE') {
+      provider = 'google';
+      data = {
+        token: user.idToken,
+        captcha: catpchaget
+      };
+    } else {
+      provider = 'facebook';
+      data = {
+        token: user.authToken,
+        captcha: catpchaget
+      };
+    }
+    console.log(data)
+    return this.http.post(`${this.url}auth/login/${provider}`, data);
   }
 
   profileView(): Observable<any> {
@@ -124,8 +146,8 @@ export class HttpServiceService {
     return this.http.post(`${this.url}auth/forgot-password`, body);
   }
 
-  resetPassword(body: any) {
+  resetPassword(body: any,token:any) {
     console.log(body);
-    return this.http.post(`${this.url}auth/reset-password`, body);
-  };
+    return this.http.post(`${this.url}auth/reset-password?token=${token}`, body);
+  }
 }

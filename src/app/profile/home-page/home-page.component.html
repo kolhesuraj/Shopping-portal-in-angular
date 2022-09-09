@@ -1,16 +1,31 @@
 <div>
   <nav class="navbar text-white p-3 py-4 bg-dark">
-    <a class="navbar-brand w-75 ms-3 text-white">Home Page</a>
+    <a class="navbar-brand w-50 ms-3 text-white">Home Page</a>
     <div class="border-start ps-5">
       <div (click)="org()" class="" style="cursor: pointer">
         <mat-icon
-          class="ms-2"
+          class="ms-1"
           aria-hidden="false"
           aria-label="Example edit icon"
           fontIcon="group"
         ></mat-icon>
         <div>Org Page</div>
       </div>
+    </div>
+    
+    <div
+      [class.d-none]="data.role == 'user'"
+      (click)="changePassword()"
+      class=""
+      style="cursor: pointer"
+    >
+      <mat-icon
+        class="ms-1"
+        aria-hidden="false"
+        aria-label="Example add profile icon"
+        fontIcon="password"
+      ></mat-icon>
+      <div>change password</div>
     </div>
 
     <div
@@ -59,7 +74,9 @@
             data-toggle="tooltip"
             title="verified"
           >
-            <i class="fa-solid fa-check bg-success text-white rounded-circle"></i>
+            <i
+              class="fa-solid fa-check bg-success text-white rounded-circle"
+            ></i>
           </div>
           <ng-template #notverified>
             <button

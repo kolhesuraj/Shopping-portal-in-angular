@@ -1,3 +1,4 @@
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -18,7 +19,8 @@ export class HomePageComponent implements OnInit {
     private ls: LoginService,
     private httpService: HttpServiceService,
     private route: Router,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private authService: SocialAuthService
   ) {
     this.ls.loadData();
     this.setData();
@@ -37,6 +39,7 @@ export class HomePageComponent implements OnInit {
   logout() {
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/auth']);
+    this.authService.signOut();
   }
 
   sendverificationemail() {
@@ -99,5 +102,9 @@ export class HomePageComponent implements OnInit {
       width: '50%',
       // backdropClass: 'dialog-bg-trans',
     });
+  }
+
+  changePassword() {
+    
   }
 }

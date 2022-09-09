@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import Swal from 'sweetalert2';
 import { passwordValidator } from '../registration/password.Validator';
 
 @Component({
@@ -27,8 +28,6 @@ export class ResetPasswordComponent implements OnInit {
       {
         password: ['', [Validators.required]],
         confirmPassword: ['', [Validators.required]],
-        captcha: [''],
-        token: [''],
       },
       { validator: passwordValidator }
     );
@@ -38,28 +37,32 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.token);
-    this.recaptchaV3Service
-      .execute('importantAction')
-      .subscribe((tocken: string) => {
-        console.debug(`Token [${tocken}] generated`);
-        this.resetPassowrdform.patchValue({ captcha: tocken });
-        this.verify();
-      });
+    if (this.resetPassowrdform.valid) {
+      console.log(this.token);
+      delete this.resetPassowrdform.value.confirmPassword;
+      console.log(this.resetPassowrdform.value);
+      this.httpservice
+        .resetPassword(this.resetPassowrdform.value, this.token)
+        .subscribe({
+          next: (res: any) => {
+            console.log(res);
+            console.log('reset');
+            Swal.fire('Password reset successfully');
+            this.route.navigate(['./auth']);
+          },
+          error: (err: any) => {
+            console.log(err);
+            console.log('err');
+          },
+        });
+    } else {
+      this.Message = true;
+    }
   }
-  verify() {
-    this.resetPassowrdform.patchValue({ token: this.token });
-    delete this.resetPassowrdform.value.confirmPassword;
-    console.log(this.resetPassowrdform.value);
-    this.httpservice.resetPassword(this.resetPassowrdform.value).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        console.log('reset');
-      },
-      error: (err: any) => {
-        console.log(err);
-        console.log('err');
-      },
-    });
+  get Password() {
+    return this.resetPassowrdform.get('password');
+  }
+  get ConfirmPassword() {
+    return this.resetPassowrdform.get('confirmPassword');
   }
 }
