@@ -15,7 +15,7 @@ import {
   SocialAuthServiceConfig,
   GoogleLoginProvider,
   FacebookLoginProvider,
-  SocialLoginModule,
+  // SocialLoginModule,
 } from '@abacritt/angularx-social-login';
 
 @NgModule({
@@ -25,10 +25,10 @@ import {
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    AuthenticationModule,
+    // AuthenticationModule,
     HotToastModule.forRoot(),
     RecaptchaV3Module,
-    SocialLoginModule,
+    // SocialLoginModule,
   ],
   providers: [
     {

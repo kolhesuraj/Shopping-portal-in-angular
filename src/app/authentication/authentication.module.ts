@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { VarifyEmailComponent } from '../varify-email/varify-email.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SocialLoginModule } from '@abacritt/angularx-social-login';
 // import { SocialLoginModule } from '@abacritt/angularx-social-login';
 
 @NgModule({
@@ -25,7 +26,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
-    // SocialLoginModule
+    SocialLoginModule
   ],
 })
 export class AuthenticationModule {}
