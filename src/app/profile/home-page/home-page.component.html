@@ -1,5 +1,5 @@
 <div>
-  <nav class="navbar text-white p-3 py-4 bg-dark">
+  <nav class="navbar text-white p-3 bg-dark">
     <a class="navbar-brand w-50 ms-3 text-white">Home Page</a>
     <div class="border-start ps-5">
       <div (click)="org()" class="" style="cursor: pointer">
@@ -14,7 +14,6 @@
     </div>
     
     <div
-      [class.d-none]="data.role == 'user'"
       (click)="changePassword()"
       class=""
       style="cursor: pointer"
@@ -43,7 +42,7 @@
       <div>add User</div>
     </div>
 
-    <div class="me-5" (click)="logout()" style="cursor: pointer">
+    <div class="me-2" (click)="logout()" style="cursor: pointer">
       <mat-icon
         aria-hidden="false"
         aria-label="Example logout icon"
@@ -54,7 +53,7 @@
     </div>
   </nav>
   <div class="pt-5 profile">
-    <div class="w-50 m-auto p-5 rounded-3 shadow border bg-body">
+    <div class="w-50 m-auto p-5 rounded-3 border bg-body card">
       <div class="m-auto text-center">
         <img
           src="../../../../assets/profile.webp"

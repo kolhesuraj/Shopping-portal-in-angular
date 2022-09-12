@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
       this.httpservice.socialLogin(user, this.captcha).subscribe({
         next: (res: any) => {
           console.log(res);
+          this.validation(res);
         },
         error: (err: any) => {
           console.log(err);
@@ -100,22 +101,8 @@ export class LoginComponent implements OnInit {
       this.httpservice.login(this.loginForm.value).subscribe({
         next: (res: any) => {
           console.log(res);
-          localStorage.setItem('LoginUser', res.token);
           // localStorage.setItem('data', JSON.stringify(res));
-          this.tocken = 1;
-          if (res.user.isEmailVerified == true) {
-            setTimeout(() => {
-              this.route.navigate(['/profile']);
-              this.tocken = 0;
-            }, 1500);
-          } else {
-            Swal.fire('email not varified', ' please varify');
-            setTimeout(() => {
-              this.route.navigate(['/profile']);
-              this.tocken = 0;
-            }, 1500);
-            // this.route.navigate(['/auth/email-varify']);
-          }
+          this.validation(res);
         },
         error: (err) => {
           console.log(err);
@@ -123,6 +110,24 @@ export class LoginComponent implements OnInit {
           // alert(err.error.message)
         },
       });
+    }
+  }
+
+  validation(res: any) {
+    this.tocken = 1;
+    localStorage.setItem('LoginUser', res.token);
+    if (res.user.isEmailVerified == true) {
+      setTimeout(() => {
+        this.route.navigate(['/profile']);
+        this.tocken = 0;
+      }, 1500);
+    } else {
+      Swal.fire('email not varified', ' please varify');
+      setTimeout(() => {
+        this.route.navigate(['/profile']);
+        this.tocken = 0;
+      }, 1500);
+      // this.route.navigate(['/auth/email-varify']);
     }
   }
   refreshToken(): void {

@@ -90,7 +90,7 @@ export class OrganizationComponent implements OnInit {
   }
   getUsers() {
     let data: any;
-    if (this.search == '') {
+    if (this.search == '' || this.search == ' ') {
       data = this.setdata();
     } else {
       data = this.setdata();
