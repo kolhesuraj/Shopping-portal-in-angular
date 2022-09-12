@@ -1,55 +1,66 @@
 <div>
-  <nav class="navbar text-white p-3 bg-dark">
-    <a class="navbar-brand w-50 ms-3 text-white">Home Page</a>
-    <div class="border-start ps-5">
-      <div (click)="org()" class="" style="cursor: pointer">
-        <mat-icon
-          class="ms-1"
-          aria-hidden="false"
-          aria-label="Example edit icon"
-          fontIcon="group"
-        ></mat-icon>
-        <div>Org Page</div>
-      </div>
-    </div>
-    
-    <div
-      (click)="changePassword()"
-      class=""
-      style="cursor: pointer"
-    >
-      <mat-icon
-        class="ms-1"
-        aria-hidden="false"
-        aria-label="Example add profile icon"
-        fontIcon="password"
-      ></mat-icon>
-      <div>change password</div>
-    </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
+    <a class="navbar-brand text-white">Home Page</a>
 
-    <div
-      [class.d-none]="data.role == 'user'"
-      (click)="addProfile()"
-      class=""
-      style="cursor: pointer"
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
-      <mat-icon
-        class="ms-2"
-        aria-hidden="false"
-        aria-label="Example add profile icon"
-        fontIcon="person_add"
-      ></mat-icon>
-      <div>add User</div>
-    </div>
-
-    <div class="me-2" (click)="logout()" style="cursor: pointer">
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example logout icon"
-        fontIcon="logout"
-        class=""
-      ></mat-icon>
-      <div class="">logout</div>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4">
+        <li class="nav-item">
+          <a class="nav-link active" (click)="org()">
+            <mat-icon
+              class="ms-1"
+              aria-hidden="false"
+              aria-label="Example edit icon"
+              fontIcon="group"
+            ></mat-icon>
+            <div>Org Page</div>
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="changePassword()">
+            <mat-icon
+              class="ms-4"
+              aria-hidden="false"
+              aria-label="Example add profile icon"
+              fontIcon="password"
+            ></mat-icon>
+            <div>change password</div></a
+          >
+        </li>
+        <li class="nav-item" [class.d-none]="loginrole == 'user'">
+          <a class="nav-link" (click)="addProfile()">
+            <mat-icon
+              class="ms-2"
+              aria-hidden="false"
+              aria-label="Example add profile icon"
+              fontIcon="person_add"
+            ></mat-icon>
+            <div>add User</div></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example logout icon"
+              fontIcon="logout"
+              class=""
+            ></mat-icon>
+            <div class="">logout</div></a
+          >
+        </li>
+      </ul>
     </div>
   </nav>
   <div class="pt-5 profile">
@@ -60,7 +71,9 @@
           alt="Profile"
           class="w-25 rounded-circle"
           data-toggle="tooltip"
-          title="Name: {{ data.name }} _ created on: {{ data.createdAt| date }}"
+          title="Name: {{ data.name }} _ created on: {{
+            data.createdAt | date
+          }}"
         />
       </div>
       <div class="m-auto w-75 mt-5">

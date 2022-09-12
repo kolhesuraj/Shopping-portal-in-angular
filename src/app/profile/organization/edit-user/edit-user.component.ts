@@ -28,7 +28,7 @@ export class EditUserComponent implements OnInit {
     private _dialogRef: MatDialogRef<EditUserComponent>,
     private httpservice: HttpServiceService
   ) {
-    console.log(data);
+    // console.log(data);
   }
 
   ngOnInit(): void {

@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-organization',
@@ -21,7 +22,8 @@ export class OrganizationComponent implements OnInit {
     private httpService: HttpServiceService,
     private ls: LoginService,
     private _dialog: MatDialog,
-    private route: Router
+    private route: Router,
+    private authService: SocialAuthService
   ) {
     this.getProfile();
     this.getUsers();
@@ -128,6 +130,7 @@ export class OrganizationComponent implements OnInit {
   logout() {
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/auth']);
+    this.authService.signOut();
   }
   addProfile() {
     const dialogRef = this._dialog.open(AddUserComponent, {

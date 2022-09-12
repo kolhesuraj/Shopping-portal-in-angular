@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-dark text-light sticky-top p-3">
+<!-- <nav class="navbar navbar-light bg-dark text-light sticky-top p-3">
   <div class="container-fluid">
     <div
       class="navbar-brand text-light d-flex justify-content-center align-items-center border-end pe-4"
@@ -67,9 +67,90 @@
       <div class="">logout</div>
     </div>
   </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">
+      <div
+        class="navbar-brand d-flex justify-content-center align-items-center border-end pe-4"
+      >
+        <span class="display-2">{{ org }}</span>
+      </div>
+    </a>
+    <a>
+      <div class="me-auto text-white">
+        <div class="fs-4">
+          {{ orgName }}
+        </div>
+        <div class="mt-2">
+          {{ orgEmail }}
+        </div>
+      </div>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4 me-5">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/profile">
+            <mat-icon
+              class="ms-1"
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="home"
+            ></mat-icon>
+            <div>home</div>
+          </a>
+        </li>
+        <li class="nav-item" [class.d-none]="loginRole == 'user'">
+          <a class="nav-link" (click)="updateOrg()">
+            <mat-icon
+              class="ms-3"
+              aria-hidden="false"
+              aria-label="edit organization details"
+              fontIcon="settings"
+            ></mat-icon>
+            <div class="mt-1">update org</div></a
+          >
+        </li>
+        <li class="nav-item" [class.d-none]="loginRole == 'user'">
+          <a class="nav-link" (click)="addProfile()">
+            <mat-icon
+              class="ms-2"
+              aria-hidden="false"
+              aria-label="Example add profile icon"
+              fontIcon="person_add"
+            ></mat-icon>
+            <div>add User</div></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example logout icon"
+              fontIcon="logout"
+              class=""
+            ></mat-icon>
+            <div class="">logout</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
-<div class=" container">
+<div class="container">
   <div class="d-flex mt-3">
     <div class="w-50">
       <select
@@ -170,11 +251,14 @@
             <i class="fa-solid fa-circle-exclamation text-warning"></i></div
         ></ng-template>
       </td>
-      <td data-toggle="tooltip" title="created on {{ result.createdAt |date: 'medium'}}">
+      <td
+        data-toggle="tooltip"
+        title="created on {{ result.createdAt | date: 'medium' }}"
+      >
         {{ result.email }}
       </td>
       <td>
-        {{ result.updatedAt|date: 'medium' }}
+        {{ result.updatedAt | date: "medium" }}
       </td>
       <td class="text-capitalize">
         {{ result.role }}

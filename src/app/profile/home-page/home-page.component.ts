@@ -15,6 +15,7 @@ import { AddUserComponent } from '../organization/add-user/add-user.component';
 })
 export class HomePageComponent implements OnInit {
   data: any = {};
+  loginrole: any;
   constructor(
     // private _dialog: MatDialog,
     private ls: LoginService,
@@ -29,6 +30,7 @@ export class HomePageComponent implements OnInit {
       next: (result: any) => {
         // console.log(result);
         this.data = result;
+        this.loginrole = result.role;
       },
       error: (err: any) => {
         console.log(err);

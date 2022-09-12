@@ -42,7 +42,7 @@ export class HttpServiceService {
         captcha: catpchaget,
       };
     }
-    console.log(data);
+    // console.log(data);
     return this.http.post(`${this.url}auth/login/${provider}`, data);
   }
 
@@ -154,7 +154,7 @@ export class HttpServiceService {
     );
   }
   changePassword(body: any) {
-    console.log(body);
+    // console.log(body);
     let tocken = this.ls.gettoken();
     let header = new HttpHeaders({
       'Content-Type': 'application/json',

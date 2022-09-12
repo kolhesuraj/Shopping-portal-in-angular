@@ -44,12 +44,12 @@ export class LoginComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.refreshCaptcha();
 
-      console.log(user);
+      // console.log(user);
       this.user = user;
       this.loggedIn = user != null;
       this.httpservice.socialLogin(user, this.captcha).subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           this.validation(res);
         },
         error: (err: any) => {
@@ -97,10 +97,10 @@ export class LoginComponent implements OnInit {
       this.massage = true;
       this.loginFaildMssage = false;
     } else {
-      console.log(this.loginForm.value);
+      // console.log(this.loginForm.value);
       this.httpservice.login(this.loginForm.value).subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           // localStorage.setItem('data', JSON.stringify(res));
           this.validation(res);
         },
