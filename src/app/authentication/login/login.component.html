@@ -9,7 +9,7 @@
       login successfully
     </div>
   </div>
-  <div class="form m-auto rounded-5 p-2">
+  <div class="form m-auto rounded-5 p-2 border">
     <img
       class="rounded-circle w-25"
       src="../../../../assets/login.png"
@@ -55,15 +55,19 @@
 
         <hr />
         <div class="d-flex ms-5 ps-5">
-          <div class="ms-5">
+          <div class="ms-5 mt-2" >
             <asl-google-signin-button
               type="icon"
               size="medium"
             ></asl-google-signin-button>
           </div>
           <div class="ms-5 mt-2">or</div>
-          <div class="fs-4 p-2 ms-5" style="cursor: pointer;" (click)="signInWithFB()">
-            <a class="fa fa-facebook"></a>
+          <div
+            class="fs-4 p-2 ms-5"
+            style="cursor: pointer"
+            (click)="signInWithFB()"
+          >
+            <a class="fa fa-facebook rounded"></a>
           </div>
         </div>
 
@@ -72,7 +76,7 @@
           <p class="ms-5 mt-3">
             Doesn't have an account
             <span class=""
-              ><button mat-button color="primary" (click)="register()">
+              ><button mat-stroked-button color="warn" (click)="register()">
                 registred here!
               </button></span
             >
@@ -81,7 +85,12 @@
         <div class="" style="margin-left: 90px">
           <p class="ms-5">
             <span class=""
-              ><button mat-button color="warn" class="ms-5" (click)="forgot()">
+              ><button
+                mat-stroked-button
+                color="accent"
+                class="ms-5"
+                (click)="forgot()"
+              >
                 forgotten password!
               </button></span
             >

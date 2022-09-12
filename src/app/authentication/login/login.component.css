@@ -1,27 +1,40 @@
-
-header{
-    background-color: rgb(46, 45, 45);
-    color: azure;
+header {
+  background-color: rgb(46, 45, 45);
+  color: azure;
 }
 
-.login{
-    /* background-color: #22577a; */
-    background-image:  url('../../../assets/bluePlane.jpg');
-    height: 804px;
+.login {
+  /* background-color: #22577a; */
+  background-image: url("../../../assets/loginBackground.jpg");
+  background-size: cover;
+  height: 804px;
 }
-.form{
-    width: 500px;
-    /* background-color: #FFFFFF; */
-    background-image: url('../../../assets/blue with black.jpg');
+.form {
+  width: 500px;
+  background-color: rgba(255, 255, 255, 0.1);
+  /* background-image: url('../../../assets/blue.jpg'); */
 }
-img{
-    margin-left: 180px;
-    margin-top: 20px;
+img {
+  margin-left: 180px;
+  margin-top: 20px;
 }
-input, .submit{
-    width: 300px;
+input,
+.submit {
+  width: 300px;
 }
-.submit{
-    margin-left: 130px;
-    margin-top: 10px;
+.submit {
+  margin-left: 130px;
+  margin-top: 10px;
+}
+.fa-facebook {
+  background: #3b5998;
+  color: white;
+}
+
+.fa {
+  padding: 5px;
+  font-size: 20px;
+  width: 30px;
+  text-align: center;
+  text-decoration: none;
 }

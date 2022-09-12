@@ -1,13 +1,14 @@
 .secondDiv {
-  /* background-color: #FFFFFF; */
-  background-image: url("../../../assets/blue with black.jpg");
+  background-color: rgba(255, 255, 255, 0.103);
+  /* background-image: url("../../../assets/blue with black.jpg"); */
   color: #03131e;
   /* margin-top: 25px; */
   padding-bottom: 20px;
 }
 .mainDiv {
   /* background-color: #22577a; */
-  background-image: url("../../../assets/bluePlane.jpg");
+  background-image: url("../../../assets/blue.jpg");
+  /* background-size: ; */
   height: 804px;
   margin-top: 0;
   padding-top: 0;

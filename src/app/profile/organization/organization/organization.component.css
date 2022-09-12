@@ -33,7 +33,7 @@ th {
 mat-option::content {
   background-color: rgb(238, 235, 235);
 }
-li{
+nav div ul li{
     cursor: pointer;
     margin-left: 30px;
 }
