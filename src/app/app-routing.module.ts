@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './services/gard/auth.guard';
 import { LoginGuard } from './services/gard/login.guard';
-import { VarifyEmailComponent } from './varify-email/varify-email.component';
+import { VarifyEmailComponent } from './authentication/varify-email/varify-email.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },

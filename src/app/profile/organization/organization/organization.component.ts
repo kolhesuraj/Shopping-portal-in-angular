@@ -48,6 +48,7 @@ export class OrganizationComponent implements OnInit {
   rolearray = ['All Employes', 'user', 'admin'];
   sortarray = ['name', 'email', 'ceatedAt', 'updated'];
   ngOnInit(): void {
+    /* This is a rxjs operator. It is used to filter the options in the search input. */
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(' '),
       map((value: string | null) => this._filter(value || ''))
@@ -62,6 +63,9 @@ export class OrganizationComponent implements OnInit {
     );
   }
 
+  /**
+   * It gets the profile of the logged in user
+   */
   getProfile() {
     this.httpService.get('auth/self').subscribe({
       next: (orgData: any) => {
