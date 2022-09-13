@@ -35,7 +35,6 @@ export class EditUserComponent implements OnInit {
     this.editForm = this.fb.group({
       name: [this.data.name, [Validators.required]],
       email: [this.data.email, [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
     });
   }
 
@@ -44,9 +43,6 @@ export class EditUserComponent implements OnInit {
   }
   get email() {
     return this.editForm.get('email');
-  }
-  get password() {
-    return this.editForm.get('password');
   }
 
   submited = false;
@@ -57,7 +53,7 @@ export class EditUserComponent implements OnInit {
       const password = this.editForm.value.password;
       console.log(this.editForm.value);
       this.httpservice
-        .updateUser(this.data.id, name, email, password)
+        .updateUser(this.data.id, name, email)
         .subscribe({
           next: (res: any) => {
             console.log(res);

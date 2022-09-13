@@ -116,12 +116,10 @@ export class HttpServiceService {
     id: string,
     name: string,
     email: string,
-    password: string
   ): Observable<any> {
     const data = {
       name: name,
       email: email,
-      password: password,
     };
     let tocken = this.ls.gettoken();
     let header = new HttpHeaders({

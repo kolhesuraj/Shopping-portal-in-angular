@@ -7,7 +7,7 @@
 dialog-bg-trans{
     background-color: rgb(240, 248, 255,0.5);
 }
-.card{
+.card, nav{
     box-shadow: 0px 0px 50px black;
 
 }

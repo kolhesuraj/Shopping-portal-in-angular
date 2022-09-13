@@ -12,7 +12,7 @@ th {
 
 th {
   position: sticky;
-  top: 130px;
+  top: 120px;
   color: aliceblue;
   background-color: rgb(3, 18, 83);
 }
@@ -36,4 +36,9 @@ mat-option::content {
 nav div ul li{
     cursor: pointer;
     margin-left: 30px;
+}
+nav{
+  position: sticky;
+  top: 0px;
+
 }
