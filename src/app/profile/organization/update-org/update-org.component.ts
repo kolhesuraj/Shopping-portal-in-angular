@@ -49,12 +49,8 @@ export class UpdateOrgComponent implements OnInit {
   submited = false;
   update() {
     if (this.editForm.valid) {
-      console.log(this.editForm.value);
-      const data = {
-        email: this.editForm.value.email,
-        name: this.editForm.value.name,
-      };
-      this.httpservice.updateOrg(data).subscribe({
+      // console.log(this.editForm.value);
+      this.httpservice.patch('users/org', this.editForm.value).subscribe({
         next: (res: any) => {
           // console.log(res);
           Swal.fire('organization details updated');
@@ -65,6 +61,17 @@ export class UpdateOrgComponent implements OnInit {
           Swal.fire(err.error.message);
         },
       });
+      // this.httpservice.updateOrg(data).subscribe({
+      //   next: (res: any) => {
+      //     // console.log(res);
+      //     Swal.fire('organization details updated');
+      //     this._dialogRef.close();
+      //   },
+      //   error: (err: any) => {
+      //     console.log(err);
+      //     Swal.fire(err.error.message);
+      //   },
+      // });
     }
   }
 }

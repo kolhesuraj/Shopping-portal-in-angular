@@ -48,7 +48,7 @@ export class HomePageComponent implements OnInit {
   sendverificationemail() {
     let token = this.ls.gettoken();
     console.log(token);
-    this.httpService.sendVerrification(token).subscribe({
+    this.httpService.post('auth/send-verification-email?captcha=false',null).subscribe({
       next: (res: any) => {
         console.log(res);
         Swal.fire('Email send successfully', 'please check email and verify');
@@ -58,6 +58,16 @@ export class HomePageComponent implements OnInit {
         Swal.fire('Email send failed');
       },
     });
+    // this.httpService.sendVerrification(token).subscribe({
+    //   next: (res: any) => {
+    //     console.log(res);
+    //     Swal.fire('Email send successfully', 'please check email and verify');
+    //   },
+    //   error: (err: any) => {
+    //     console.log(err);
+    //     Swal.fire('Email send failed');
+    //   },
+    // });
   }
 
   org() {
@@ -89,7 +99,7 @@ export class HomePageComponent implements OnInit {
 
   // }
   setData() {
-    this.httpService.profileView().subscribe({
+    this.httpService.get('auth/self').subscribe({
       next: (res: any) => {
         // console.log(res);
         this.ls.LogIndata.next(res);
@@ -98,6 +108,15 @@ export class HomePageComponent implements OnInit {
         console.log(err);
       },
     });
+    // this.httpService.profileView().subscribe({
+    //   next: (res: any) => {
+    //     // console.log(res);
+    //     this.ls.LogIndata.next(res);
+    //   },
+    //   error: (err: any) => {
+    //     console.log(err);
+    //   },
+    // });
   }
 
   addProfile() {

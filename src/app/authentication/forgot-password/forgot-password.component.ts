@@ -45,18 +45,34 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendEmail() {
-    this.httpservice.forgotPassword(this.forgotPasswordForm.value).subscribe({
-      next: (res: any) => {
-        // console.log(res);
-        // console.log('emailsend');
-        Swal.fire('Link send vai Email', 'please check email');
-        this.forgotPasswordForm.reset();
-      },
-      error: (err: any) => {
-        console.log(err);
-        console.log('error');
-      },
-    });
+    if (this.forgotPasswordForm.valid) {
+      this.httpservice
+        .post('auth/forgot-password', this.forgotPasswordForm.value)
+        .subscribe({
+          next: (res: any) => {
+            // console.log(res);
+            // console.log('emailsend');
+            Swal.fire('Link send vai Email', 'please check email');
+            this.forgotPasswordForm.reset();
+          },
+          error: (err: any) => {
+            console.log(err);
+            console.log('error');
+          },
+        });
+    }
+    // this.httpservice.forgotPassword(this.forgotPasswordForm.value).subscribe({
+    //   next: (res: any) => {
+    //     // console.log(res);
+    //     // console.log('emailsend');
+    //     Swal.fire('Link send vai Email', 'please check email');
+    //     this.forgotPasswordForm.reset();
+    //   },
+    //   error: (err: any) => {
+    //     console.log(err);
+    //     console.log('error');
+    //   },
+    // });
   }
 
   goback() {

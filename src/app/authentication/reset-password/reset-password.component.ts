@@ -40,9 +40,12 @@ export class ResetPasswordComponent implements OnInit {
     if (this.resetPassowrdform.valid) {
       console.log(this.token);
       delete this.resetPassowrdform.value.confirmPassword;
-      console.log(this.resetPassowrdform.value);
+      // console.log(this.resetPassowrdform.value);
       this.httpservice
-        .resetPassword(this.resetPassowrdform.value, this.token)
+        .post(
+          `auth/reset-password?token=${this.token}`,
+          this.resetPassowrdform.value
+        )
         .subscribe({
           next: (res: any) => {
             console.log(res);
@@ -55,6 +58,20 @@ export class ResetPasswordComponent implements OnInit {
             console.log('err');
           },
         });
+      // this.httpservice
+      //   .resetPassword(this.resetPassowrdform.value, this.token)
+      //   .subscribe({
+      //     next: (res: any) => {
+      //       console.log(res);
+      //       console.log('reset');
+      //       Swal.fire('Password reset successfully');
+      //       this.route.navigate(['./auth']);
+      //     },
+      //     error: (err: any) => {
+      //       console.log(err);
+      //       console.log('err');
+      //     },
+      //   });
     } else {
       this.Message = true;
     }

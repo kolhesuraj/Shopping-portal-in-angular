@@ -14,7 +14,7 @@
         <label class="d-inline w-25 me-5">Full Name</label>
         <input
           type="text"
-          formControlName="Name"
+          formControlName="name"
           name="Name"
           class="form-control d-inline ms-2"
           [class.is-invalid]="
@@ -39,7 +39,7 @@
             (Role?.invalid && Role?.touched) || (submited && Role?.untouched)
           "
         /> -->
-        <select name="cars" formControlName="Role" class="form-select d-inline ms-5 w-auto" 
+        <select name="cars" formControlName="role" class="form-select d-inline ms-5 w-auto" 
         [class.is-invalid]="(Role?.invalid && Role?.touched) || (submited && Role?.untouched)"
           >
           <option  value="admin">Admin</option>
@@ -57,7 +57,7 @@
         <label class="d-inline w-25 me-5">email</label>
         <input
           type="email"
-          formControlName="Email"
+          formControlName="email"
           name="email"
           class="form-control d-inline"
           style="margin-left: 40px"
@@ -75,7 +75,7 @@
         <label class="d-inline w-25 me-5">Password</label>
         <input
           type="password"
-          formControlName="Password"
+          formControlName="password"
           name="password"
           class="form-control d-inline ms-3"
           [class.is-invalid]="

@@ -63,7 +63,7 @@ export class OrganizationComponent implements OnInit {
   }
 
   getProfile() {
-    this.httpService.profileView().subscribe({
+    this.httpService.get('auth/self').subscribe({
       next: (orgData: any) => {
         // console.log(orgData);
         this.orgName = orgData._org.name;
@@ -80,6 +80,23 @@ export class OrganizationComponent implements OnInit {
         }
       },
     });
+    // this.httpService.profileView().subscribe({
+    //   next: (orgData: any) => {
+    //     // console.log(orgData);
+    //     this.orgName = orgData._org.name;
+    //     this.orgEmail = orgData._org.email;
+    //     this.loginRole = orgData.role;
+    //     var splitted = this.orgName.split(' ', 3);
+    //     // console.log(splitted);
+    //     if (splitted.length > 1) {
+    //       this.org = splitted[0].slice(0, 1).toUpperCase();
+    //       this.org += splitted[1].slice(0, 1).toUpperCase();
+    //       // console.log(this.org);
+    //     } else {
+    //       this.org = this.orgName.slice(0, 2).toUpperCase();
+    //     }
+    //   },
+    // });
   }
   setdata() {
     let data;
@@ -90,6 +107,10 @@ export class OrganizationComponent implements OnInit {
     }
     return data;
   }
+
+  /**
+   * It gets the users from the API and sets the result and list variables
+   */
   getUsers() {
     let data: any;
     if (this.search == '' || this.search == ' ') {
@@ -98,7 +119,7 @@ export class OrganizationComponent implements OnInit {
       data = this.setdata();
       data = `${data}&name=${this.search}`;
     }
-    this.httpService.orgUsers(data).subscribe({
+    this.httpService.get(`users?${data}`).subscribe({
       next: (res: any) => {
         this.result = res.results;
         this.list = res;
@@ -111,12 +132,28 @@ export class OrganizationComponent implements OnInit {
         Swal.fire(err);
       },
     });
+    // this.httpService.orgUsers(data).subscribe({
+    //   next: (res: any) => {
+    //     this.result = res.results;
+    //     this.list = res;
+    //     if (this.flag == 0) {
+    //       this.getSuggetion();
+    //       this.flag = 1;
+    //     }
+    //   },
+    //   error: (err: any) => {
+    //     Swal.fire(err);
+    //   },
+    // });
   }
 
+  /**
+   * It gets the list of users from the API and adds them to the suggestion array
+   */
   getSuggetion() {
     const data = `limit=${this.list.totalResults}`;
-    this.httpService.orgUsers(data).subscribe({
-      next: (res) => {
+    this.httpService.get(`users?${data}`).subscribe({
+      next: (res: any) => {
         res.results.forEach((element: any) => {
           if (this.suggestion.includes(element.name)) {
           } else {
@@ -124,7 +161,20 @@ export class OrganizationComponent implements OnInit {
           }
         });
       },
+      error: (err) => {
+        console.log(err);
+      },
     });
+    // this.httpService.orgUsers(data).subscribe({
+    //   next: (res) => {
+    //     res.results.forEach((element: any) => {
+    //       if (this.suggestion.includes(element.name)) {
+    //       } else {
+    //         this.suggestion.push(element.name);
+    //       }
+    //     });
+    //   },
+    // });
   }
 
   logout() {
@@ -152,6 +202,9 @@ export class OrganizationComponent implements OnInit {
     });
   }
 
+  /**
+   * This function is used to update the organization details
+   */
   updateOrg() {
     if (this.loginRole == 'admin') {
       const dialogRef = this._dialog.open(UpdateOrgComponent, {
@@ -169,6 +222,10 @@ export class OrganizationComponent implements OnInit {
     }
   }
 
+  /**
+   * The above function is used to delete the user.
+   * @param {any} id - any - The id of the user to delete.
+   */
   deleteUser(id: any) {
     // console.log(id);
     if (this.loginRole == 'admin') {
@@ -182,9 +239,8 @@ export class OrganizationComponent implements OnInit {
         confirmButtonText: 'Yes, delete it!',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.httpService.deleteUser(id).subscribe({
+          this.httpService.delete(`users/${id}`).subscribe({
             next: (res: any) => {
-              // console.log(res);
               Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
               this.getUsers();
             },
@@ -236,11 +292,11 @@ export class OrganizationComponent implements OnInit {
     this.getUsers();
   }
 
-  // sortby(event: any) {
-  //   this.sortBy = (event.target as HTMLSelectElement).value;
-  //   this.getUsers();
-  // }
-
+  /**
+   * If the sortBy variable is equal to the by variable, then set sortBy to 'role', otherwise set sortBy
+   * to by
+   * @param {string} by - string - the column name to sort by
+   */
   sortby(by: string) {
     if (this.sortBy == by) {
       this.sortBy = 'role';
@@ -257,6 +313,11 @@ export class OrganizationComponent implements OnInit {
     this.getUsers();
   }
 
+  /**
+   * If the value is not empty, then set the search variable to the value, otherwise set the search
+   * variable to an empty string
+   * @param {string} value - string - The value of the search input.
+   */
   searchinput(value: string) {
     if (value) {
       this.search = value;
@@ -282,18 +343,25 @@ export class OrganizationComponent implements OnInit {
         if (result.isConfirmed) {
           const roleselect = result.value?.toLowerCase();
           if (roleselect == 'admin' || roleselect == 'user') {
-            // console.log(result);
             const roleget = { role: roleselect };
-            // console.log(id, roleget);
-            this.httpService.updateRole(roleget, id).subscribe({
+            this.httpService.patch(`users/role/${id}`, roleget).subscribe({
               next: (res: any) => {
-                // console.log(res);
+                Swal.fire('user role changed successfully');
                 this.getUsers();
               },
               error: (err: any) => {
                 console.log(err);
               },
             });
+            // this.httpService.updateRole(roleget, id).subscribe({
+            //   next: (res: any) => {
+            //     // console.log(res);
+            //     this.getUsers();
+            //   },
+            //   error: (err: any) => {
+            //     console.log(err);
+            //   },
+            // });
           } else {
             Swal.fire('role must be admin or user');
           }

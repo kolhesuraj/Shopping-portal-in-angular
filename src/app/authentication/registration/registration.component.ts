@@ -81,23 +81,40 @@ export class RegistrationComponent implements OnInit {
       // };
       const dataSent = this.register.value;
       delete dataSent.ConfirmPassword;
-      this.httpService.register(dataSent).subscribe({
+      this.httpService.post('auth/register', dataSent).subscribe({
         next: (res) => {
-          // localStorage.setItem('registrationToken', res.token);
-          // console.log(res);
-          this.httpService.sendVerrification(res.token).subscribe({
-            next: (res: any) => {
-              // console.log(res);
-              Swal.fire(
-                'registerd Successfully',
-                'please check email to verify'
-              );
-            },
-            error: (err) => {
-              // console.log(err);
-              this.errorFromserver = err.error.message;
-            },
-          });
+          this.httpService
+            .post('auth/send-verification-email?captcha=false', null)
+            .subscribe({
+              next: (res: any) => {
+                // console.log(res);
+                Swal.fire(
+                  'registerd Successfully',
+                  'please check email to verify'
+                );
+              },
+              error: (err) => {
+                // console.log(err);
+                this.errorFromserver = err.error.message;
+              },
+            });
+          // this.httpService.register(dataSent).subscribe({
+          //   next: (res) => {
+          //     // localStorage.setItem('registrationToken', res.token);
+          //     // console.log(res);
+          //     // this.httpService.sendVerrification(res.token).subscribe({
+          //     //   next: (res: any) => {
+          //     //     // console.log(res);
+          //     //     Swal.fire(
+          //     //       'registerd Successfully',
+          //     //       'please check email to verify'
+          //     //     );
+          //       },
+          //       error: (err) => {
+          //         // console.log(err);
+          //         this.errorFromserver = err.error.message;
+          //       },
+          //     });
 
           // console.log(res);
           // localStorage.setItem('registrationToken', JSON.stringify(res));

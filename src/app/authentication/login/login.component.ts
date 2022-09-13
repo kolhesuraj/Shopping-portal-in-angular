@@ -47,7 +47,23 @@ export class LoginComponent implements OnInit {
       // console.log(user);
       this.user = user;
       this.loggedIn = user != null;
-      this.httpservice.socialLogin(user, this.captcha).subscribe({
+      let data: any;
+      let provider!: String;
+      if (user.provider == 'GOOGLE') {
+        provider = 'google';
+        data = {
+          token: user.idToken,
+          captcha: this.captcha,
+        };
+      } else {
+        provider = 'facebook';
+        data = {
+          token: user.authToken,
+          captcha: this.captcha,
+        };
+      }
+
+      this.httpservice.post(`auth/login/${provider}`,data).subscribe({
         next: (res: any) => {
           // console.log(res);
           this.validation(res);
@@ -56,6 +72,16 @@ export class LoginComponent implements OnInit {
           console.log(err);
         },
       });
+
+      // this.httpservice.socialLogin(user, this.captcha).subscribe({
+      //   next: (res: any) => {
+      //     // console.log(res);
+      //     this.validation(res);
+      //   },
+      //   error: (err: any) => {
+      //     console.log(err);
+      //   },
+      // });
     });
   }
 
@@ -98,7 +124,20 @@ export class LoginComponent implements OnInit {
       this.loginFaildMssage = false;
     } else {
       // console.log(this.loginForm.value);
-      this.httpservice.login(this.loginForm.value).subscribe({
+      // this.httpservice.login(this.loginForm.value).subscribe({
+      //   next: (res: any) => {
+      //     // console.log(res);
+      //     // localStorage.setItem('data', JSON.stringify(res));
+      //     this.validation(res);
+      //   },
+      //   error: (err) => {
+      //     console.log(err);
+      //     Swal.fire(err.error.message);
+      //     // alert(err.error.message)
+      //   },
+      // });
+
+      this.httpservice.post('auth/login', this.loginForm.value).subscribe({
         next: (res: any) => {
           // console.log(res);
           // localStorage.setItem('data', JSON.stringify(res));

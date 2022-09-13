@@ -24,26 +24,26 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
     this.register = this.fb.group(
       {
-        Name: ['', [Validators.required]],
-        Role: ['', [Validators.required]],
-        Email: ['', [Validators.required, Validators.email]],
-        Password: ['', [Validators.required, Validators.minLength(8)]],
+        name: ['', [Validators.required]],
+        role: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
         ConfirmPassword: [''],
       },
       { validator: passwordValidator }
     );
   }
   get Name() {
-    return this.register.get('Name');
+    return this.register.get('name');
   }
   get Role() {
-    return this.register.get('Role');
+    return this.register.get('role');
   }
   get Email() {
-    return this.register.get('Email');
+    return this.register.get('email');
   }
   get Password() {
-    return this.register.get('Password');
+    return this.register.get('password');
   }
   get ConfirmPassword() {
     return this.register.get('ConfirmPassword');
@@ -53,16 +53,15 @@ export class AddUserComponent implements OnInit {
   addUser() {
     if (this.register.valid) {
       this.submited = false;
-      const dataSent = {
-        name: this.register?.value.Name,
-        email: this.register?.value.Email,
-        role: this.register?.value.Role,
-        password: this.register?.value.Password,
-      };
-      this.httpService.addOrgUser(dataSent).subscribe({
+      // const data = {
+      //   name: this.register?.value.Name,
+      //   email: this.register?.value.Email,
+      //   role: this.register?.value.Role,
+      //   password: this.register?.value.Password,
+      // };
+      delete this.register.value.ConfirmPassword;
+      this.httpService.post('users', this.register.value).subscribe({
         next: (res) => {
-          localStorage.setItem('registrationToken', res.token);
-          console.log(res);
           Swal.fire('registerd Successfully');
           this.register.reset();
         },
@@ -70,6 +69,17 @@ export class AddUserComponent implements OnInit {
           console.log(err);
         },
       });
+      // this.httpService.addOrgUser(dataSent).subscribe({
+      //   next: (res) => {
+      //     localStorage.setItem('registrationToken', res.token);
+      //     console.log(res);
+      //     Swal.fire('registerd Successfully');
+      //     this.register.reset();
+      //   },
+      //   error: (err) => {
+      //     console.log(err);
+      //   },
+      // });
     } else {
       this.submited = true;
     }

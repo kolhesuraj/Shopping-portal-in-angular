@@ -39,18 +39,32 @@ export class ChangePasswordComponent implements OnInit {
 
   submit() {
     if (this.changePassword.valid) {
-      this.httpService.changePassword(this.changePassword.value).subscribe({
-        next: (res: any) => {
-          console.log(res);
-          Swal.fire('changed');
-          console.log('Response');
-          this._dialogRef.close();
-        },
-        error: (err: any) => {
-          console.log(err);
-          console.log('error');
-        },
-      });
+      this.httpService
+        .post('users/auth/change-password', this.changePassword.value)
+        .subscribe({
+          next: (res: any) => {
+            console.log(res);
+            Swal.fire('changed');
+            console.log('Response');
+            this._dialogRef.close();
+          },
+          error: (err: any) => {
+            console.log(err);
+            console.log('error');
+          },
+        });
+      // this.httpService.changePassword(this.changePassword.value).subscribe({
+      //   next: (res: any) => {
+      //     console.log(res);
+      //     Swal.fire('changed');
+      //     console.log('Response');
+      //     this._dialogRef.close();
+      //   },
+      //   error: (err: any) => {
+      //     console.log(err);
+      //     console.log('error');
+      //   },
+      // });
     } else {
       this.Message = true;
     }
