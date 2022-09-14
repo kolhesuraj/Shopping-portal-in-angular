@@ -16,37 +16,37 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4">
         <li class="nav-item">
-          <a class="nav-link active" (click)="org()">
+          <a class="nav-link" (click)="org()">
             <mat-icon
-              class="ms-1"
+              class="ms-lg-1"
               aria-hidden="false"
               aria-label="Example edit icon"
               fontIcon="group"
             ></mat-icon>
-            <div>Org Page</div>
+            <span class="d-lg-block ms-2 ms-lg-0">Org Page</span>
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="changePassword()">
             <mat-icon
-              class="ms-4"
+              class="ms-0 ms-lg-4"
               aria-hidden="false"
               aria-label="Example add profile icon"
               fontIcon="password"
             ></mat-icon>
-            <div>change password</div></a
+            <span class="d-lg-block ms-2 ms-lg-0">change password</span></a
           >
         </li>
         <li class="nav-item" [class.d-none]="loginrole == 'user'">
           <a class="nav-link" (click)="addProfile()">
             <mat-icon
-              class="ms-2"
+              class="ms-lg-2"
               aria-hidden="false"
               aria-label="Example add profile icon"
               fontIcon="person_add"
             ></mat-icon>
-            <div>add User</div></a
+            <span class="d-lg-block ms-2 ms-lg-0">add User</span></a
           >
         </li>
         <li class="nav-item">
@@ -57,7 +57,7 @@
               fontIcon="logout"
               class=""
             ></mat-icon>
-            <div class="">logout</div></a
+            <span class="d-lg-block ms-2 ms-lg-0">logout</span></a
           >
         </li>
       </ul>
@@ -78,7 +78,7 @@
       </div>
       <div class="m-auto w-auto mt-5">
         <div class="fs-5 mt-3">
-          Name:
+          Name
           <span style="margin-left: 120px">{{ data.name }}</span>
           <div
             *ngIf="data.isEmailVerified; else notverified"
@@ -103,14 +103,14 @@
           ></ng-template>
         </div>
         <div class="fs-5 mt-3">
-          Company Name:
+          Company Name
           <span style="margin-left: 30px">{{ data?._org?.name }}</span>
         </div>
         <div class="fs-5 mt-3">
-          Email: <span style="margin-left: 120px">{{ data?.email }}</span>
+          Email <span style="margin-left: 120px">{{ data?.email }}</span>
         </div>
         <div class="fs-5 mt-3">
-          Role:
+          Role
           <span style="margin-left: 133px" class="text-capitalize">{{
             data?.role
           }}</span>

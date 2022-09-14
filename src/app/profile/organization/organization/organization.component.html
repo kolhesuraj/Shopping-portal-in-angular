@@ -31,36 +31,36 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4 me-5">
         <li class="nav-item">
-          <a class="nav-link active" routerLink="/profile">
+          <a class="nav-link " routerLink="/profile">
             <mat-icon
               class="ms-1"
               aria-hidden="false"
               aria-label="Example home icon"
               fontIcon="home"
             ></mat-icon>
-            <div>home</div>
+            <span class="d-lg-block ms-2 ms-lg-0">home</span>
           </a>
         </li>
         <li class="nav-item" [class.d-none]="loginRole == 'user'">
           <a class="nav-link" (click)="updateOrg()">
             <mat-icon
-              class="ms-3"
+              class="ms-lg-3"
               aria-hidden="false"
               aria-label="edit organization details"
               fontIcon="settings"
             ></mat-icon>
-            <div class="mt-1">update org</div></a
+            <span class="mt-lg-0 ms-2 d-lg-block">update org</span></a
           >
         </li>
         <li class="nav-item" [class.d-none]="loginRole == 'user'">
           <a class="nav-link" (click)="addProfile()">
             <mat-icon
-              class="ms-2"
+              class="ms-lg-2"
               aria-hidden="false"
               aria-label="Example add profile icon"
               fontIcon="person_add"
             ></mat-icon>
-            <div>add User</div></a
+            <span class="d-lg-block ms-2 ms-lg-0">add User</span></a
           >
         </li>
         <li class="nav-item">
@@ -71,7 +71,7 @@
               fontIcon="logout"
               class=""
             ></mat-icon>
-            <div class="">logout</div>
+            <span class="d-lg-block ms-2 ms-lg-0">logout</span>
           </a>
         </li>
       </ul>

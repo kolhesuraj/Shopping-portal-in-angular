@@ -44,8 +44,8 @@ export class ChangePasswordComponent implements OnInit {
         .subscribe({
           next: (res: any) => {
             console.log(res);
-            Swal.fire('changed');
-            console.log('Response');
+            Swal.fire('password changed successfully');
+            // console.log('Response');
             this._dialogRef.close();
           },
           error: (err: any) => {

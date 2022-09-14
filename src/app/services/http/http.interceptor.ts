@@ -33,7 +33,7 @@ export class HttpsInterceptor implements HttpInterceptor {
     this.ls.loader.next(true);
     // console.log(request);
     const url = request.url;
-    if (this.isAuth(request.url) == false) {
+    if (this.isAuthRequaire(request.url) == false) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${this.ls.gettoken()}`,
@@ -64,7 +64,7 @@ export class HttpsInterceptor implements HttpInterceptor {
    * It returns true if the url contains any of the strings in the findArray
    * @param {string} url - The URL that the user is trying to access.
    */
-  isAuth(url: string) {
+  isAuthRequaire(url: string) {
     let result: boolean = false;
     let findArray = [
       'login',
