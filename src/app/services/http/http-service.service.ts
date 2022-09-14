@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginService } from '../login.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +12,7 @@ export class HttpServiceService {
   // sendVarrification = ' https://ngminds.herokuapp.com/auth/send-verification-email';
   url = 'https://ngminds.herokuapp.com/';
 
-  constructor(private http: HttpClient, private ls: LoginService) {}
+  constructor(private http: HttpClient) {}
 
   post(url: string, body: any) {
     return this.http.post(`${this.url}${url}`, body);
@@ -29,6 +28,23 @@ export class HttpServiceService {
 
   patch(url: string, body: any) {
     return this.http.patch(`${this.url}${url}`, body);
+  }
+
+  /**
+   * This function sends a verification email to the user's email address
+   * @param {any} tokenGet - The token you get from the Register API.
+   */
+  sendVerrification(tokenGet: any): Observable<any> {
+    console.log(tokenGet);
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${tokenGet}`,
+    });
+    return this.http.post(
+      this.url + 'auth/send-verification-email?captcha=false',
+      null,
+      { headers: header }
+    );
   }
   // register(data: any): Observable<any> {
   //   // console.log(data);
@@ -69,17 +85,6 @@ export class HttpServiceService {
   //   // });
 
   //   return this.http.get(`${this.url}auth/self`);
-  // }
-
-  // sendVerrification(tokenGet: any): Observable<any> {
-  //   // let header = new HttpHeaders({
-  //   //   'Content-Type': 'application/json',
-  //   //   Authorization: `Bearer ${tokenGet}`,
-  //   // });
-  //   return this.http.post(
-  //     this.url + 'auth/send-verification-email?captcha=false',
-  //     null
-  //   );
   // }
 
   // finalVerifyEmail(verificationToken: string): Observable<any> {

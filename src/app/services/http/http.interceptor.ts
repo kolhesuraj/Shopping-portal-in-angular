@@ -11,7 +11,6 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { LoginService } from '../login.service';
-import { Token } from '@angular/compiler';
 
 @Injectable()
 export class HttpsInterceptor implements HttpInterceptor {
@@ -21,12 +20,12 @@ export class HttpsInterceptor implements HttpInterceptor {
     private toster: HotToastService
   ) {}
 
- /**
-  * The function intercepts the request, adds the token to the request header, and then sends the
-  * request to the next handler
-  * @param request - HttpRequest<any> - The request object that is being intercepted.
-  * @param {HttpHandler} next - The next interceptor in the chain.
-  */
+  /**
+   * The function intercepts the request, adds the token to the request header, and then sends the
+   * request to the next handler
+   * @param request - HttpRequest<any> - The request object that is being intercepted.
+   * @param {HttpHandler} next - The next interceptor in the chain.
+   */
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -41,10 +40,13 @@ export class HttpsInterceptor implements HttpInterceptor {
         },
       });
     }
+
+    /* This is the code that is executed when the request is sent to the server. */
     return next.handle(request).pipe(
       finalize(() => {
         this.ls.loader.next(false);
       }),
+      /* This is the code that is executed when the request is sent to the server. */
       catchError((error: HttpErrorResponse) => {
         let status = error.status;
         this.toster.error(error.error.message);
@@ -58,20 +60,25 @@ export class HttpsInterceptor implements HttpInterceptor {
     );
   }
 
-
-
-/**
- * It returns true if the url contains any of the strings in the findArray
- * @param {string} url - The URL that the user is trying to access.
- */
+  /**
+   * It returns true if the url contains any of the strings in the findArray
+   * @param {string} url - The URL that the user is trying to access.
+   */
   isAuth(url: string) {
     let result: boolean = false;
-    let findArray = ['login', 'register', 'forgot-password', 'reset-password', 'verify-email'];
-    findArray.forEach(element => {
+    let findArray = [
+      'login',
+      'register',
+      'forgot-password',
+      'reset-password',
+      'verify-email',
+      'send-verification-email',
+    ];
+    findArray.forEach((element) => {
       if (url.includes(element)) {
         result = true;
       }
     });
-    return result
+    return result;
   }
 }
