@@ -40,24 +40,26 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {}
   logout() {
+    this.authService.signOut();
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/auth']);
-    this.authService.signOut();
   }
 
   sendverificationemail() {
     let token = this.ls.gettoken();
     console.log(token);
-    this.httpService.post('auth/send-verification-email?captcha=false',null).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        Swal.fire('Email send successfully', 'please check email and verify');
-      },
-      error: (err: any) => {
-        console.log(err);
-        Swal.fire('Email send failed');
-      },
-    });
+    this.httpService
+      .post('auth/send-verification-email?captcha=false', null)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+          Swal.fire('Email send successfully', 'please check email and verify');
+        },
+        error: (err: any) => {
+          console.log(err);
+          Swal.fire('Email send failed');
+        },
+      });
     // this.httpService.sendVerrification(token).subscribe({
     //   next: (res: any) => {
     //     console.log(res);
@@ -129,6 +131,6 @@ export class HomePageComponent implements OnInit {
   changePassword() {
     const dialogRef = this._dialog.open(ChangePasswordComponent, {
       width: '35%',
-    })
+    });
   }
 }

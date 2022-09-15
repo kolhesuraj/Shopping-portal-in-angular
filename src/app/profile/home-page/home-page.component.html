@@ -18,35 +18,34 @@
         <li class="nav-item">
           <a class="nav-link" (click)="org()">
             <mat-icon
-              class="ms-lg-1"
               aria-hidden="false"
               aria-label="Example edit icon"
               fontIcon="group"
+              class="d-lg-block d-none ms-lg-1"
             ></mat-icon>
-            <span class="d-lg-block ms-2 ms-lg-0">Org Page</span>
-            <span class="sr-only">(current)</span>
+            <span class="">Org Page</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="changePassword()">
             <mat-icon
-              class="ms-0 ms-lg-4"
+              class="ms-0 ms-lg-4 d-lg-block d-none"
               aria-hidden="false"
               aria-label="Example add profile icon"
               fontIcon="password"
             ></mat-icon>
-            <span class="d-lg-block ms-2 ms-lg-0">change password</span></a
+            <span class="">change password</span></a
           >
         </li>
         <li class="nav-item" [class.d-none]="loginrole == 'user'">
           <a class="nav-link" (click)="addProfile()">
             <mat-icon
-              class="ms-lg-2"
               aria-hidden="false"
               aria-label="Example add profile icon"
               fontIcon="person_add"
+              class="d-lg-block d-none ms-lg-2"
             ></mat-icon>
-            <span class="d-lg-block ms-2 ms-lg-0">add User</span></a
+            <span class="">add User</span></a
           >
         </li>
         <li class="nav-item">
@@ -55,9 +54,9 @@
               aria-hidden="false"
               aria-label="Example logout icon"
               fontIcon="logout"
-              class=""
+              class="d-lg-block d-none"
             ></mat-icon>
-            <span class="d-lg-block ms-2 ms-lg-0">logout</span></a
+            <span class="">logout</span></a
           >
         </li>
       </ul>
@@ -110,10 +109,7 @@
           Email <span style="margin-left: 120px">{{ data?.email }}</span>
         </div>
         <div class="fs-5 mt-3">
-          Role
-          <span style="margin-left: 133px" class="text-capitalize">{{
-            data?.role
-          }}</span>
+          Role <span style="margin-left: 133px" class="text-capitalize">{{ data?.role }}</span>
         </div>
         <div class="fs-5 mt-5"></div>
       </div>

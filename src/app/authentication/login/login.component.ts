@@ -4,9 +4,10 @@ import {
   SocialAuthService,
   SocialUser,
 } from '@abacritt/angularx-social-login';
+import { Token } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, UrlSegment } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -22,9 +23,9 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   hide = true;
   user!: SocialUser;
-  loggedIn!: boolean;
   accessToken!: string;
   captcha: any;
+  counter: boolean = false;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -42,46 +43,10 @@ export class LoginComponent implements OnInit {
     });
     this.refreshCaptcha();
     this.authService.authState.subscribe((user) => {
-      this.refreshCaptcha();
-
+      this.counter = true;
       // console.log(user);
       this.user = user;
-      this.loggedIn = user != null;
-      let data: any;
-      let provider!: String;
-      if (user.provider == 'GOOGLE') {
-        provider = 'google';
-        data = {
-          token: user.idToken,
-          captcha: this.captcha,
-        };
-      } else {
-        provider = 'facebook';
-        data = {
-          token: user.authToken,
-          captcha: this.captcha,
-        };
-      }
-
-      this.httpservice.post(`auth/login/${provider}`,data).subscribe({
-        next: (res: any) => {
-          // console.log(res);
-          this.validation(res);
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-      });
-
-      // this.httpservice.socialLogin(user, this.captcha).subscribe({
-      //   next: (res: any) => {
-      //     // console.log(res);
-      //     this.validation(res);
-      //   },
-      //   error: (err: any) => {
-      //     console.log(err);
-      //   },
-      // });
+      this.socialLogin(user);
     });
   }
 
@@ -123,33 +88,52 @@ export class LoginComponent implements OnInit {
       this.massage = true;
       this.loginFaildMssage = false;
     } else {
-      // console.log(this.loginForm.value);
-      // this.httpservice.login(this.loginForm.value).subscribe({
-      //   next: (res: any) => {
-      //     // console.log(res);
-      //     // localStorage.setItem('data', JSON.stringify(res));
-      //     this.validation(res);
-      //   },
-      //   error: (err) => {
-      //     console.log(err);
-      //     Swal.fire(err.error.message);
-      //     // alert(err.error.message)
-      //   },
-      // });
-
       this.httpservice.post('auth/login', this.loginForm.value).subscribe({
         next: (res: any) => {
-          // console.log(res);
-          // localStorage.setItem('data', JSON.stringify(res));
           this.validation(res);
         },
         error: (err) => {
           console.log(err);
           Swal.fire(err.error.message);
-          // alert(err.error.message)
         },
       });
     }
+  }
+
+  socialLogin(user: any) {
+    let data: any;
+    let provider!: String;
+    if (user.provider == 'GOOGLE') {
+      provider = 'google';
+      data = {
+        token: user.idToken,
+        captcha: this.captcha,
+      };
+    } else {
+      provider = 'facebook';
+      data = {
+        token: user.authToken,
+        captcha: this.captcha,
+      };
+    }
+    this.httpservice.post(`auth/login/${provider}`, data).subscribe({
+      next: (res: any) => {
+        this.validation(res);
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+
+    // this.httpservice.socialLogin(user, this.captcha).subscribe({
+    //   next: (res: any) => {
+    //     // console.log(res);
+    //     this.validation(res);
+    //   },
+    //   error: (err: any) => {
+    //     console.log(err);
+    //   },
+    // });
   }
 
   validation(res: any) {
@@ -166,7 +150,6 @@ export class LoginComponent implements OnInit {
         this.route.navigate(['/profile']);
         this.tocken = 0;
       }, 1500);
-      // this.route.navigate(['/auth/email-varify']);
     }
   }
   refreshToken(): void {
