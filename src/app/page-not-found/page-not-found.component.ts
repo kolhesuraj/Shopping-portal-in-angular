@@ -8,8 +8,8 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 export class PageNotFoundComponent implements OnInit {
   constructor(private elementRef: ElementRef) {}
   ngAfterViewInit() {
-    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
-      '#ffb703';
+    // this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+    //   '#ffb703';
   }
 
   ngOnInit(): void {}

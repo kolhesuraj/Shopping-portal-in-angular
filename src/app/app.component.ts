@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginService } from './services/login.service';
 
 @Component({
@@ -9,16 +8,10 @@ import { LoginService } from './services/login.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router, public ls: LoginService) {}
+  spinner!: Observable<boolean>
+  constructor(public ls: LoginService) { }
   ngOnInit(): void {
-    //   this.router.events.subscribe((roterEvent: Event) => {
-    //     if (roterEvent instanceof NavigationStart) {
-    //       this.show = true;
-    //     }
-    //     if (roterEvent instanceof NavigationEnd) {
-    //       this.show = false;
-    //     }
-    //   });
+    this.spinner = this.ls.loader
   }
   title = 'Project';
 }

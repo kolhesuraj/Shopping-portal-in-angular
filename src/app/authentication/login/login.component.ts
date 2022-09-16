@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]],
       captcha: [''],
     });
+
     this.refreshCaptcha();
     this.authService.authState.subscribe((user) => {
       this.counter = true;
@@ -91,10 +92,12 @@ export class LoginComponent implements OnInit {
       this.httpservice.post('auth/login', this.loginForm.value).subscribe({
         next: (res: any) => {
           this.validation(res);
+          this.refreshCaptcha();
         },
         error: (err) => {
           console.log(err);
           Swal.fire(err.error.message);
+          this.refreshCaptcha();
         },
       });
     }
@@ -119,9 +122,11 @@ export class LoginComponent implements OnInit {
     this.httpservice.post(`auth/login/${provider}`, data).subscribe({
       next: (res: any) => {
         this.validation(res);
+        this.refreshCaptcha();
       },
       error: (err: any) => {
         console.log(err);
+        this.refreshCaptcha();
       },
     });
 
@@ -141,13 +146,13 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('LoginUser', res.token);
     if (res.user.isEmailVerified == true) {
       setTimeout(() => {
-        this.route.navigate(['/profile']);
+        this.route.navigate(['/products']);
         this.tocken = 0;
       }, 1500);
     } else {
       Swal.fire('email not varified', ' please varify');
       setTimeout(() => {
-        this.route.navigate(['/profile']);
+        this.route.navigate(['/products']);
         this.tocken = 0;
       }, 1500);
     }
@@ -171,5 +176,8 @@ export class LoginComponent implements OnInit {
   }
   forgot() {
     this.route.navigate(['./auth/forgot-password']);
+  }
+  signOut(): void {
+    this.authService.signOut();
   }
 }

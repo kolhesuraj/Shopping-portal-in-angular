@@ -1,0 +1,112 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4 fixed-top">
+  <a class="navbar-brand text-white ms-5">Products</a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4">
+      <li class="nav-item">
+        <a class="nav-link me-5" routerLink="/profile">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example edit icon"
+            fontIcon="person"
+            class="d-lg-block d-none mx-lg-auto"
+          ></mat-icon>
+          <span class="">profile Page</span>
+        </a>
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" routerLink="/products/add_product">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="widgets"
+            class="d-lg-block d-none m-lg-auto"
+          ></mat-icon>
+          <span class="">Add Product</span></a
+        >
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" (click)="logout()">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="logout"
+            class="d-lg-block d-none"
+          ></mat-icon>
+          <span class="">Logout</span></a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="ms-3 row ">
+  <div
+    class="card mb-5 border border-dark ms-4 me-4 col-1"
+    style="width: 20rem; height: 25rem"
+    *ngFor="let item of list.results; let i = index"
+  >
+    <div *ngIf="item.images.length >= 1; else elseBlock" style="height: 18rem;" >
+      <div
+        id="img{{ i }}"
+        class="carousel slide mt-3 mb-2 justify-content-center"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div
+            class="carousel-item"
+            *ngFor="let img of item.images; let j = index"
+            [class.active]="j == 0"
+          >
+            <img [src]="img.url" class="" alt="img.public_id" />
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          attr.data-bs-target="#img{{ i }}"
+          data-bs-slide="prev"
+          [class.d-none]="item.images.length <= 1"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          attr.data-bs-target="#img{{ i }}"
+          data-bs-slide="next"
+          [class.d-none]="item.images.length <= 1"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="false"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <div style="height: 18rem"></div>
+    </ng-template>
+
+    <div class="card-body mt-1">
+      <h3 class="card-title d-block" style="font-weight: 500">
+        {{ item.name }}
+      </h3>
+      <p class="card-text">
+        {{ item.description }}
+      </p>
+      <h2 class="card-text">Rs.{{ item.price }}</h2>
+      <button class="btn btn-primary" (click)="gotoproduct(item._id)">Details</button>
+      <button class="btn btn-danger ms-2" (click)="deleteProduct(item._id)">delete</button>
+    </div>
+  </div>
+</div>

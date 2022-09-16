@@ -72,9 +72,6 @@ export class HomePageComponent implements OnInit {
     // });
   }
 
-  org() {
-    this.route.navigate(['profile/org']);
-  }
 
   // editProfile() {
   //   const dialogRef = this._dialog.open(EditProfileComponent, {
@@ -119,13 +116,6 @@ export class HomePageComponent implements OnInit {
     //     console.log(err);
     //   },
     // });
-  }
-
-  addProfile() {
-    const dialogRef = this._dialog.open(AddUserComponent, {
-      width: '50%',
-      // backdropClass: 'dialog-bg-trans',
-    });
   }
 
   changePassword() {

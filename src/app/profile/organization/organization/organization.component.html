@@ -37,9 +37,9 @@
               aria-hidden="false"
               aria-label="Example home icon"
               fontIcon="home"
-              class="d-lg-block d-none"
+              class="d-lg-block d-none mx-lg-auto"
             ></mat-icon>
-            <span class="">home</span>
+            <span class="">Home</span>
           </a>
         </li>
         <li class="nav-item" [class.d-none]="loginRole == 'user'">
@@ -49,9 +49,9 @@
               aria-hidden="false"
               aria-label="edit organization details"
               fontIcon="settings"
-              class="d-lg-block d-none ms-lg-4"
+              class="d-lg-block d-none ms-lg-3"
             ></mat-icon>
-            <span class="">update org</span></a
+            <span class="">Update Org</span></a
           >
         </li>
         <li class="nav-item" [class.d-none]="loginRole == 'user'">
@@ -63,7 +63,18 @@
               fontIcon="person_add"
               class="d-lg-block d-none ms-lg-2"
             ></mat-icon>
-            <span class=" ">add User</span></a
+            <span class=" ">New User</span></a
+          >
+        </li>
+        <li class="nav-item" [class.d-none]="loginRole == 'user'">
+          <a class="nav-link" routerLink="/products">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example add profile icon"
+              fontIcon="list_alt"
+              class="d-lg-block d-none m-lg-auto"
+            ></mat-icon>
+            <span class="">product List</span></a
           >
         </li>
         <li class="nav-item">
@@ -74,7 +85,7 @@
               fontIcon="logout"
               class="d-lg-block d-none"
             ></mat-icon>
-            <span class=" ">logout</span>
+            <span class=" ">Logout</span>
           </a>
         </li>
       </ul>

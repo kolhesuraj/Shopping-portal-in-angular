@@ -5,6 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
 import { catchError, finalize, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -30,7 +31,7 @@ export class HttpsInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.ls.loader.next(true);
+    this.ls.showloader();
     // console.log(request);
     const url = request.url;
     if (this.isAuthRequaire(request.url) == false) {
@@ -39,14 +40,14 @@ export class HttpsInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${this.ls.gettoken()}`,
         },
       });
+      // console.log(request)
     }
 
     /* This is the code that is executed when the request is sent to the server. */
     return next.handle(request).pipe(
       finalize(() => {
-        this.ls.loader.next(false);
+        this.ls.hideloader()
       }),
-      /* This is the code that is executed when the request is sent to the server. */
       catchError((error: HttpErrorResponse) => {
         let status = error.status;
         this.toster.error(error.error.message);
@@ -58,6 +59,12 @@ export class HttpsInterceptor implements HttpInterceptor {
         throw new Error('error');
       })
     );
+    // return next.handle(request).do((event: HttpEvent<any>) => {
+    //   if (event instanceof HttpResponse) {
+      
+    // }
+    // })
+
   }
 
   /**
@@ -72,7 +79,7 @@ export class HttpsInterceptor implements HttpInterceptor {
       'forgot-password',
       'reset-password',
       'verify-email',
-      'send-verification-email',
+      'send-verification-email'
     ];
     findArray.forEach((element) => {
       if (url.includes(element)) {

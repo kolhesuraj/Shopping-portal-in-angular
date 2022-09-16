@@ -7,7 +7,6 @@
     >
       Register successfully
     </div>
-    <!-- <img src="../../../assets/register.jpeg" alt="register.png"> -->
     <h1 class="text-center">Add User</h1>
     <form [formGroup]="register" class="w-100 p-5" (ngSubmit)="addUser()">
       <div>
@@ -30,15 +29,6 @@
       </div>
       <div class="mt-3">
         <label class="d-inline w-25 me-5">Role</label>
-        <!-- <input
-          type="text"
-          formControlName="Role"
-          name="Role"
-          class="form-control d-inline ms-5"
-          [class.is-invalid]="
-            (Role?.invalid && Role?.touched) || (submited && Role?.untouched)
-          "
-        /> -->
         <select
           name="cars"
           formControlName="role"

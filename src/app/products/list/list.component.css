@@ -1,0 +1,12 @@
+li {
+  cursor: pointer;
+  margin-left: 30px;
+}
+img{
+  width: auto;
+  height: 150px;
+}
+.row{
+    position:relative;
+  top: 120px;
+}

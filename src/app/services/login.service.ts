@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -9,7 +8,13 @@ export class LoginService {
   LogIndata = new BehaviorSubject({});
   loader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
+  constructor() { }
+  showloader() {
+    this.loader.next(true);
+  }
+  hideloader() {
+    this.loader.next(false);
+  }
 
   loadData() {
     let temp: any = localStorage.getItem('LoginUser');
