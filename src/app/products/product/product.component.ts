@@ -1,6 +1,11 @@
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import Swal from 'sweetalert2';
+import { UpdateImagesComponent } from '../update-images/update-images.component';
+import { UpdateProductComponent } from '../update-product/update-product.component';
 
 @Component({
   selector: 'app-product',
@@ -8,22 +13,95 @@ import { HttpServiceService } from 'src/app/services/http/http-service.service';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
+  product: any;
+  productId: any;
   constructor(
     private activateRoute: ActivatedRoute,
-    private httpservice: HttpServiceService
-  ) {}
-  productId: any;
-  ngOnInit(): void {
-    this.productId = this.activateRoute.snapshot.paramMap.get('id')
+    private httpservice: HttpServiceService,
+    private authService: SocialAuthService,
+    private route: Router,
+    private _dialog: MatDialog
+  ) {
+    this.productId = this.activateRoute.snapshot.paramMap.get('id');
     this.getDetails();
   }
+
+  ngOnInit(): void {}
   getDetails() {
     this.httpservice.get(`products/${this.productId}`).subscribe({
       next: (res) => {
-        console.log(res);
+        this.product = res;
+        // console.log(res);
+        // console.log(this.product);
       },
       error: (err) => {
         console.log(err);
+      },
+    });
+  }
+
+  logout() {
+    this.authService.signOut();
+    localStorage.removeItem('LoginUser');
+    this.route.navigate(['/auth']);
+  }
+  update() {
+    const dialog = this._dialog.open(UpdateProductComponent, {
+      width:'100%',
+      data: {
+        product_id: this.productId,
+        name: this.product.name,
+        description: this.product.description,
+        price: this.product.price,
+      },
+    });
+    dialog.afterClosed().subscribe(() => {
+      this.getDetails();
+    });
+  }
+  updateImages() {
+    const dialog = this._dialog.open(UpdateImagesComponent, {
+      width: '100%',
+      data: {
+        product: this.product,
+      },
+    });
+    dialog.afterOpened().subscribe(() => {
+      const first = document.querySelector('.navbar') as HTMLElement;
+      first.classList.remove('sticky-top');
+    });
+    dialog.afterClosed().subscribe(() => {
+      const first = document.querySelector('.navbar') as HTMLElement;
+      first.classList.add('sticky-top');
+      this.getDetails();
+    });
+  }
+
+  deleteProduct() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.httpservice.delete(`products/${this.productId}`).subscribe({
+          next: () => {
+            Swal.fire('Deleted!', 'Your Product has been deleted.', 'success');
+            this.route.navigate(['./products']);
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Something went wrong! ${err}`,
+            });
+          },
+        });
       }
     });
   }

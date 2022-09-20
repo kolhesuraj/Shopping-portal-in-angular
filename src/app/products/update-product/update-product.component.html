@@ -1,0 +1,80 @@
+<div class="container-fluid border border-dark">
+  <p class="display-5 text-center">Update Product</p>
+  <div>
+    <form
+      [formGroup]="updateProductForm"
+      class="p-5 m-auto"
+      (ngSubmit)="updateDetils()"
+    >
+      <div class="form-floating mb-4">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          formControlName="name"
+          placeholder="Product Name"
+          [class.is-invalid]="Name?.invalid && Name?.touched"
+        />
+        <label for="floatingInput">Product Name</label>
+        <small
+          class="text-danger float-end"
+          *ngIf="Name?.invalid && Name?.touched"
+        >
+          Product Name required</small
+        >
+      </div>
+      <div class="form-floating mb-4">
+        <textarea
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          formControlName="description"
+          placeholder="Description of Product"
+          [class.is-invalid]="description?.invalid && description?.touched"
+        ></textarea>
+        <label for="floatingInput">Description</label>
+        <small
+          class="text-danger float-end"
+          *ngIf="description?.invalid && description?.touched"
+        >
+          Product Description required</small
+        >
+      </div>
+
+      <div class="form-floating">
+        <input
+          type="number"
+          class="form-control"
+          id="floatingInput"
+          formControlName="price"
+          placeholder="Price"
+          [class.is-invalid]="price?.invalid && price?.touched"
+        />
+        <label for="floatingInput">Price</label>
+        <small
+          class="text-danger float-end"
+          *ngIf="price?.invalid && price?.touched"
+        >
+          Product Price required</small
+        >
+      </div>
+      <div *ngIf="incomplete" class="text-danger float-start">
+        Please add all details
+      </div>
+      <div class="mt-5">
+        <button type="submit" mat-flat-button color="primary">
+          Update Details
+        </button>
+        <button
+          type="reset"
+          mat-flat-button
+          color="warn"
+          class="ms-5"
+          mat-dialog-close
+        >
+          Cancle
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

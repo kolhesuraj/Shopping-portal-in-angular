@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginService } from 'src/app/services/login.service';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { Router } from '@angular/router';
 import { UpdateOrgComponent } from '../update-org/update-org.component';
@@ -20,7 +19,6 @@ export class OrganizationComponent implements OnInit {
   myControl = new FormControl('');
   constructor(
     private httpService: HttpServiceService,
-    private ls: LoginService,
     private _dialog: MatDialog,
     private route: Router,
     private authService: SocialAuthService
@@ -136,19 +134,6 @@ export class OrganizationComponent implements OnInit {
         Swal.fire(err);
       },
     });
-    // this.httpService.orgUsers(data).subscribe({
-    //   next: (res: any) => {
-    //     this.result = res.results;
-    //     this.list = res;
-    //     if (this.flag == 0) {
-    //       this.getSuggetion();
-    //       this.flag = 1;
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     Swal.fire(err);
-    //   },
-    // });
   }
 
   /**
@@ -169,16 +154,6 @@ export class OrganizationComponent implements OnInit {
         console.log(err);
       },
     });
-    // this.httpService.orgUsers(data).subscribe({
-    //   next: (res) => {
-    //     res.results.forEach((element: any) => {
-    //       if (this.suggestion.includes(element.name)) {
-    //       } else {
-    //         this.suggestion.push(element.name);
-    //       }
-    //     });
-    //   },
-    // });
   }
 
   logout() {
@@ -357,15 +332,6 @@ export class OrganizationComponent implements OnInit {
                 console.log(err);
               },
             });
-            // this.httpService.updateRole(roleget, id).subscribe({
-            //   next: (res: any) => {
-            //     // console.log(res);
-            //     this.getUsers();
-            //   },
-            //   error: (err: any) => {
-            //     console.log(err);
-            //   },
-            // });
           } else {
             Swal.fire('role must be admin or user');
           }
@@ -375,5 +341,4 @@ export class OrganizationComponent implements OnInit {
       Swal.fire("users cann't change role");
     }
   }
-
 }

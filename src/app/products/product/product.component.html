@@ -1,1 +1,116 @@
-<p>product works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4 sticky-top">
+  <a class="navbar-brand text-white ms-5">Products</a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4">
+      <li class="nav-item">
+        <a class="nav-link me-5" routerLink="/profile">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example edit icon"
+            fontIcon="person"
+            class="d-lg-block d-none mx-lg-auto"
+          ></mat-icon>
+          <span class="">profile Page</span>
+        </a>
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" routerLink="/products">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example list icon"
+            fontIcon="list_alt"
+            class="d-lg-block d-none m-lg-auto"
+          ></mat-icon>
+          <span class="">All Product</span></a
+        >
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" routerLink="/products/add_product">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="widgets"
+            class="d-lg-block d-none m-lg-auto"
+          ></mat-icon>
+          <span class="">Add Product</span></a
+        >
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" (click)="logout()">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="logout"
+            class="d-lg-block d-none"
+          ></mat-icon>
+          <span class="">Logout</span></a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container border-dark border mt-3 p-5">
+  <div
+    id="carouselExampleControls"
+    class="carousel slide"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-inner text-center">
+      <div
+        class="carousel-item"
+        *ngFor="let img of product?.images; let j = index"
+        [class.active]="j == 0"
+      >
+        <img [src]="img.url" alt="img.public_id" />
+      </div>
+      <!-- <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="..." class="d-block w-100" alt="...">
+    </div> -->
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleControls"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="text-center mt-3">
+    Name:
+    <h1>{{ product?.name }}</h1>
+    Description:
+    <h4>{{ product?.description }}</h4>
+  </div>
+  <div class="text-center">
+    <button class="btn btn-primary me-3" (click)="update()">update</button>
+    <button class="btn btn-primary me-3" (click)="updateImages()">update images</button>
+    <button class="btn btn-danger me-3" (click)="deleteProduct()">delete</button>
+
+  </div>
+</div>

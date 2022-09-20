@@ -27,15 +27,15 @@ export class AddProductComponent implements OnInit {
     public fb: FormBuilder,
     private route: Router,
     private authService: SocialAuthService
-  ) {
-    this.addProductForm = fb.group({
+  ) {}
+  ngOnInit(): void {
+    this.addProductForm = this.fb.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       price: ['', [Validators.required]],
       images: ['', [Validators.required]],
     });
   }
-  ngOnInit(): void {}
 
   get Name() {
     return this.addProductForm.get('name');
