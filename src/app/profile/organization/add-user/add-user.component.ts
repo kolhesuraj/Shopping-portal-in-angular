@@ -66,6 +66,11 @@ export class AddUserComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Something went wrong! ${err}`,
+          });
         },
       });
       // this.httpService.addOrgUser(dataSent).subscribe({

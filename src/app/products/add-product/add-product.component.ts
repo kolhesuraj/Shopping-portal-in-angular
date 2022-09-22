@@ -1,15 +1,12 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
-import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -76,10 +73,15 @@ export class AddProductComponent implements OnInit {
         next: () => {
           Swal.fire('Product Added successfully', 'Go for next product');
           this.addProductForm.reset();
-          this.cancle();
+          this.reset();
         },
         error: (err) => {
           Swal.fire(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Something went wrong! ${err}`,
+          });
         },
       });
     } else {
@@ -91,7 +93,13 @@ export class AddProductComponent implements OnInit {
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/auth']);
   }
-  cancle() {
+
+  cancel() {
+    this.reset();
+    this.route.navigate(['/products/list']);
+  }
+
+  reset() {
     this.incomplete = false;
     this.imageSrc = [];
   }

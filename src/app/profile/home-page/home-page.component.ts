@@ -57,7 +57,11 @@ export class HomePageComponent implements OnInit {
         },
         error: (err: any) => {
           console.log(err);
-          Swal.fire('Email send failed');
+             Swal.fire({
+               icon: 'error',
+               title: 'Oops... Email send Failed',
+               text: `Something went wrong! ${err}`,
+             });
         },
       });
     // this.httpService.sendVerrification(token).subscribe({

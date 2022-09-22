@@ -1,7 +1,11 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialogClose,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
@@ -10,7 +14,7 @@ interface dialogdata {
   product_id: string;
   name: string;
   description: string;
-  price:number
+  price: number;
 }
 @Component({
   selector: 'app-update-product',
@@ -49,8 +53,6 @@ export class UpdateProductComponent implements OnInit {
     return this.updateProductForm.get('price');
   }
 
-  
-
   updateDetils() {
     if (this.updateProductForm.valid) {
       this.incomplete = false;
@@ -63,12 +65,20 @@ export class UpdateProductComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            Swal.fire('Product updated successfully');
+            Swal.fire({
+              title: 'Product updated successfully',
+              icon: 'success',
+            });
             this.updateProductForm.reset();
             this._dialogRef.close();
           },
           error: (err) => {
             Swal.fire(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Something went wrong! ${err}`,
+            });
           },
         });
     } else {
@@ -81,5 +91,4 @@ export class UpdateProductComponent implements OnInit {
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/auth']);
   }
-
 }

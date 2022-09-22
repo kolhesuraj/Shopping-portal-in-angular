@@ -22,7 +22,7 @@
             fontIcon="person"
             class="d-lg-block d-none mx-lg-auto"
           ></mat-icon>
-          <span class="">profile Page</span>
+          <span class="">Profile Page</span>
         </a>
       </li>
       <li class="nav-item me-5">
@@ -54,7 +54,7 @@
   <a class="closebtn" (click)="closeNav()">&times;</a>
   <a href="#submenu1" data-bs-toggle="collapse" class="align-middle">
     <i class="fa fa-sort"></i>
-    <span class="ms-1 d-none d-sm-inline">sort by</span></a
+    <span class="ms-1 d-none d-sm-inline">Sort By</span></a
   >
   <ul
     class="collapse nav flex-column ms-1"
@@ -68,7 +68,7 @@
   </ul>
   <a href="#submenu2" data-bs-toggle="collapse" class="align-middle">
     <i class="fa fa-columns"></i>
-    <span class="ms-1 d-none d-sm-inline">items per page </span></a
+    <span class="ms-1 d-none d-sm-inline">Items Per Page </span></a
   >
   <ul
     class="collapse nav flex-column ms-1"
@@ -85,7 +85,7 @@
 <div class="d-flex mt-3">
   <span class="d-inline"
     ><button (click)="openNav()" mat-raised-button class="ms-2">
-      filter
+      Filter
     </button></span
   >
 
@@ -171,12 +171,12 @@
         Details
       </button>
       <button class="btn btn-danger ms-2" (click)="deleteProduct(item._id)">
-        delete
+        Delete
       </button>
     </div>
   </div>
   <div class="container text-center" [class.d-none]="!list">
-    <h4 class="text-secondary">Nothing to show</h4>
+    <h4 class="text-secondary">Nothing To Show</h4>
   </div>
   <div id="footer" class="fixed-bottom bg-body pt-2 border-top">
     <div class="container w-100">
@@ -234,7 +234,7 @@
 
           <li class="ms-auto">
             <div class="text-secondary mt-3">
-              showing result {{ result ? result.length : "0" }} out of
+              Showing Result {{ result ? result.length : "0" }} Out Of
               {{ list.totalResults }}
             </div>
           </li>

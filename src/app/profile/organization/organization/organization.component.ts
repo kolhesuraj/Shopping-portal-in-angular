@@ -131,7 +131,11 @@ export class OrganizationComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        Swal.fire(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `Something went wrong! ${err}`,
+        });
       },
     });
   }
@@ -152,6 +156,11 @@ export class OrganizationComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+           Swal.fire({
+             icon: 'error',
+             title: 'Oops... Suggestion Fetch Failed',
+             text: `Something went wrong! ${err}`,
+           });
       },
     });
   }
@@ -330,6 +339,11 @@ export class OrganizationComponent implements OnInit {
               },
               error: (err: any) => {
                 console.log(err);
+                   Swal.fire({
+                     icon: 'error',
+                     title: 'Oops...',
+                     text: `Something went wrong! ${err}`,
+                   });
               },
             });
           } else {

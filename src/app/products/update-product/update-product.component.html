@@ -20,7 +20,7 @@
           class="text-danger float-end"
           *ngIf="Name?.invalid && Name?.touched"
         >
-          Product Name required</small
+          Product Name Required</small
         >
       </div>
       <div class="form-floating mb-4">
@@ -37,7 +37,7 @@
           class="text-danger float-end"
           *ngIf="description?.invalid && description?.touched"
         >
-          Product Description required</small
+          Product Description Required</small
         >
       </div>
 
@@ -55,11 +55,11 @@
           class="text-danger float-end"
           *ngIf="price?.invalid && price?.touched"
         >
-          Product Price required</small
+          Product Price Required</small
         >
       </div>
       <div *ngIf="incomplete" class="text-danger float-start">
-        Please add all details
+        Please Add All Details
       </div>
       <div class="mt-5">
         <button type="submit" mat-flat-button color="primary">
@@ -72,7 +72,7 @@
           class="ms-5"
           mat-dialog-close
         >
-          Cancle
+          Cancel
         </button>
       </div>
     </form>

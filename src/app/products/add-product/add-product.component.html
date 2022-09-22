@@ -127,11 +127,16 @@
       <div *ngIf="incomplete" class="text-danger float-start">
         Please add all details
       </div>
-       <div>
-      <span *ngFor="let img of imageSrc">
-        <img [src]="img" alt="img" style="height: 5rem" class="mx-2 mt-2 mb-2" />
-      </span>
-    </div>
+      <div>
+        <span *ngFor="let img of imageSrc">
+          <img
+            [src]="img"
+            alt="img"
+            style="height: 5rem"
+            class="mx-2 mt-2 mb-2"
+          />
+        </span>
+      </div>
       <div class="mt-5">
         <button type="submit" mat-flat-button color="primary">
           Add Product
@@ -141,13 +146,12 @@
           mat-flat-button
           color="warn"
           class="ms-5"
-          (click)="cancle()"
+          (click)="cancel()"
           (click)="imgs.value = ''"
         >
-          Cancle
+          Cancel
         </button>
       </div>
     </form>
-   
   </div>
 </div>

@@ -39,11 +39,16 @@ export class UpdateImagesComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-          Swal.fire('updated');
+          Swal.fire({title: 'Images Updated Successfully', icon:'success'});
           this._dialogRef.close();
         },
         error: (err) => {
           console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Something went wrong! ${err}`,
+          });
         },
       });
   }

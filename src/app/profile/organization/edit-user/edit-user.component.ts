@@ -49,13 +49,20 @@ export class EditUserComponent implements OnInit {
   save() {
     if (this.editForm.valid) {
       // console.log(this.editForm.value);
-      this.httpservice.patch(`users/${this.data.id}`, this.editForm.value).subscribe({
+      this.httpservice
+        .patch(`users/${this.data.id}`, this.editForm.value)
+        .subscribe({
           next: (res: any) => {
             Swal.fire('user details updated successfully');
             this._dialogRef.close();
           },
           error: (err: any) => {
             console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Something went wrong! ${err}`,
+            });
           },
         });
       // this.httpservice.updateUser(this.data.id, name, email).subscribe({

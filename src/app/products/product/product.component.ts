@@ -36,6 +36,11 @@ export class ProductComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `Something went wrong! ${err}`,
+        });
       },
     });
   }
@@ -47,7 +52,7 @@ export class ProductComponent implements OnInit {
   }
   update() {
     const dialog = this._dialog.open(UpdateProductComponent, {
-      width:'100%',
+      width: '100%',
       data: {
         product_id: this.productId,
         name: this.product.name,

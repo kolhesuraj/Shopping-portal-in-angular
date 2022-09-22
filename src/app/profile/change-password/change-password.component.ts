@@ -50,7 +50,11 @@ export class ChangePasswordComponent implements OnInit {
           },
           error: (err: any) => {
             console.log(err);
-            console.log('error');
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Something went wrong! ${err}`,
+            });
           },
         });
       // this.httpService.changePassword(this.changePassword.value).subscribe({
