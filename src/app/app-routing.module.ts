@@ -1,28 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LoginGuard } from './services/gard/login.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'shop', pathMatch: 'full' },
   {
-    path: 'auth',
+    path: 'shop',
     loadChildren: () =>
-      import('./authentication/authentication.module').then(
-        (m) => m.AuthenticationModule
-      ),
+      import('./shopping/shopping.module').then((m) => m.ShoppingModule),
   },
   {
-    path: 'profile',
+    path: 'seller',
     loadChildren: () =>
-      import('./profile/profile.module').then((m) => m.ProfileModule),
-    canActivate: [LoginGuard],
-  },
-  {
-    path: 'products',
-    loadChildren: () =>
-      import('./products/products.module').then((m) => m.ProductsModule),
-    canActivate: [LoginGuard],
+      import('./seller/seller.module').then((m) => m.SellerModule),
   },
   { path: '**', component: PageNotFoundComponent },
 ];

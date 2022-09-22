@@ -1,0 +1,157 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
+  <a class="navbar-brand text-white ms-5">Products</a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4">
+      <li class="nav-item">
+        <a class="nav-link me-5" routerLink="/seller/profile">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example edit icon"
+            fontIcon="person"
+            class="d-lg-block d-none mx-lg-auto"
+          ></mat-icon>
+          <span class="">profile Page</span>
+        </a>
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" routerLink="/seller/products">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="apps"
+            class="d-lg-block d-none m-lg-auto"
+          ></mat-icon>
+          <span class="">All Product</span></a
+        >
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" (click)="logout()">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="logout"
+            class="d-lg-block d-none"
+          ></mat-icon>
+          <span class="">Logout</span></a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container border border-dark mt-5">
+  <p class="display-5 text-center">Add Product</p>
+  <div>
+    <form
+      [formGroup]="addProductForm"
+      class="w-50 p-5 m-auto"
+      (ngSubmit)="addProduct()"
+    >
+      <div class="form-floating mb-4">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          formControlName="name"
+          placeholder="Product Name"
+          [class.is-invalid]="Name?.invalid && Name?.touched"
+        />
+        <label for="floatingInput">Product Name</label>
+        <small
+          class="text-danger float-end"
+          *ngIf="Name?.invalid && Name?.touched"
+        >
+          Product Name required</small
+        >
+      </div>
+      <div class="form-floating mb-4">
+        <textarea
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          formControlName="description"
+          placeholder="Description of Product"
+          [class.is-invalid]="description?.invalid && description?.touched"
+        ></textarea>
+        <label for="floatingInput">Description</label>
+        <small
+          class="text-danger float-end"
+          *ngIf="description?.invalid && description?.touched"
+        >
+          Product Description required</small
+        >
+      </div>
+
+      <div class="form-floating mb-4">
+        <input
+          type="file"
+          class="form-control"
+          id="floatingInput"
+          placeholder="Product Name"
+          #imgs
+          name="imgs"
+          (change)="imageSelected($event)"
+          multiple
+        />
+        <label for="floatingInput">Images</label>
+      </div>
+
+      <div class="form-floating">
+        <input
+          type="number"
+          class="form-control"
+          id="floatingInput"
+          formControlName="price"
+          placeholder="Price"
+          [class.is-invalid]="price?.invalid && price?.touched"
+        />
+        <label for="floatingInput">Price</label>
+        <small
+          class="text-danger float-end"
+          *ngIf="price?.invalid && price?.touched"
+        >
+          Product Price required</small
+        >
+      </div>
+      <div *ngIf="incomplete" class="text-danger float-start">
+        Please add all details
+      </div>
+      <div>
+        <span *ngFor="let img of imageSrc">
+          <img
+            [src]="img"
+            alt="img"
+            style="height: 5rem"
+            class="mx-2 mt-2 mb-2"
+          />
+        </span>
+      </div>
+      <div class="mt-5">
+        <button type="submit" mat-flat-button color="primary">
+          Add Product
+        </button>
+        <button
+          type="reset"
+          mat-flat-button
+          color="warn"
+          class="ms-5"
+          (click)="cancel()"
+          (click)="imgs.value = ''"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

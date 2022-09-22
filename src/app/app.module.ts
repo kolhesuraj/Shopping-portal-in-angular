@@ -3,12 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthenticationModule } from './authentication/authentication.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HotToastModule } from '@ngneat/hot-toast';
-import { HttpsInterceptor } from './services/http/http.interceptor';
 import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
 import {
@@ -17,6 +14,8 @@ import {
   FacebookLoginProvider,
   // SocialLoginModule,
 } from '@abacritt/angularx-social-login';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HttpsInterceptor } from './services/http/http.interceptor';
 
 
 @NgModule({
@@ -26,10 +25,8 @@ import {
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    // AuthenticationModule,
     HotToastModule.forRoot(),
     RecaptchaV3Module,
-    // SocialLoginModule,
   ],
   providers: [
     {

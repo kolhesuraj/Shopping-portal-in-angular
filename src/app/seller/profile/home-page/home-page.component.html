@@ -1,0 +1,121 @@
+<div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
+    <a class="navbar-brand text-white">Home Page</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/seller/profile/org">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example edit icon"
+              fontIcon="dashboard"
+              class="d-lg-block d-none mx-lg-auto"
+            ></mat-icon>
+            <span class="">Org Page</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="changePassword()">
+            <mat-icon
+              class="ms-0 m-lg-auto d-lg-block d-none"
+              aria-hidden="false"
+              aria-label="Example add profile icon"
+              fontIcon="password"
+            ></mat-icon>
+            <span class="">Change Password</span></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/seller/products">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example add profile icon"
+              fontIcon="list_alt"
+              class="d-lg-block d-none m-lg-auto"
+            ></mat-icon>
+            <span class="">product List</span></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example logout icon"
+              fontIcon="logout"
+              class="d-lg-block d-none"
+            ></mat-icon>
+            <span class="">Logout</span></a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="pt-5 profile">
+    <div class="w-75 m-auto p-5 rounded-3 card">
+      <div class="m-auto text-center">
+        <img
+          src="../../../../../assets/profile.webp"
+          alt="Profile"
+          class="w-25 rounded-circle"
+          data-toggle="tooltip"
+          title="Name: {{ data.name }} _ created on: {{
+            data.createdAt | date
+          }}"
+        />
+      </div>
+      <div class="m-auto w-auto mt-5">
+        <div class="fs-5 mt-3">
+          Name
+          <span style="margin-left: 120px">{{ data.name }}</span>
+          <div
+            *ngIf="data.isEmailVerified; else notverified"
+            class="ms-1 d-inline"
+            data-toggle="tooltip"
+            title="verified"
+          >
+            <i
+              class="fa-solid fa-check bg-success text-white rounded-circle"
+            ></i>
+          </div>
+          <ng-template #notverified>
+            <button
+              class="d-inline ms-1 border-0"
+              (click)="sendverificationemail()"
+              data-toggle="tooltip"
+              title="click to verified"
+            >
+              <i
+                class="fa-solid fa-circle-exclamation text-warning bg-dark rounded-circle"
+              ></i></button
+          ></ng-template>
+        </div>
+        <div class="fs-5 mt-3">
+          Company Name
+          <span style="margin-left: 30px">{{ data?._org?.name }}</span>
+        </div>
+        <div class="fs-5 mt-3">
+          Email <span style="margin-left: 120px">{{ data?.email }}</span>
+        </div>
+        <div class="fs-5 mt-3">
+          Role
+          <span style="margin-left: 133px" class="text-capitalize">{{
+            data?.role
+          }}</span>
+        </div>
+        <div class="fs-5 mt-5"></div>
+      </div>
+    </div>
+  </div>
+</div>

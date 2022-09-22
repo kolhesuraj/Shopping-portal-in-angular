@@ -1,5 +1,5 @@
-import { Component, Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { LoginService } from './services/login.service';
 
 @Component({
@@ -8,10 +8,10 @@ import { LoginService } from './services/login.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  spinner!: Observable<boolean>
-  constructor(public ls: LoginService) { }
+  spinner!: Observable<boolean>;
+  constructor(public ls: LoginService) {}
   ngOnInit(): void {
-    this.spinner = this.ls.loader
+    this.spinner = this.ls.loader;
   }
   title = 'Project';
 }
