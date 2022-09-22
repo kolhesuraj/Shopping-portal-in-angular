@@ -37,7 +37,7 @@
         >
       </li>
       <li class="nav-item me-5">
-        <a class="nav-link" (click)="logout()">
+        <a class="nav-link" (click)="Logout()">
           <mat-icon
             aria-hidden="false"
             aria-label="Example logout icon"
@@ -167,7 +167,7 @@
         {{ item.description }}
       </p>
       <h2 class="card-text">Rs.{{ item.price }}</h2>
-      <button class="btn btn-primary" (click)="gotoproduct(item._id)">
+      <button class="btn btn-primary" (click)="gotoProduct(item._id)">
         Details
       </button>
       <button class="btn btn-danger ms-2" (click)="deleteProduct(item._id)">

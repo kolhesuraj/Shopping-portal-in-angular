@@ -79,6 +79,8 @@ img {
 .carousel-control-prev /*, .carousel-indicators */ {
   filter: invert(100%);
 }
-.desc{
-  min-height: 62px;
+.desc {
+  min-height: 5rem;
+  min-width: 5rem;
+  max-height: 5rem;
 }

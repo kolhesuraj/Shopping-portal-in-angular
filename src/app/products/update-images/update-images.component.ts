@@ -52,7 +52,7 @@ export class UpdateImagesComponent implements OnInit {
         },
       });
   }
-  deleteimg(id: number) {
+  deleteImg(id: number) {
     console.log(this.deletearray);
     let token = false;
     if (this.deletearray.length < 1) {

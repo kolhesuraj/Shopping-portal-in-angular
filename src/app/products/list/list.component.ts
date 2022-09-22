@@ -96,6 +96,11 @@ export class ListComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `Something went wrong! ${err}`,
+        });
       },
     });
   }
@@ -104,14 +109,14 @@ export class ListComponent implements OnInit {
     this.data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sort}`;
   }
 
-  logout() {
+  Logout() {
     this.authService.signOut();
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/auth']);
   }
 
-  gotoproduct(id: any) {
-    this.route.navigate([`/products/product`, id]);
+  gotoProduct(id: any) {
+    this.route.navigate([`/products/product-details`, id]);
   }
 
   itemCount(count: number) {
