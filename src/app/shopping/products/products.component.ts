@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
+import { CustomersService } from '../services/customers.service';
 
 @Component({
   selector: 'app-products',
@@ -16,18 +17,25 @@ export class ProductsComponent implements OnInit {
   data!: string;
   myControl = new FormControl('');
   flag: boolean = false;
-  itemPerPage = [4, 8, 16];
+  itemPerPage = [12, 24, 48];
   sortByarray = ['name', 'price'];
   pagenumber: number = 1;
-  limit: number = 4;
+  limit: number = this.itemPerPage[0];
   search: string = '';
   sort: string = 'name';
   suggestion: string[] = [''];
   filteredOptions: Observable<string[]> | undefined;
   token: number = 0;
-  constructor(private http: HttpServiceService, private route: Router) {}
+  customer: any;
+  profile: any;
+  constructor(
+    private http: HttpServiceService,
+    private route: Router,
+    private service: CustomersService
+  ) {}
 
   ngOnInit(): void {
+    this.getProfile();
     this.getProducts();
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(' '),
@@ -46,7 +54,7 @@ export class ProductsComponent implements OnInit {
     const data = `limit=${this.list.totalResults}`;
     this.http.get(`shop/products?${data}`).subscribe({
       next: (res: any) => {
-        console.log(res);
+        // console.log(res);
         res.results.forEach((element: any) => {
           if (this.suggestion.includes(element.name)) {
           } else {
@@ -55,6 +63,18 @@ export class ProductsComponent implements OnInit {
         });
       },
       error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
+  getProfile() {
+    this.customer = this.service.getCustomer();
+    this.http.get('shop/auth/self').subscribe({
+      next: (res) => {
+        // console.log(res);
+        this.profile = res
+      },
+      error: (err) => {
         console.log(err);
       },
     });
@@ -70,8 +90,8 @@ export class ProductsComponent implements OnInit {
       query = `${query}&name=${this.search}`;
     }
     this.http.get(`shop/products?${query}`).subscribe({
-      next: (res:any) => {
-        console.log(res);
+      next: (res: any) => {
+        // console.log(res);
         this.list = res;
         this.result = res.results;
         if (this.token == 0) {
@@ -84,6 +104,12 @@ export class ProductsComponent implements OnInit {
       },
     });
   }
+
+  Logout() {
+    localStorage.removeItem('customer');
+    this.getProfile();
+  }
+
   openNav() {
     this.flag = true;
   }
@@ -96,9 +122,6 @@ export class ProductsComponent implements OnInit {
   logout() {
     localStorage.removeItem('LoginUser');
     this.route.navigate(['/seller/auth']);
-  }
-  gotoproduct(id: any) {
-    this.route.navigate([`/seller/products/product`, id]);
   }
 
   itemCount(count: number) {
@@ -123,33 +146,10 @@ export class ProductsComponent implements OnInit {
     this.pagenumber = page;
     this.getProducts();
   }
-
-  deleteProduct(product_id: any) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.http.delete(`products/${product_id}`).subscribe({
-          next: () => {
-            Swal.fire('Deleted!', 'Your Product has been deleted.', 'success');
-            this.getProducts();
-          },
-          error: (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
-          },
-        });
-      }
-    });
+  addToCart(id: any) {
+    console.log(id);
+  }
+  BuyNow(product_id: any) {
+    console.log(product_id);
   }
 }

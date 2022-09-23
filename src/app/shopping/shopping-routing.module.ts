@@ -12,6 +12,11 @@ const routes: Routes = [
         (m) => m.AuthenticationModule
       ),
   },
+  {
+    path: 'customer',
+    loadChildren: () =>
+      import('./customers/customers.module').then((m) => m.CustemersModule),
+  },
 ];
 
 @NgModule({

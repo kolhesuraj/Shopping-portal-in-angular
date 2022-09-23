@@ -1,9 +1,9 @@
-<div class="mainDiv pt-5 ">
-  <div class="container  m-auto " style="width: 650px;">
-    <div class="container pt-2 mt-5 secondDiv rounded-5">
+<div class="mainDiv">
+  <div class="container pt-2" style="width: 650px">
+    <div class="container pt-2 secondDiv rounded-5">
       <div
         [class.d-none]="tocken == 0"
-        class="p-3 mt-1 float-right bg-success text-white"
+        class="p-3 float-right bg-success text-white"
         style="width: 165px"
       >
         Register successfully
@@ -12,16 +12,16 @@
       <h1 class="text-center text-white">Registration</h1>
       <form
         [formGroup]="register"
-        class="w-100  p-5"
+        class="w-100 p-5"
         (ngSubmit)="registerLogin()"
       >
         <div>
-          <label class="d-inline w-25 me-5">Full Name</label>
+          <label class="">Full Name</label>
           <input
             type="text"
             formControlName="name"
             name="Name"
-            class="form-control d-inline  ms-2"
+            class="form-control"
             [class.is-invalid]="
               (Name?.invalid && Name?.touched) || (submited && Name?.untouched)
             "
@@ -35,32 +35,12 @@
         </div>
 
         <div class="mt-3">
-          <label class="d-inline w-25">Company Name</label>
-          <input
-            type="text"
-            formControlName="company"
-            name="Cname"
-            class="form-control d-inline  ms-4"
-            [class.is-invalid]="
-              (CompanyName?.invalid && CompanyName?.touched) ||
-              (submited && CompanyName?.untouched)
-            "
-          />
-          <small
-            class="ms-5 ps-5 text-danger"
-            *ngIf="CompanyName?.invalid && CompanyName?.touched"
-            >Company Name required</small
-          >
-        </div>
-
-        <div class="mt-3">
-          <label class="d-inline w-25 me-5">email</label>
+          <label class="">email</label>
           <input
             type="email"
             formControlName="email"
             name="email"
-            class="form-control d-inline "
-            style="margin-left: 40px"
+            class="form-control"
             [class.is-invalid]="
               (Email?.invalid && Email?.touched) ||
               (submited && Email?.untouched)
@@ -76,12 +56,12 @@
           >
         </div>
         <div class="mt-3">
-          <label class="d-inline w-25 me-5">Password</label>
+          <label class="">Password</label>
           <input
             type="password"
             formControlName="password"
             name="password"
-            class="form-control d-inline  ms-3"
+            class="form-control "
             [class.is-invalid]="
               (Password?.invalid && Password?.touched) ||
               (submited && Password?.untouched)
@@ -99,12 +79,12 @@
           >
         </div>
         <div class="mt-3">
-          <label class="d-inline w-25">Confirm Password</label>
+          <label class="">Confirm Password</label>
           <input
             type="password"
             formControlName="ConfirmPassword"
             name="Cpassword"
-            class="form-control d-inline  ms-2"
+            class="form-control"
             [class.is-invalid]="register.errors?.['misMatch'] || submited && ConfirmPassword?.untouched"
           />
           <small
@@ -114,6 +94,99 @@
           >
           <!-- ConfirmPassword?.invalid && ConfirmPassword?.touched -->
         </div>
+        <div formGroupName="address">
+          <h3 class="text-white mt-3">address</h3>
+          <div class="mt-3">
+            <label class="">street</label>
+            <input
+              type="text"
+              formControlName="street"
+              name="street"
+              class="form-control"
+              [class.is-invalid]="
+                (Street?.invalid && Street?.touched) ||
+                (submited && Street?.untouched)
+              "
+            />
+            <small
+              class="ms-5 ps-5 text-danger"
+              *ngIf="Street?.errors?.['required'] && Street?.touched"
+              >Street required</small
+            >
+          </div>
+          <div class="mt-3">
+            <label class="">street</label>
+            <input
+              type="text"
+              formControlName="addressLine2"
+              name="addressLine2"
+              class="form-control"
+              [class.is-invalid]="
+                (AddressLine2?.invalid && AddressLine2?.touched) ||
+                (submited && AddressLine2?.untouched)
+              "
+            />
+            <small
+              class="ms-5 ps-5 text-danger"
+              *ngIf="AddressLine2?.errors?.['required'] && AddressLine2?.touched"
+              >Address Line required</small
+            >
+          </div>
+          <div class="mt-3">
+            <label class="">City</label>
+            <input
+              type="text"
+              formControlName="city"
+              name="city"
+              class="form-control"
+              [class.is-invalid]="
+                (City?.invalid && City?.touched) ||
+                (submited && City?.untouched)
+              "
+            />
+            <small
+              class="ms-5 ps-5 text-danger"
+              *ngIf="City?.errors?.['required'] && City?.touched"
+              >City required</small
+            >
+          </div>
+          <div class="mt-3">
+            <label class="">State</label>
+            <input
+              type="text"
+              formControlName="state"
+              name="state"
+              class="form-control "
+              [class.is-invalid]="
+                (State?.invalid && State?.touched) ||
+                (submited && State?.untouched)
+              "
+            />
+            <small
+              class="ms-5 ps-5 text-danger"
+              *ngIf="State?.errors?.['required'] && State?.touched"
+              >State required</small
+            >
+          </div>
+          <div class="mt-3">
+            <label class="">Pin</label>
+            <input
+              type="text"
+              formControlName="pin"
+              name="pin"
+              class="form-control"
+              [class.is-invalid]="
+                (Pin?.invalid && Pin?.touched) || (submited && Pin?.untouched)
+              "
+            />
+            <small
+              class="ms-5 ps-5 text-danger"
+              *ngIf="Pin?.errors?.['required'] && Pin?.touched"
+              >Pin required</small
+            >
+          </div>
+        </div>
+
         <small class="ms-5 ps-5 text-danger" *ngIf="submited"
           >Please fill all details</small
         >
@@ -135,7 +208,12 @@
           </button>
           <p class="mt-2 text-white">
             already have an account!<span
-              ><button mat-raised-button class="ms-2" color="primary" routerLink="/seller/auth/login">
+              ><button
+                mat-raised-button
+                class="ms-2"
+                color="primary"
+                routerLink="/shop/auth/login"
+              >
                 Sign in
               </button>
             </span>

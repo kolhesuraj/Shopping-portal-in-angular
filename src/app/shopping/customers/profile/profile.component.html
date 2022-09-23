@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark p-4 sticky-top">
+  <a class="navbar-brand text-white ms-5"
+    ><img src="../../../assets/AngularMindsLogo.png" height="50rem" />Angular
+    Shopping</a
+  >
+  <div class="navbar navbar-dark ms-auto">
+    <ul class="navbar-nav ms-lg-auto ps-lg-4"></ul>
+  </div>
+</nav>
+<div class="container mt-5 border mx-auto border-dark p-5 row">
+  <div class="col">
+    <img [src]="profile?.picture" height="250rem" class="w-auto" />
+    <span>
+       <mat-icon
+      aria-hidden="false"
+      fontIcon="edit"
+      aria-label="delete"
+      class="text-primary edit"
+      (click)="editPicture()"
+      ></mat-icon>
+    </span>
+  </div>
+  <div class="col">{{ profile?.name }}</div>
+</div>

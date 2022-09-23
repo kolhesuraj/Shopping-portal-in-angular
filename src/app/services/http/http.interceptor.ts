@@ -37,34 +37,34 @@ export class HttpsInterceptor implements HttpInterceptor {
     if (this.isAuthRequaire(request.url) == false) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.ls.gettoken()}`,
+          Authorization: `Bearer ${
+            this.ls.gettoken() || localStorage.getItem('token')
+          }`,
         },
       });
-      // console.log(request)
+      // console.log(request);
     }
 
     /* This is the code that is executed when the request is sent to the server. */
     return next.handle(request).pipe(
       finalize(() => {
-        this.ls.hideloader()
+        this.ls.hideloader();
       }),
       catchError((error: HttpErrorResponse) => {
         let status = error.status;
         this.toster.error(error.error.message);
         if (status == 401) {
-          Swal.fire('token expire', ' please login again');
           localStorage.removeItem('LoginUser');
-          this.route.navigate(['/auth']);
+          this.route.navigate(['/']);
         }
         throw new Error('error');
       })
     );
     // return next.handle(request).do((event: HttpEvent<any>) => {
     //   if (event instanceof HttpResponse) {
-      
+
     // }
     // })
-
   }
 
   /**
@@ -79,7 +79,7 @@ export class HttpsInterceptor implements HttpInterceptor {
       'forgot-password',
       'reset-password',
       'verify-email',
-      'send-verification-email'
+      'send-verification-email',
     ];
     findArray.forEach((element) => {
       if (url.includes(element)) {

@@ -1,45 +1,82 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4 sticky-top">
-  <a class="navbar-brand text-white ms-5"><img src="../../../assets/AngularMindsLogo.png" height="50rem">Angular Shopping</a>
-
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
+<nav class="navbar navbar-expand navbar-dark bg-dark p-4 sticky-top">
+  <a class="navbar-brand text-white ms-5"
+    ><img src="../../../assets/AngularMindsLogo.png" height="50rem" />Angular
+    Shopping</a
   >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4">
+  <div class="navbar navbar-dark ms-auto">
+    <ul class="navbar-nav ms-lg-auto ps-lg-4">
       <li class="nav-item">
-        <a class="nav-link me-5" routerLink="/custemer/profile">
+        <a class="nav-link me-5">
           <mat-icon
             aria-hidden="false"
-            aria-label="Example edit icon"
-            fontIcon="person"
-            class="d-lg-block d-none mx-lg-auto"
+            aria-label="shopping_cart"
+            fontIcon="shopping_cart"
+            class="d-block"
           ></mat-icon>
-          <span class="">Profile Page</span>
+          <span>Cart</span>
         </a>
       </li>
-      <li class="nav-item me-5">
-        <a class="nav-link" (click)="logout()">
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Example logout icon"
-            fontIcon="logout"
-            class="d-lg-block d-none"
-          ></mat-icon>
-          <span class="">Logout</span></a
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link me-5 dropdown-toggle"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
+          <span [class.d-none]="!customer">
+            <img
+              [src]="profile?.picture"
+              height="30rem"
+              class="d-block mx-auto rounded-circle"
+            />
+            <span class="">{{ profile?.name }}</span>
+          </span>
+          <span [class.d-none]="customer">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example add profile icon"
+              fontIcon="person"
+              class="d-block"
+            ></mat-icon>
+            <span class="">user</span>
+          </span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <a class="dropdown-item" [class.d-none]="customer == null" routerLink="/shop/customer/profile"
+              >profile</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              [class.d-none]="customer == null"
+              (click)="Logout()"
+              >Logout</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              [class.d-none]="customer != null"
+              routerLink="/shop/auth"
+              >Sign In</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              [class.d-none]="customer != null"
+              routerLink="/shop/auth/register"
+              >Register</a
+            >
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
 </nav>
-<div id="mySidenav" class="sidenav" [style.width]="flag ? '150px' : '0px'">
+<div id="mySidenav" class="sidenav mt-3" [style.width]="flag ? '150px' : '0px'">
   <a class="closebtn" (click)="closeNav()">&times;</a>
   <a href="#submenu1" data-bs-toggle="collapse" class="align-middle">
     <i class="fa fa-sort"></i>
@@ -156,11 +193,11 @@
         {{ item.description }}
       </p>
       <h2 class="card-text">Rs.{{ item.price }}</h2>
-      <button class="btn btn-primary" (click)="gotoproduct(item._id)">
-        Details
+      <button class="btn btn-primary" (click)="addToCart(item._id)">
+        Add to Cart
       </button>
-      <button class="btn btn-danger ms-2" (click)="deleteProduct(item._id)">
-        Delete
+      <button class="btn btn-danger ms-2" (click)="BuyNow(item._id)">
+        Buy Now
       </button>
     </div>
   </div>
