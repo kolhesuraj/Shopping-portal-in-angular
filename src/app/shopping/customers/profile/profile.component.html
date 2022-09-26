@@ -4,21 +4,74 @@
     Shopping</a
   >
   <div class="navbar navbar-dark ms-auto">
-    <ul class="navbar-nav ms-lg-auto ps-lg-4"></ul>
+    <ul class="navbar-nav ms-lg-auto ps-lg-4">
+      <li class="nav-item me-5 ps-5 border-start">
+        <a class="nav-link" routerLink="/shop/products">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example add profile icon"
+            fontIcon="list_alt"
+            class="d-block mx-auto"
+          ></mat-icon>
+          <span class="">Product List</span></a
+        >
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" (click)="Logout()">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example add profile icon"
+            fontIcon="logout"
+            class="d-block mx-auto"
+          ></mat-icon>
+          <span class="">Logout</span></a
+        >
+      </li>
+    </ul>
   </div>
 </nav>
-<div class="container mt-5 border mx-auto border-dark p-5 row">
-  <div class="col">
-    <img [src]="profile?.picture" height="250rem" class="w-auto" />
-    <span>
-       <mat-icon
-      aria-hidden="false"
-      fontIcon="edit"
-      aria-label="delete"
-      class="text-primary edit"
-      (click)="editPicture()"
-      ></mat-icon>
-    </span>
+<div class="container w-50 mt-5 border border-dark p-5">
+  <div class="text-center">
+    <img
+      [src]="profile?.picture"
+      height="250rem"
+      class="w-auto rounded-circle"
+    />
   </div>
-  <div class="col">{{ profile?.name }}</div>
+  <hr />
+  <div class="mx-auto w-75 fw-bold text-center">
+    <div class="display2 mb-3">Contact Details</div>
+    Name:
+    <h3>{{ profile?.name }}</h3>
+    Email:
+    <h4>{{ profile?.email }}</h4>
+    <div class="d-inline">
+      <div
+        class="d-inline-block"
+        style="cursor: pointer"
+        (click)="editProfile()"
+      >
+        <mat-icon
+          aria-hidden="false"
+          fontIcon="edit"
+          aria-label="edit"
+          class="text-primary edit"
+        ></mat-icon
+        ><span class="d-block">Edit Profile</span>
+      </div>
+      <div
+        class="ms-3 d-inline-block"
+        style="cursor: pointer"
+        (click)="deleteProfile()"
+      >
+        <mat-icon
+          aria-hidden="false"
+          fontIcon="delete"
+          aria-label="delete"
+          class="text-danger edit"
+        ></mat-icon
+        ><span class="d-block">Delete Profile</span>
+      </div>
+    </div>
+  </div>
 </div>

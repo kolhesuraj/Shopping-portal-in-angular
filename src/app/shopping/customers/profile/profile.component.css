@@ -1,5 +1,8 @@
-.edit{  position: relative;
+/* .edit{  position: relative;
   cursor: pointer;
     top: -6rem;
     left: -2rem;
+} */
+li a{
+  cursor: pointer;
 }

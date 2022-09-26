@@ -106,7 +106,7 @@ export class ProductsComponent implements OnInit {
   }
 
   Logout() {
-    localStorage.removeItem('customer');
+    localStorage.removeItem('token');
     this.getProfile();
   }
 

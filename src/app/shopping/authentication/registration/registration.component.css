@@ -1,18 +1,24 @@
 .secondDiv {
   background-color: rgba(255, 255, 255, 0.103);
   color: #03131e;
+  max-width: 1000px;
 }
 .mainDiv {
-  background-image: url("../../../../assets/download3.webp");
+  background-image: url("../../../../assets/black_Backgruond.png");
   height: 100vh;
   margin-top: 0;
   padding-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 label {
   display: inline-block;
   color: white;
   width: 120px;
 }
+
+ 
 input {
   display: inline;
   width: 350px;

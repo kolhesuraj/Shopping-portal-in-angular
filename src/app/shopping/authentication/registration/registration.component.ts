@@ -41,7 +41,8 @@ export class RegistrationComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(8)]],
         ConfirmPassword: ['', [Validators.required]],
-        address: this.fb.group({
+        captcha: ['', Validators.required],
+        addresses: this.fb.group({
           street: ['', [Validators.required]],
           addressLine2: [''],
           city: ['', [Validators.required]],
@@ -55,7 +56,6 @@ export class RegistrationComponent implements OnInit {
             ],
           ],
         }),
-        captcha: ['',Validators.required],
       },
       { validator: passwordValidator }
     );
@@ -77,7 +77,7 @@ export class RegistrationComponent implements OnInit {
     return this.register.get('ConfirmPassword');
   }
   get Address() {
-    return this.register.get('address') as FormGroup;
+    return this.register.get('addresses') as FormGroup;
   }
   get Street() {
     return this.Address.get('street');

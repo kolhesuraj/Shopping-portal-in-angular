@@ -55,6 +55,7 @@ export class HttpsInterceptor implements HttpInterceptor {
         this.toster.error(error.error.message);
         if (status == 401) {
           localStorage.removeItem('LoginUser');
+          localStorage.removeItem('token')
           this.route.navigate(['/']);
         }
         throw new Error('error');
