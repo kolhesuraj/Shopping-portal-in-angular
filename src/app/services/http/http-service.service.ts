@@ -30,6 +30,10 @@ export class HttpServiceService {
     return this.http.patch(`${this.url}${url}`, body);
   }
 
+  put(url:string,body:any){
+    return this.http.put(`${this.url}${url}`,body);
+  }
+
   /**
    * This function sends a verification email to the user's email address
    * @param {any} tokenGet - The token you get from the Register API.

@@ -1,8 +1,13 @@
-/* .edit{  position: relative;
-  cursor: pointer;
-    top: -6rem;
-    left: -2rem;
-} */
+.card{
+  box-shadow: 0 0 10px rgb(26, 25, 25);
+  margin-right: 5px;
+}
 li a{
   cursor: pointer;
+}
+.addIcon{
+ 
+  font-weight: 700;
+  border: 2px dashed black;
+  border-radius: 50%;
 }

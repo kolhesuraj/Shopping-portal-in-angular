@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Route, Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import Swal from 'sweetalert2';
 import { CustomersService } from '../../services/customers.service';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 
@@ -10,26 +12,24 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-Logout() {
-throw new Error('Method not implemented.');
-}
-deleteProfile() {
-throw new Error('Method not implemented.');
-}
-  profile!: any;
-  customer!: any;
+  profile: any;
+  addresses: any;
   constructor(
     private service: CustomersService,
     private http: HttpServiceService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
     this.getProfile();
     this.getAddresses();
   }
+  Logout() {
+    localStorage.removeItem('token');
+    this.route.navigate(['/shop/products']);
+  }
   getProfile() {
-    this.customer = this.service.getCustomer();
     this.http.get('shop/auth/self').subscribe({
       next: (res) => {
         console.log(res);
@@ -40,22 +40,119 @@ throw new Error('Method not implemented.');
       },
     });
   }
-  getAddresses(){
+  getAddresses() {
     this.http.get('customers/address').subscribe({
-      next: (res)=>{
-        console.log(res)
+      next: (res) => {
+        console.log(res);
+        this.addresses = res;
       },
-      error: (err)=>{
-        console.log(err)
-      }
+      error: (err) => {
+        console.log(err);
+      },
     });
   }
   editProfile() {
     const _dialog = this.matDialog.open(EditProfileComponent);
     _dialog.afterClosed().subscribe({
-      next: ()=>{
+      next: () => {
+        const navbar = document.querySelector('.navbar') as HTMLElement;
+        navbar.classList.remove('sticky-top');
+      },
+    });
+    _dialog.afterClosed().subscribe({
+      next: () => {
+        const navbar = document.querySelector('.navbar') as HTMLElement;
+        navbar.classList.add('sticky-top');
         this.getProfile();
+      },
+    });
+  }
+  deleteProfile() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete(`customers/account`).subscribe({
+          next: (res: any) => {
+            Swal.fire('Deleted!', 'Your profile has been deleted.', 'success');
+            this.route.navigate(['/shop/products']);
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Something went wrong! ${err}`,
+            });
+          },
+        });
       }
-    })
+    });
+  }
+  editAddress(arg0: any) {
+   const _dialog = this.matDialog.open(EditProfileComponent);
+   _dialog.afterClosed().subscribe({
+     next: () => {
+       const navbar = document.querySelector('.navbar') as HTMLElement;
+       navbar.classList.remove('sticky-top');
+     },
+   });
+   _dialog.afterClosed().subscribe({
+     next: () => {
+       const navbar = document.querySelector('.navbar') as HTMLElement;
+       navbar.classList.add('sticky-top');
+       this.getProfile();
+     },
+   });
+  }
+  addAddress() {
+    const _dialog = this.matDialog.open(EditProfileComponent);
+    _dialog.afterClosed().subscribe({
+      next: () => {
+        const navbar = document.querySelector('.navbar') as HTMLElement;
+        navbar.classList.remove('sticky-top');
+      },
+    });
+    _dialog.afterClosed().subscribe({
+      next: () => {
+        const navbar = document.querySelector('.navbar') as HTMLElement;
+        navbar.classList.add('sticky-top');
+        this.getProfile();
+      },
+    });
+  }
+  deleteAddress(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete(`customers/address/${id}`).subscribe({
+          next: (res: any) => {
+            Swal.fire('Deleted!', 'Your profile has been deleted.', 'success');
+            this.route.navigate(['/shop/products']);
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Something went wrong! ${err}`,
+            });
+          },
+        });
+      }
+    });
   }
 }
