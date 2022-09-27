@@ -48,7 +48,7 @@ export class ProductComponent implements OnInit {
   logout() {
     this.authService.signOut();
     localStorage.removeItem('LoginUser');
-    this.route.navigate(['/auth']);
+    this.route.navigate(['/seller/auth']);
   }
   update() {
     const dialog = this._dialog.open(UpdateProductComponent, {

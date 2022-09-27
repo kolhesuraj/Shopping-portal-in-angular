@@ -18,7 +18,7 @@ export class LoginService {
 
   loadData() {
     let temp: any = localStorage.getItem('LoginUser');
-    const data = JSON.parse(temp);
+    // const data = JSON.parse(temp);
     this.setLogin(temp);
   }
 

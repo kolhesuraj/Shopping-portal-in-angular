@@ -32,11 +32,13 @@ export class ProductsComponent implements OnInit {
     private http: HttpServiceService,
     private route: Router,
     private service: CustomersService
-  ) {}
+  ) {
+        this.getProfile();
+        this.getProducts();
+  }
 
   ngOnInit(): void {
-    this.getProfile();
-    this.getProducts();
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(' '),
       map((value: string | null) => this._filter(value || ''))
@@ -69,15 +71,18 @@ export class ProductsComponent implements OnInit {
   }
   getProfile() {
     this.customer = this.service.getCustomer();
-    this.http.get('shop/auth/self').subscribe({
-      next: (res) => {
-        // console.log(res);
-        this.profile = res
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    console.log(this.customer)
+    if (this.customer) {
+      this.http.get('shop/auth/self').subscribe({
+        next: (res) => {
+          // console.log(res);
+          this.profile = res;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
   }
   getProducts() {
     let query: string;
@@ -118,10 +123,6 @@ export class ProductsComponent implements OnInit {
   }
   setdata(): any {
     this.data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sort}`;
-  }
-  logout() {
-    localStorage.removeItem('LoginUser');
-    this.route.navigate(['/seller/auth']);
   }
 
   itemCount(count: number) {

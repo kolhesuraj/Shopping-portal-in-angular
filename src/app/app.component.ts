@@ -8,10 +8,14 @@ import { LoginService } from './services/login.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  spinner!: Observable<boolean>;
+  spinner: boolean = false;
   constructor(public ls: LoginService) {}
   ngOnInit(): void {
-    this.spinner = this.ls.loader;
+    this.ls.loader.subscribe({
+      next: (res)=>{
+        this.spinner = res
+      }
+    })
   }
   title = 'Project';
 }

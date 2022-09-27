@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
+import { ImageCroppedEvent, base64ToFile } from 'ngx-image-cropper';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-edit-picture',
@@ -22,19 +19,22 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private http: HttpServiceService,
     private fb: FormBuilder,
-    private _matDialog: MatDialogRef<EditProfileComponent>
+    private _matDialog: MatDialogRef<EditProfileComponent>,
+    private toster: HotToastService
   ) {}
 
   ngOnInit(): void {
-    this.getProfile();
     this.editProfile = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
     });
+    this.getProfile();
   }
+
   close() {
     this._matDialog.close();
   }
+
   getProfile() {
     this.http.get('shop/auth/self').subscribe({
       next: (res) => {
@@ -48,29 +48,35 @@ export class EditProfileComponent implements OnInit {
     });
   }
   delete() {
-    this.http.delete('customers/profile-picture').subscribe({
-      next: (res) => {
-        console.log(res);
-        Swal.fire('Profile Picture Deleted successfully');
-        this.getProfile();
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-  uploadeImage() {
-    const formData = new FormData();
-    formData.append('picture', this.profileGet);
-    this.http.post('customers/profile-picture', formData).subscribe({
-      next: (res) => {
-        console.log(res);
-        Swal.fire('Profile Picture Updated');
-        this.getProfile();
-      },
-      error: (err) => {
-        console.log(err);
-      },
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete('customers/profile-picture').subscribe({
+          next: (res: any) => {
+            Swal.fire(
+              'Deleted!',
+              'Your profile Picture has been deleted.',
+              'success'
+            );
+            this.getProfile();
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Something went wrong! ${err}`,
+            });
+          },
+        });
+      }
     });
   }
 
@@ -95,5 +101,46 @@ export class EditProfileComponent implements OnInit {
           },
         });
     }
+  }
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  open = true;
+  ImageReady: any;
+  openImageBox() {
+    this.open = false;
+  }
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+    this.ImageReady = base64ToFile(this.croppedImage);
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+    this.toster.error('File format not supported');
+    this.imageChangedEvent = '';
+  }
+  uploadeImage() {
+    const formData = new FormData();
+    formData.append('picture', this.ImageReady);
+    this.http.post('customers/profile-picture', formData).subscribe({
+      next: (res) => {
+        console.log(res);
+        Swal.fire('Profile Picture Updated');
+        this.imageChangedEvent = '';
+        this.open = true;
+        this.getProfile();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogClose, MatDialogRef } from '@angular/material/dialog';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
-import { passwordValidator } from '../../authentication/registration/password.Validator';
+import { passwordValidator } from '../../../services/password.Validator';
 import { EditUserComponent } from '../organization/edit-user/edit-user.component';
 
 @Component({

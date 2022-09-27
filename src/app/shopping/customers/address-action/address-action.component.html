@@ -1,0 +1,119 @@
+<div>
+  <form [formGroup]="addressFrom" (ngSubmit)="saveAddress()">
+    <h1 class="mt-3 text-center mb-5">Address</h1>
+    <div class="row">
+      <div class="col">
+        <label class="">street</label>
+        <input
+          type="text"
+          formControlName="street"
+          name="street"
+          class="form-control"
+          [class.is-invalid]="
+            (Street?.invalid && Street?.touched) ||
+            (submited && Street?.untouched)
+          "
+        />
+        <small
+          class="ms-5 ps-5 text-danger"
+          *ngIf="Street?.errors?.['required'] && Street?.touched"
+          >Street required</small
+        >
+      </div>
+      <div class="col">
+        <label class="">Address line 2</label>
+        <input
+          type="text"
+          formControlName="addressLine2"
+          name="addressLine2"
+          class="form-control"
+          [class.is-invalid]="
+            (AddressLine2?.invalid && AddressLine2?.touched) ||
+            (submited && AddressLine2?.untouched)
+          "
+        />
+        <small
+          class="ms-5 ps-5 text-danger"
+          *ngIf="AddressLine2?.errors?.['required'] && AddressLine2?.touched"
+          >Address Line required</small
+        >
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <label class="">City</label>
+        <input
+          type="text"
+          formControlName="city"
+          name="city"
+          class="form-control"
+          [class.is-invalid]="
+            (City?.invalid && City?.touched) || (submited && City?.untouched)
+          "
+        />
+        <small
+          class="ms-5 ps-5 text-danger"
+          *ngIf="City?.errors?.['required'] && City?.touched"
+          >City required</small
+        >
+      </div>
+      <div class="row col">
+        <div class="col" style="padding: 0">
+          <label class="">State</label>
+          <input
+            type="text"
+            formControlName="state"
+            name="state"
+            class="form-control w-75"
+            [class.is-invalid]="
+              (State?.invalid && State?.touched) ||
+              (submited && State?.untouched)
+            "
+          />
+          <small
+            class="ms-5 ps-5 text-danger"
+            *ngIf="State?.errors?.['required'] && State?.touched"
+            >State required</small
+          >
+        </div>
+        <div class="col">
+          <label class="">Pin</label>
+          <input
+            type="text"
+            formControlName="pin"
+            name="pin"
+            class="form-control w-75"
+            [class.is-invalid]="
+              (Pin?.invalid && Pin?.touched) || (submited && Pin?.untouched)
+            "
+          />
+          <small
+            class="ms-5 ps-5 text-danger"
+            *ngIf="Pin?.errors?.['required'] && Pin?.touched"
+            >Pin required</small
+          >
+        </div>
+      </div>
+    </div>
+    <small class="ms-5 ps-5 text-danger" *ngIf="submited"
+      >Please fill all details</small
+    >
+    <small class="ms-5 ps-5 text-danger" *ngIf="errorFromserver">{{
+      errorFromserver
+    }}</small>
+    <div class="mt-3 row text-center">
+      <div class="col w-25">
+        <button mat-raised-button color="primary" type="submit">Save</button>
+        <button
+          mat-flat-button
+          color="accent"
+          class="ms-5"
+          type="reset"
+          (click)="reset()"
+        >
+          cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

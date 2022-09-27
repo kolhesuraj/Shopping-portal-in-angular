@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { passwordValidator } from './password.Validator';
+import { passwordValidator } from '../../../services/password.Validator';
 import Swal from 'sweetalert2';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { ReCaptchaV3Service } from 'ng-recaptcha';

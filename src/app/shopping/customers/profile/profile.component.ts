@@ -4,6 +4,8 @@ import { Route, Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 import { CustomersService } from '../../services/customers.service';
+import { AddressActionComponent } from '../address-action/address-action.component';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 
 @Component({
@@ -53,20 +55,34 @@ export class ProfileComponent implements OnInit {
   }
   editProfile() {
     const _dialog = this.matDialog.open(EditProfileComponent);
-    _dialog.afterClosed().subscribe({
+    _dialog.afterOpened().subscribe({
       next: () => {
-        const navbar = document.querySelector('.navbar') as HTMLElement;
-        navbar.classList.remove('sticky-top');
+        this.removeNavClass();
       },
     });
     _dialog.afterClosed().subscribe({
       next: () => {
-        const navbar = document.querySelector('.navbar') as HTMLElement;
-        navbar.classList.add('sticky-top');
+        this.AddNavClass();
         this.getProfile();
       },
     });
   }
+  changePassword() {
+    const _dialog = this.matDialog.open(ChangePasswordComponent);
+    _dialog.afterOpened().subscribe({
+      next: () => {
+        this.removeNavClass();
+      },
+    });
+    _dialog.afterClosed().subscribe({
+      next: () => {
+        this.AddNavClass();
+        this.getProfile();
+        this.getAddresses();
+      },
+    });
+  }
+
   deleteProfile() {
     Swal.fire({
       title: 'Are you sure?',
@@ -81,6 +97,7 @@ export class ProfileComponent implements OnInit {
         this.http.delete(`customers/account`).subscribe({
           next: (res: any) => {
             Swal.fire('Deleted!', 'Your profile has been deleted.', 'success');
+            localStorage.removeItem('token');
             this.route.navigate(['/shop/products']);
           },
           error: (err: any) => {
@@ -95,38 +112,53 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-  editAddress(arg0: any) {
-   const _dialog = this.matDialog.open(EditProfileComponent);
-   _dialog.afterClosed().subscribe({
-     next: () => {
-       const navbar = document.querySelector('.navbar') as HTMLElement;
-       navbar.classList.remove('sticky-top');
-     },
-   });
-   _dialog.afterClosed().subscribe({
-     next: () => {
-       const navbar = document.querySelector('.navbar') as HTMLElement;
-       navbar.classList.add('sticky-top');
-       this.getProfile();
-     },
-   });
+
+  editAddress(address: any) {
+    const _dialog = this.matDialog.open(AddressActionComponent, {
+      width: '1000px',
+      data: address,
+    });
+    _dialog.afterOpened().subscribe({
+      next: () => {
+        this.removeNavClass();
+      },
+    });
+    _dialog.afterClosed().subscribe({
+      next: () => {
+        this.AddNavClass();
+        this.getProfile();
+        this.getAddresses();
+      },
+    });
   }
   addAddress() {
-    const _dialog = this.matDialog.open(EditProfileComponent);
-    _dialog.afterClosed().subscribe({
+    const _dialog = this.matDialog.open(AddressActionComponent, {
+      data: null,
+    });
+    _dialog.afterOpened().subscribe({
       next: () => {
-        const navbar = document.querySelector('.navbar') as HTMLElement;
-        navbar.classList.remove('sticky-top');
+        this.removeNavClass();
       },
     });
     _dialog.afterClosed().subscribe({
       next: () => {
-        const navbar = document.querySelector('.navbar') as HTMLElement;
-        navbar.classList.add('sticky-top');
+        this.AddNavClass();
         this.getProfile();
+        this.getAddresses();
       },
     });
   }
+
+  removeNavClass() {
+    const navbar = document.querySelector('.navbar') as HTMLElement;
+    navbar.classList.remove('sticky-top');
+  }
+
+  AddNavClass() {
+    const navbar = document.querySelector('.navbar') as HTMLElement;
+    navbar.classList.add('sticky-top');
+  }
+
   deleteAddress(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -140,8 +172,8 @@ export class ProfileComponent implements OnInit {
       if (result.isConfirmed) {
         this.http.delete(`customers/address/${id}`).subscribe({
           next: (res: any) => {
-            Swal.fire('Deleted!', 'Your profile has been deleted.', 'success');
-            this.route.navigate(['/shop/products']);
+            Swal.fire('Deleted!', 'Your address has been deleted.', 'success');
+            this.getAddresses();
           },
           error: (err: any) => {
             console.log(err);

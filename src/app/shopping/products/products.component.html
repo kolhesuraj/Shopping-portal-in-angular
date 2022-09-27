@@ -31,7 +31,7 @@
             />
             <span class="">{{ profile?.name }}</span>
           </span>
-          <span [class.d-none]="customer">
+          <span [class.d-none]="customer != null">
             <mat-icon
               aria-hidden="false"
               aria-label="Example add profile icon"

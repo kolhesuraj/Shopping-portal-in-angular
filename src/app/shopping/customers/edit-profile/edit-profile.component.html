@@ -1,54 +1,90 @@
-<div class="container p-5 text-center">
-  <div class="w-25 ms-auto">
-    <button class="btn btn-close" type="button" (click)="close()"></button>
+<div class="row p-5 text-center">
+  <div class="col">
+    <div class="w-25 ms-auto">
+      <button class="btn btn-close" type="button" (click)="close()"></button>
+    </div>
+    <div class="text-center">
+      <img [src]="profile?.picture" alt="profile picture" height="150res" />
+      <div class="d-flex">
+        <button
+          class="btn btn-danger d-block mt-3 w-auto mx-auto"
+          (click)="delete()"
+        >
+          Remove Image
+        </button>
+        <button
+          class="btn btn-outline-primary d-block mt-3 w-auto mx-auto"
+          (click)="openImageBox()"
+        >
+          Change Image
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <form
+        action=""
+        [formGroup]="editProfile"
+        (ngSubmit)="update()"
+        class="mt-3"
+      >
+        <div>
+          <Label for="name" class="d-inline me-3">Name</Label>
+          <input
+            type="text"
+            name="name"
+            formControlName="name"
+            class="form-control d-inline-block w-75"
+            [class.is-invalid]="editProfile.get('name')?.invalid"
+          />
+        </div>
+        <div class="mt-3">
+          <Label for="email" class="d-inline me-3">Email</Label>
+          <input
+            type="text"
+            name="email"
+            formControlName="email"
+            class="form-control d-inline-block w-75"
+            [class.is-invalid]="editProfile.get('email')?.invalid"
+          />
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-primary" type="submit">update</button>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="picture text-center">
-    <img [src]="profile?.picture" alt="profile picture" height="150res" />
-    <button
-      class="btn btn-danger d-block mt-3 w-auto mx-auto"
-      (click)="delete()"
-    >
-      Remove Image
-    </button>
-  </div>
-  <div>
-    <input
-      class="form-control m-3 d-inline-block"
-      type="file"
-      (change)="checkImg($event)"
+
+  <div class="col" [class.d-none]="open">
+    <div>
+      <input
+        class="form-control m-3 d-inline-block"
+        type="file"
+        (change)="fileChangeEvent($event)"
+      />
+    </div>
+    <image-cropper
+      style="height: 250px"
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+      [class.d-none]="imageChangedEvent == ''"
+    ></image-cropper>
+
+    <img
+      [src]="croppedImage"
+      height="100px"
+      class="border border-dark p-1"
+      [class.d-none]="imageChangedEvent == ''"
     />
-    <button class="btn btn-secondary" (click)="uploadeImage()">
-      Uploade Image
-    </button>
-  </div>
-  <div>
-    <form
-      action=""
-      [formGroup]="editProfile"
-      (ngSubmit)="update()"
-      class="mt-3"
-    >
-      <div>
-        <Label for="name" class="d-inline me-3">Name</Label>
-        <input
-          type="text"
-          name="name"
-          formControlName="name"
-          class="form-control d-inline-block w-75"
-        />
-      </div>
-      <div class="mt-3">
-        <Label for="email" class="d-inline me-3">Email</Label>
-        <input
-          type="text"
-          name="email"
-          formControlName="email"
-          class="form-control d-inline-block w-75"
-        />
-      </div>
-      <div class="mt-3">
-        <button class="btn btn-primary" type="submit">update</button>
-      </div>
-    </form>
+    <div class="mt-5">
+      <button class="btn btn-secondary" (click)="uploadeImage()">
+        Upload Image
+      </button>
+    </div>
   </div>
 </div>

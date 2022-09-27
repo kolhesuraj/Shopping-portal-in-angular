@@ -26,6 +26,7 @@
     "@ngneat/overview": "^3.0.0",
     "angular-responsive-carousel": "^2.1.2",
     "ng-recaptcha": "^10.0.0",
+    "ngx-image-cropper": "^6.2.2",
     "ngx-toastr": "^15.0.0",
     "rxjs": "~7.5.0",
     "sweetalert": "^2.1.2",

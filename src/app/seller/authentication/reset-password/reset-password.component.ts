@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
-import { passwordValidator } from '../registration/password.Validator';
+import { passwordValidator } from '../../../services/password.Validator';
 
 @Component({
   selector: 'app-reset-password',
