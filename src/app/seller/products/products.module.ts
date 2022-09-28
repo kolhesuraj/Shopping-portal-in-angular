@@ -8,16 +8,24 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductComponent } from './product/product.component';
-import {  MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { UpdateImagesComponent } from './update-images/update-images.component';
-
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NgxEditorModule } from 'ngx-editor';
+import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 
 @NgModule({
-  declarations: [ListComponent, AddProductComponent, ProductComponent, UpdateProductComponent, UpdateImagesComponent],
+  declarations: [
+    ListComponent,
+    AddProductComponent,
+    ProductComponent,
+    UpdateProductComponent,
+    UpdateImagesComponent,
+  ],
   imports: [
     CommonModule,
     ProductsRoutingModule,
@@ -28,7 +36,10 @@ import { UpdateImagesComponent } from './update-images/update-images.component';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxDropzoneModule,
+    NgxEditorModule,
+    NgDompurifyModule
   ],
 })
 export class ProductsModule {}

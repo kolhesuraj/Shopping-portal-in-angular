@@ -23,16 +23,28 @@
           Product Name Required</small
         >
       </div>
-      <div class="form-floating mb-4">
-        <textarea
+      <div class="mb-4">
+        <!-- <textarea
           type="text"
           class="form-control"
           id="floatingInput"
           formControlName="description"
           placeholder="Description of Product"
           [class.is-invalid]="description?.invalid && description?.touched"
-        ></textarea>
-        <label for="floatingInput">Description</label>
+        ></textarea> -->
+        <label>Description</label>
+
+        <div class="editor">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+          </ngx-editor-menu>
+          <ngx-editor
+            [editor]="editor"
+            [placeholder]="'Description...'"
+            formControlName="description"
+          
+          >
+          </ngx-editor>
+        </div>
         <small
           class="text-danger float-end"
           *ngIf="description?.invalid && description?.touched"

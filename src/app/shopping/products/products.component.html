@@ -189,12 +189,12 @@
     </ng-template>
 
     <div class="card-body mt-1">
-      <div routerLink="./{{item._id}}" style="cursor: pointer;">
+      <div routerLink="./{{ item._id }}" style="cursor: pointer">
         <h3 class="card-title d-block" style="font-weight: 500">
           {{ item.name }}
         </h3>
-        <p class="card-text desc">
-          {{ item.description }}
+        <p class="card-text desc" [innerHTML]="item?.description | dompurify">
+         
         </p>
         <h2 class="card-text">Rs.{{ item.price }}</h2>
       </div>
@@ -236,7 +236,9 @@
             <a class="page-link" style="cursor: pointer">{{ list.page - 1 }}</a>
           </li>
           <li class="page-item" (click)="gotoPage(list.page)">
-            <a class="page-link" style="cursor: pointer">{{ list.page }}</a>
+            <a class="page-link" style="cursor: pointer"
+              ><u>{{ list.page }}</u></a
+            >
           </li>
           <li
             class="page-item"

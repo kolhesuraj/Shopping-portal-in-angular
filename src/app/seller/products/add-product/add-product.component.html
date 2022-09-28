@@ -75,8 +75,8 @@
           Product Name required</small
         >
       </div>
-      <div class="form-floating mb-4">
-        <textarea
+      <div class="mb-4">
+        <!-- <textarea
           type="text"
           class="form-control"
           id="floatingInput"
@@ -84,7 +84,17 @@
           placeholder="Description of Product"
           [class.is-invalid]="description?.invalid && description?.touched"
         ></textarea>
-        <label for="floatingInput">Description</label>
+        <label for="floatingInput">Description</label> -->
+        <div class="editor">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+          </ngx-editor-menu>
+          <ngx-editor
+            [editor]="editor"
+            [placeholder]="'Description...'"
+            formControlName="description"
+          >
+          </ngx-editor>
+        </div>
         <small
           class="text-danger float-end"
           *ngIf="description?.invalid && description?.touched"
@@ -93,7 +103,7 @@
         >
       </div>
 
-      <div class="form-floating mb-4">
+      <!-- <div class="form-floating mb-4">
         <input
           type="file"
           class="form-control"
@@ -105,9 +115,22 @@
           multiple
         />
         <label for="floatingInput">Images</label>
-      </div>
+      </div> -->
 
-      <div class="form-floating">
+      <ngx-dropzone (change)="onSelect($event)">
+        <ngx-dropzone-label>Drop Images</ngx-dropzone-label>
+        <ngx-dropzone-image-preview
+          *ngFor="let f of files"
+          [removable]="true"
+          (removed)="onRemove(f)"
+          ngProjectAs="ngx-dropzone-preview"
+          [file]="f"
+        >
+          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+        </ngx-dropzone-image-preview>
+      </ngx-dropzone>
+
+      <div class="form-floating mt-3">
         <input
           type="number"
           class="form-control"
@@ -127,7 +150,8 @@
       <div *ngIf="incomplete" class="text-danger float-start">
         Please add all details
       </div>
-      <div>
+
+      <!-- <div>
         <span *ngFor="let img of imageSrc">
           <img
             [src]="img"
@@ -136,7 +160,8 @@
             class="mx-2 mt-2 mb-2"
           />
         </span>
-      </div>
+      </div> -->
+
       <div class="mt-5">
         <button type="submit" mat-flat-button color="primary">
           Add Product
@@ -147,7 +172,6 @@
           color="warn"
           class="ms-5"
           (click)="cancel()"
-          (click)="imgs.value = ''"
         >
           Cancel
         </button>

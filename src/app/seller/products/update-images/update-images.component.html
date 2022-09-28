@@ -17,7 +17,19 @@
     ></i>
   </div>
   <hr />
-  <div class="d-inline m-5 mb-5">
+  <ngx-dropzone (change)="onSelect($event)">
+    <ngx-dropzone-label>Drop Image</ngx-dropzone-label>
+    <ngx-dropzone-image-preview
+      *ngFor="let f of files"
+      [removable]="true"
+      (removed)="onRemove(f)"
+      ngProjectAs="ngx-dropzone-preview"
+      [file]="f"
+    >
+      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+    </ngx-dropzone-image-preview>
+  </ngx-dropzone>
+  <!-- <div class="d-inline m-5 mb-5">
     <span *ngFor="let img of imageSrc , let delet of images" class="p-5">
       <img
         [src]="img"
@@ -26,16 +38,17 @@
         class="m-2 mb-5 border p-3"
       />
     </span>
-  </div>
-  <div class="d-flex mx-auto w-75">
-    <input
+  </div> -->
+  <div class="d-flex mx-auto w-75 mt-3">
+    <!-- <input
       type="file"
       multiple
       class="w-50 form-control d-inline"
       (change)="imageSelected($event)"
-    />
+    /> -->
     <button class="btn btn-primary w-auto ms-3" (click)="update()">
       Update
     </button>
+    <button class="btn btn-danger w-auto ms-3" mat-dialog-close="true"> cancel</button>
   </div>
 </div>

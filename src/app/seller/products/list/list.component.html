@@ -163,8 +163,8 @@
       <h3 class="card-title d-block" style="font-weight: 500">
         {{ item.name }}
       </h3>
-      <p class="card-text desc">
-        {{ item.description }}
+      <p class="card-text desc" [innerHTML]="item?.description | dompurify">
+        <!-- {{ item.description }} -->
       </p>
       <h2 class="card-text">Rs.{{ item.price }}</h2>
       <button class="btn btn-primary" (click)="gotoproduct(item._id)">

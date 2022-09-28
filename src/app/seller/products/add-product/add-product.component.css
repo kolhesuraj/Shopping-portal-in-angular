@@ -6,3 +6,8 @@ li {
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+.editor{
+   border: 1px solid gray;
+   padding: 5px;
+   border-radius: 5px;
+}

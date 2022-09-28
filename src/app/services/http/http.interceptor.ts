@@ -8,8 +8,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { catchError, finalize, Observable } from 'rxjs';
-import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { LoginService } from '../login.service';
 
@@ -18,7 +17,8 @@ export class HttpsInterceptor implements HttpInterceptor {
   constructor(
     private ls: LoginService,
     private route: Router,
-    private toster: HotToastService
+    private toster: HotToastService,
+    private activateRoute: ActivatedRoute
   ) {}
 
   /**
@@ -32,13 +32,13 @@ export class HttpsInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     this.ls.showloader();
-    // console.log(request);
+    console.log(request);
     const url = request.url;
     if (this.isAuthRequaire(request.url) == false) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${
-            this.ls.gettoken() || localStorage.getItem('token')
+            this.isSeller() ? this.ls.gettoken() : localStorage.getItem('token')
           }`,
         },
       });
@@ -55,7 +55,7 @@ export class HttpsInterceptor implements HttpInterceptor {
         this.toster.error(error.error.message);
         if (status == 401) {
           localStorage.removeItem('LoginUser');
-          localStorage.removeItem('token')
+          localStorage.removeItem('token');
           this.route.navigate(['/']);
         }
         throw new Error('error');
@@ -88,5 +88,14 @@ export class HttpsInterceptor implements HttpInterceptor {
       }
     });
     return result;
+  }
+  isSeller() {
+        let route: any = this.activateRoute.snapshot;
+    console.log(route._routerState.url);
+    if (route._routerState.url.includes('seller')) {
+      return true
+    } else {
+      return false
+    }
   }
 }

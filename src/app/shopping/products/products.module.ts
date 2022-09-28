@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProductsRoutingModule } from './products-routing.module';
 import { DetailsComponent } from './details/details.component';
 import { MatIconModule } from '@angular/material/icon';
+import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     ProductsRoutingModule,
-    MatIconModule
+    MatIconModule,
+    NgDompurifyModule
   ]
 })
 export class ProductsModule { }

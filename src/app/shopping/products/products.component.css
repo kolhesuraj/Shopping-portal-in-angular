@@ -90,3 +90,6 @@ nav div ul li {
 .dropdown-toggle::after{
   display: none !important;
 }
+mat-option{
+  background-color: rgba(168, 166, 166, 0.856);
+}

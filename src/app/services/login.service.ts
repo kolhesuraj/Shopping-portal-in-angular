@@ -16,6 +16,8 @@ export class LoginService {
     this.loader.next(false);
   }
 
+  
+
   loadData() {
     let temp: any = localStorage.getItem('LoginUser');
     // const data = JSON.parse(temp);

@@ -31,7 +31,7 @@ export class UpdateImagesComponent implements OnInit {
     this.deletearray.forEach((element) => {
       formdata.append('delete', element);
     });
-    this.images.forEach((element) => {
+    this.files.forEach((element) => {
       formdata.append('new_images', element);
     });
     this.httpservice
@@ -39,7 +39,7 @@ export class UpdateImagesComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-          Swal.fire({title: 'Images Updated Successfully', icon:'success'});
+          Swal.fire({ title: 'Images Updated Successfully', icon: 'success' });
           this._dialogRef.close();
         },
         error: (err) => {
@@ -72,31 +72,42 @@ export class UpdateImagesComponent implements OnInit {
       }
     }
   }
-  imageSelected(event: any) {
-    // console.log(event.target.files);
-    let image: any[] = event.target.files;
-    this.readURL(event);
-    // this.images = [];
-    if (image) {
-      console.log(image);
-      for (let i = 0; i < image.length; i++) {
-        this.images.push(image[i]);
-      }
-    }
-  }
-  readURL(event: any): void {
-    this.imageSrc = [];
-    if (event.target.files.length > 0) {
-      const file = event.target.files;
-      [...file].forEach((element: any) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.imageSrc.push(reader.result);
-        };
-        reader.readAsDataURL(element);
-      });
+  // imageSelected(event: any) {
+  //   // console.log(event.target.files);
+  //   let image: any[] = event.target.files;
+  //   this.readURL(event);
+  //   // this.images = [];
+  //   if (image) {
+  //     console.log(image);
+  //     for (let i = 0; i < image.length; i++) {
+  //       this.images.push(image[i]);
+  //     }
+  //   }
+  // }
+  // readURL(event: any): void {
+  //   this.imageSrc = [];
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files;
+  //     [...file].forEach((element: any) => {
+  //       const reader = new FileReader();
+  //       reader.onload = (e) => {
+  //         this.imageSrc.push(reader.result);
+  //       };
+  //       reader.readAsDataURL(element);
+  //     });
 
-      console.log(this.imageSrc);
-    }
+  //     console.log(this.imageSrc);
+  //   }
+  // }
+  files: File[] = [];
+
+  onSelect(event:any) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+  }
+
+  onRemove(event:any) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
   }
 }
