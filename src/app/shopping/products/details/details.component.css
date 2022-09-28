@@ -1,0 +1,13 @@
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+  filter: invert(100%);
+}
+img {
+  max-height: 500px;
+}
+.dropdown-toggle::after {
+  display: none !important;
+}
+nav div ul li {
+  cursor: pointer;
+}

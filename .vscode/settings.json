@@ -3,5 +3,13 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
-  "git.enabled": true
+  "git.enabled": true,
+  "prettier.bracketSameLine": true,
+  "prettier.enableDebugLogs": true,
+  "prettier.insertPragma": true,
+  "prettier.jsxSingleQuote": false,
+  "prettier.requirePragma": true,
+  "prettier.singleAttributePerLine": true,
+  "prettier.singleQuote": true,
+  "editor.formatOnType": true
 }

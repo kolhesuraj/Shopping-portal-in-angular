@@ -43,7 +43,10 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li>
-            <a class="dropdown-item" [class.d-none]="customer == null" routerLink="/shop/customer/profile"
+            <a
+              class="dropdown-item"
+              [class.d-none]="customer == null"
+              routerLink="/shop/customer/profile"
               >profile</a
             >
           </li>
@@ -186,13 +189,16 @@
     </ng-template>
 
     <div class="card-body mt-1">
-      <h3 class="card-title d-block" style="font-weight: 500">
-        {{ item.name }}
-      </h3>
-      <p class="card-text desc">
-        {{ item.description }}
-      </p>
-      <h2 class="card-text">Rs.{{ item.price }}</h2>
+      <div routerLink="./{{item._id}}" style="cursor: pointer;">
+        <h3 class="card-title d-block" style="font-weight: 500">
+          {{ item.name }}
+        </h3>
+        <p class="card-text desc">
+          {{ item.description }}
+        </p>
+        <h2 class="card-text">Rs.{{ item.price }}</h2>
+      </div>
+
       <button class="btn btn-primary" (click)="addToCart(item._id)">
         Add to Cart
       </button>

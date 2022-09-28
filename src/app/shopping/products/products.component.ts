@@ -71,7 +71,6 @@ export class ProductsComponent implements OnInit {
   }
   getProfile() {
     this.customer = this.service.getCustomer();
-    console.log(this.customer)
     if (this.customer) {
       this.http.get('shop/auth/self').subscribe({
         next: (res) => {
