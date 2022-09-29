@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
@@ -22,9 +23,9 @@ export class UpdateOrgComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: dialogdata,
     private fb: FormBuilder,
-    private ls: LoginService,
     private _dialogRef: MatDialogRef<UpdateOrgComponent>,
-    private httpservice: HttpServiceService
+    private httpservice: HttpServiceService,
+    private toaster: HotToastService
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +54,7 @@ export class UpdateOrgComponent implements OnInit {
       this.httpservice.patch('users/org', this.editForm.value).subscribe({
         next: (res: any) => {
           // console.log(res);
-          Swal.fire('organization details updated');
+          this.toaster.success('Organixzation Details Upadetd');
           this._dialogRef.close();
         },
         error: (err: any) => {

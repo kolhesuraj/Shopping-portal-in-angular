@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 import { Editor, Toolbar } from 'ngx-editor';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-add-product',
@@ -31,7 +32,8 @@ export class AddProductComponent implements OnInit {
     private httpservice: HttpServiceService,
     public fb: FormBuilder,
     private route: Router,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private toster: HotToastService
   ) {}
   ngOnInit(): void {
     this.editor = new Editor();
@@ -79,17 +81,12 @@ export class AddProductComponent implements OnInit {
 
       this.httpservice.post('products', formdata).subscribe({
         next: () => {
-          Swal.fire('Product Added successfully', 'Go for next product');
+          this.toster.success('Product Added');
           this.addProductForm.reset();
           this.reset();
         },
         error: (err) => {
-          Swal.fire(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `Something went wrong! ${err}`,
-          });
+          this.toster.error(err);
         },
       });
     } else {

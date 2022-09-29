@@ -60,11 +60,7 @@ export class EditProfileComponent implements OnInit {
       if (result.isConfirmed) {
         this.http.delete('customers/profile-picture').subscribe({
           next: (res: any) => {
-            Swal.fire(
-              'Deleted!',
-              'Your profile Picture has been deleted.',
-              'success'
-            );
+            this.toster.success('Profile Picture Removed!');
             this.getProfile();
           },
           error: (err: any) => {
@@ -93,7 +89,7 @@ export class EditProfileComponent implements OnInit {
         .subscribe({
           next: (res) => {
             console.log(res);
-            Swal.fire('profile details updated');
+            this.toster.success('Profile Details Upadetd');
             this.getProfile();
           },
           error: (err) => {
@@ -133,7 +129,7 @@ export class EditProfileComponent implements OnInit {
     this.http.post('customers/profile-picture', formData).subscribe({
       next: (res) => {
         console.log(res);
-        Swal.fire('Profile Picture Updated');
+        this.toster.success('Profile Picture Updated')
         this.imageChangedEvent = '';
         this.open = true;
         this.getProfile();

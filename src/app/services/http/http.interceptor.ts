@@ -5,7 +5,6 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
-  HttpResponse,
 } from '@angular/common/http';
 import { catchError, finalize, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';

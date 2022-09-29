@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 import { Editor, Toolbar } from 'ngx-editor';
+import { HotToastService } from '@ngneat/hot-toast';
 
 interface dialogdata {
   product_id: string;
@@ -40,7 +41,8 @@ export class UpdateProductComponent implements OnInit {
     private route: Router,
     private authService: SocialAuthService,
     private fb: FormBuilder,
-    private _dialogRef: MatDialogRef<UpdateProductComponent>
+    private _dialogRef: MatDialogRef<UpdateProductComponent>,
+    private toaster: HotToastService
   ) {}
 
   ngOnInit(): void {
@@ -81,15 +83,11 @@ export class UpdateProductComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            Swal.fire({
-              title: 'Product updated successfully',
-              icon: 'success',
-            });
+            this.toaster.success('Product Details Upadted')
             this.updateProductForm.reset();
             this._dialogRef.close();
           },
           error: (err) => {
-            Swal.fire(err);
             Swal.fire({
               icon: 'error',
               title: 'Oops...',

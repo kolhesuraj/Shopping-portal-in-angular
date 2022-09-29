@@ -2,6 +2,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 import { map, Observable, startWith } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
@@ -29,7 +30,8 @@ export class ListComponent implements OnInit {
   constructor(
     private route: Router,
     private authService: SocialAuthService,
-    private httpservice: HttpServiceService
+    private httpservice: HttpServiceService,
+    private toaster: HotToastService
   ) {
     this.getProducts();
   }
@@ -150,16 +152,12 @@ export class ListComponent implements OnInit {
       if (result.isConfirmed) {
         this.httpservice.delete(`products/${product_id}`).subscribe({
           next: () => {
-            Swal.fire('Deleted!', 'Your Product has been deleted.', 'success');
+            this.toaster.success('Product Deleted ');
             this.getProducts();
           },
           error: (err: any) => {
             console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
+            this.toaster.error('Error while Deletion',err);
           },
         });
       }

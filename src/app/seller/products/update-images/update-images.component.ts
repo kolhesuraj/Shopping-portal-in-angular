@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { HotToastService } from '@ngneat/hot-toast';
 import { elementAt } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
@@ -16,7 +17,8 @@ export class UpdateImagesComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: dialogdata,
     private httpservice: HttpServiceService,
-    private _dialogRef: MatDialogRef<UpdateImagesComponent>
+    private _dialogRef: MatDialogRef<UpdateImagesComponent>,
+    private toaster: HotToastService,
   ) {}
   product: any;
   deletearray: any[] = [];
@@ -39,7 +41,7 @@ export class UpdateImagesComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-          Swal.fire({ title: 'Images Updated Successfully', icon: 'success' });
+         this.toaster.success("Images Upadated")
           this._dialogRef.close();
         },
         error: (err) => {

@@ -9,6 +9,7 @@ import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-organization',
@@ -21,7 +22,8 @@ export class OrganizationComponent implements OnInit {
     private httpService: HttpServiceService,
     private _dialog: MatDialog,
     private route: Router,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private toaster: HotToastService
   ) {
     this.getProfile();
     this.getUsers();
@@ -156,11 +158,11 @@ export class OrganizationComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-           Swal.fire({
-             icon: 'error',
-             title: 'Oops... Suggestion Fetch Failed',
-             text: `Something went wrong! ${err}`,
-           });
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops... Suggestion Fetch Failed',
+          text: `Something went wrong! ${err}`,
+        });
       },
     });
   }
@@ -229,7 +231,7 @@ export class OrganizationComponent implements OnInit {
         if (result.isConfirmed) {
           this.httpService.delete(`users/${id}`).subscribe({
             next: (res: any) => {
-              Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+              this.toaster.success('User Deleted !');
               this.getUsers();
             },
             error: (err: any) => {
@@ -339,11 +341,11 @@ export class OrganizationComponent implements OnInit {
               },
               error: (err: any) => {
                 console.log(err);
-                   Swal.fire({
-                     icon: 'error',
-                     title: 'Oops...',
-                     text: `Something went wrong! ${err}`,
-                   });
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: `Something went wrong! ${err}`,
+                });
               },
             });
           } else {

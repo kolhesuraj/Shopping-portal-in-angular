@@ -96,7 +96,7 @@ export class ProfileComponent implements OnInit {
       if (result.isConfirmed) {
         this.http.delete(`customers/account`).subscribe({
           next: (res: any) => {
-            Swal.fire('Deleted!', 'Your profile has been deleted.', 'success');
+            Swal.fire('Deleted!', 'Your profile has been deleted.', 'warning');
             localStorage.removeItem('token');
             this.route.navigate(['/shop/products']);
           },

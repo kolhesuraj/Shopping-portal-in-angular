@@ -2,6 +2,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 import { UpdateImagesComponent } from '../update-images/update-images.component';
@@ -20,7 +21,8 @@ export class ProductComponent implements OnInit {
     private httpservice: HttpServiceService,
     private authService: SocialAuthService,
     private route: Router,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private toaster: HotToastService
   ) {
     this.productId = this.activateRoute.snapshot.paramMap.get('id');
     this.getDetails();
@@ -36,11 +38,7 @@ export class ProductComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `Something went wrong! ${err}`,
-        });
+      this.toaster.error(err)
       },
     });
   }
@@ -95,16 +93,12 @@ export class ProductComponent implements OnInit {
       if (result.isConfirmed) {
         this.httpservice.delete(`products/${this.productId}`).subscribe({
           next: () => {
-            Swal.fire('Deleted!', 'Your Product has been deleted.', 'success');
+            this.toaster.success('Product Deleted!')
             this.route.navigate(['./products']);
           },
           error: (err: any) => {
             console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
+           this.toaster.error('Error while Deltetion', err)
           },
         });
       }

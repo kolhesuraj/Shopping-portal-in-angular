@@ -5,6 +5,7 @@ import { passwordValidator } from '../../../services/password.Validator';
 import Swal from 'sweetalert2';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-registration',
@@ -19,10 +20,9 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: Router,
-    // private ls: LoginService,
-    // private http: HttpClient
     private httpService: HttpServiceService,
-    private recaptchaV3Service: ReCaptchaV3Service
+    private recaptchaV3Service: ReCaptchaV3Service,
+    private toaster: HotToastService
   ) {}
 
   ngOnInit(): void {
@@ -69,10 +69,7 @@ export class RegistrationComponent implements OnInit {
           this.httpService.sendVerrification(res.token).subscribe({
             next: (res: any) => {
               console.log(res);
-              Swal.fire(
-                'registerd Successfully',
-                'please check email to verify'
-              );
+              this.toaster.success('User Registered Successfully');
               setTimeout(() => {
                 this.tocken = 0;
                 this.route.navigate(['/login']);

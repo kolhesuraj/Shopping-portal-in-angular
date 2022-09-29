@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 
@@ -26,7 +27,8 @@ export class EditUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: dataform,
     private fb: FormBuilder,
     private _dialogRef: MatDialogRef<EditUserComponent>,
-    private httpservice: HttpServiceService
+    private httpservice: HttpServiceService,
+    private toaster: HotToastService
   ) {
     // console.log(data);
   }
@@ -53,7 +55,7 @@ export class EditUserComponent implements OnInit {
         .patch(`users/${this.data.id}`, this.editForm.value)
         .subscribe({
           next: (res: any) => {
-            Swal.fire('user details updated successfully');
+            this.toaster.success('User Details Updated');
             this._dialogRef.close();
           },
           error: (err: any) => {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogClose, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 import { passwordValidator } from '../../../services/password.Validator';
@@ -18,7 +19,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private httpService: HttpServiceService,
-    private _dialogRef: MatDialogRef<EditUserComponent>
+    private _dialogRef: MatDialogRef<EditUserComponent>,
+    private toaster: HotToastService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class ChangePasswordComponent implements OnInit {
         .subscribe({
           next: (res: any) => {
             console.log(res);
-            Swal.fire('password changed successfully');
+            this.toaster.success('Password Updated');
             // console.log('Response');
             this._dialogRef.close();
           },

@@ -61,7 +61,7 @@ export class AddUserComponent implements OnInit {
       delete this.register.value.ConfirmPassword;
       this.httpService.post('users', this.register.value).subscribe({
         next: (res) => {
-          Swal.fire('registerd Successfully');
+          Swal.fire('User Registerd Successfully');
           this.register.reset();
         },
         error: (err) => {

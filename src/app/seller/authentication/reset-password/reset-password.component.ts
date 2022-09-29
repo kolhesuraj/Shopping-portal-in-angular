@@ -18,7 +18,6 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: Router,
-    private recaptchaV3Service: ReCaptchaV3Service,
     private httpservice: HttpServiceService,
     private activateRoute: ActivatedRoute
   ) {}
