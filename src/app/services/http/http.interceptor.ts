@@ -31,7 +31,7 @@ export class HttpsInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     this.ls.showloader();
-    console.log(request);
+    // console.log(request);
     const url = request.url;
     if (this.isAuthRequaire(request.url) == false) {
       request = request.clone({
@@ -90,7 +90,7 @@ export class HttpsInterceptor implements HttpInterceptor {
   }
   isSeller() {
         let route: any = this.activateRoute.snapshot;
-    console.log(route._routerState.url);
+    // console.log(route._routerState.url);
     if (route._routerState.url.includes('seller')) {
       return true
     } else {

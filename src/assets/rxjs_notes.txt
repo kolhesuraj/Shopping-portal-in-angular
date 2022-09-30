@@ -1,0 +1,9 @@
+Oprators:
+    - OF 
+        help to create observable form array, obj or string.
+        students: Observable<string[]> = of(['marks', 'ram', 'laxaman']);
+
+    -FROM
+        create observable from an array an array-like objects
+        students : Observable<string> = form['data','data2','data3'];
+        

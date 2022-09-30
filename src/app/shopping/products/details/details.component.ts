@@ -31,10 +31,7 @@ export class DetailsComponent implements OnInit {
         console.log(res);
         this.item = res;
         this.show = this.item.images[0];
-      },
-      error: (err) => {
-        console.log(err);
-      },
+      }
     });
   }
   getProfile() {
@@ -45,9 +42,6 @@ export class DetailsComponent implements OnInit {
         next: (res) => {
           // console.log(res);
           this.profile = res;
-        },
-        error: (err) => {
-          console.log(err);
         },
       });
     }

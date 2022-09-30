@@ -131,14 +131,7 @@ export class OrganizationComponent implements OnInit {
           this.getSuggetion();
           this.flag = 1;
         }
-      },
-      error: (err: any) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `Something went wrong! ${err}`,
-        });
-      },
+      }
     });
   }
 
@@ -155,15 +148,7 @@ export class OrganizationComponent implements OnInit {
             this.suggestion.push(element.name);
           }
         });
-      },
-      error: (err) => {
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops... Suggestion Fetch Failed',
-          text: `Something went wrong! ${err}`,
-        });
-      },
+      }
     });
   }
 
@@ -233,15 +218,7 @@ export class OrganizationComponent implements OnInit {
             next: (res: any) => {
               this.toaster.success('User Deleted !');
               this.getUsers();
-            },
-            error: (err: any) => {
-              console.log(err);
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `Something went wrong! ${err}`,
-              });
-            },
+            }
           });
         }
       });
@@ -338,15 +315,7 @@ export class OrganizationComponent implements OnInit {
               next: (res: any) => {
                 Swal.fire('user role changed successfully');
                 this.getUsers();
-              },
-              error: (err: any) => {
-                console.log(err);
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: `Something went wrong! ${err}`,
-                });
-              },
+              }
             });
           } else {
             Swal.fire('role must be admin or user');

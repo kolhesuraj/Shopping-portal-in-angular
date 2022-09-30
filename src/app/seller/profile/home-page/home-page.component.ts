@@ -30,10 +30,7 @@ export class HomePageComponent implements OnInit {
         // console.log(result);
         this.data = result;
         this.loginrole = result.role;
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
+      }
     });
   }
 
@@ -53,15 +50,7 @@ export class HomePageComponent implements OnInit {
         next: (res: any) => {
           console.log(res);
           Swal.fire('Email send successfully', 'please check email and verify');
-        },
-        error: (err: any) => {
-          console.log(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops... Email send Failed',
-            text: `Something went wrong! ${err}`,
-          });
-        },
+        }
       });
     // this.httpService.sendVerrification(token).subscribe({
     //   next: (res: any) => {
@@ -98,10 +87,7 @@ export class HomePageComponent implements OnInit {
       next: (res: any) => {
         // console.log(res);
         this.ls.LogIndata.next(res);
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
+      }
     });
     // this.httpService.profileView().subscribe({
     //   next: (res: any) => {

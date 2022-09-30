@@ -57,15 +57,7 @@ export class EditUserComponent implements OnInit {
           next: (res: any) => {
             this.toaster.success('User Details Updated');
             this._dialogRef.close();
-          },
-          error: (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
-          },
+          }
         });
       // this.httpservice.updateUser(this.data.id, name, email).subscribe({
       //   next: (res: any) => {

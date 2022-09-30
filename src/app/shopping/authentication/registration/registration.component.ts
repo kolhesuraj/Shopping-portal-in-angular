@@ -113,12 +113,7 @@ export class RegistrationComponent implements OnInit {
             this.tocken = 0;
             this.route.navigate(['/shop/auth/login']);
           }, 1500);
-        },
-        error: (err) => {
-          // console.log(err);
-          this.refreshCaptcha();
-          this.errorFromserver = err.error.message;
-        },
+        }
       });
     } else {
       this.submited = true;

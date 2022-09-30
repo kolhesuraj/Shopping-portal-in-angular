@@ -41,17 +41,9 @@ export class UpdateImagesComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-         this.toaster.success("Images Upadated")
+         this.toaster.success("Images Updated")
           this._dialogRef.close();
-        },
-        error: (err) => {
-          console.log(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `Something went wrong! ${err}`,
-          });
-        },
+        }
       });
   }
   deleteimg(id: number) {

@@ -52,10 +52,7 @@ export class ChangePasswordComponent implements OnInit {
             console.log(res);
             this.toaster.success('Password Updated!');
             this._matDialog.close();
-          },
-          error: (err) => {
-            console.log(err);
-          },
+          }
         });
     } else {
       this.submmited = true;

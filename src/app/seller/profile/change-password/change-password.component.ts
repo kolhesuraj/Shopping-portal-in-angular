@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { passwordValidator } from 'src/app/shopping/services/password.Validator';
 import Swal from 'sweetalert2';
-import { passwordValidator } from '../../../services/password.Validator';
 import { EditUserComponent } from '../organization/edit-user/edit-user.component';
 
 @Component({
@@ -28,6 +28,7 @@ export class ChangePasswordComponent implements OnInit {
       {
         old_password: ['', [Validators.required]],
         new_password: ['', [Validators.required]],
+        confirm_password: ['', [Validators.required]],
       },
       { validator: passwordValidator }
     );
@@ -35,12 +36,15 @@ export class ChangePasswordComponent implements OnInit {
   get Password() {
     return this.changePassword.get('old_password');
   }
-  get ConfirmPassword() {
+  get NewPassword() {
     return this.changePassword.get('new_password');
   }
-
+  get ConfirmPassword() {
+    return this.changePassword.get('confirm_password');
+  }
   submit() {
     if (this.changePassword.valid) {
+      delete this.changePassword.value.confirm_password;
       this.httpService
         .post('users/auth/change-password', this.changePassword.value)
         .subscribe({
@@ -49,15 +53,7 @@ export class ChangePasswordComponent implements OnInit {
             this.toaster.success('Password Updated');
             // console.log('Response');
             this._dialogRef.close();
-          },
-          error: (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
-          },
+          }
         });
       // this.httpService.changePassword(this.changePassword.value).subscribe({
       //   next: (res: any) => {

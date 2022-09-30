@@ -92,12 +92,7 @@ export class LoginComponent implements OnInit {
         next: (res: any) => {
           this.validation(res);
           this.refreshCaptcha();
-        },
-        error: (err) => {
-          console.log(err);
-          Swal.fire(err.error.message);
-          this.refreshCaptcha();
-        },
+        }
       });
     }
   }
@@ -122,11 +117,7 @@ export class LoginComponent implements OnInit {
       next: (res: any) => {
         this.validation(res);
         this.refreshCaptcha();
-      },
-      error: (err: any) => {
-        console.log(err);
-        this.refreshCaptcha();
-      },
+      }
     });
 
     // this.httpservice.socialLogin(user, this.captcha).subscribe({

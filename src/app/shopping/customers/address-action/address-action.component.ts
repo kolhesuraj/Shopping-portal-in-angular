@@ -76,10 +76,7 @@ export class AddressActionComponent implements OnInit {
               console.log(res);
               Swal.fire('Address Updated Successfully');
               this.reset();
-            },
-            error: (err) => {
-              console.log(err);
-            },
+            }
           });
       } else {
         this.http.post('customers/address', this.addressFrom.value).subscribe({
@@ -87,10 +84,7 @@ export class AddressActionComponent implements OnInit {
             console.log(res);
             Swal.fire('Address Added Successfully');
             this.reset();
-          },
-          error: (err) => {
-            console.log(err);
-          },
+          }
         });
       }
     } else {

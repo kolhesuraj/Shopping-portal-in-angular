@@ -63,15 +63,7 @@ export class AddUserComponent implements OnInit {
         next: (res) => {
           Swal.fire('User Registerd Successfully');
           this.register.reset();
-        },
-        error: (err) => {
-          console.log(err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `Something went wrong! ${err}`,
-          });
-        },
+        }
       });
       // this.httpService.addOrgUser(dataSent).subscribe({
       //   next: (res) => {

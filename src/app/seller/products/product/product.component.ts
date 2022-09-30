@@ -35,11 +35,7 @@ export class ProductComponent implements OnInit {
         this.product = res;
         // console.log(res);
         // console.log(this.product);
-      },
-      error: (err) => {
-        console.log(err);
-      this.toaster.error(err)
-      },
+      }
     });
   }
 
@@ -95,11 +91,7 @@ export class ProductComponent implements OnInit {
           next: () => {
             this.toaster.success('Product Deleted!')
             this.route.navigate(['./products']);
-          },
-          error: (err: any) => {
-            console.log(err);
-           this.toaster.error('Error while Deltetion', err)
-          },
+          }
         });
       }
     });

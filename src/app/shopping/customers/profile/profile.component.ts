@@ -36,10 +36,7 @@ export class ProfileComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.profile = res;
-      },
-      error: (err) => {
-        console.log(err);
-      },
+      }
     });
   }
   getAddresses() {
@@ -47,10 +44,7 @@ export class ProfileComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.addresses = res;
-      },
-      error: (err) => {
-        console.log(err);
-      },
+      }
     });
   }
   editProfile() {
@@ -99,15 +93,7 @@ export class ProfileComponent implements OnInit {
             Swal.fire('Deleted!', 'Your profile has been deleted.', 'warning');
             localStorage.removeItem('token');
             this.route.navigate(['/shop/products']);
-          },
-          error: (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
-          },
+          }
         });
       }
     });
@@ -174,15 +160,7 @@ export class ProfileComponent implements OnInit {
           next: (res: any) => {
             Swal.fire('Deleted!', 'Your address has been deleted.', 'success');
             this.getAddresses();
-          },
-          error: (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
-          },
+          }
         });
       }
     });

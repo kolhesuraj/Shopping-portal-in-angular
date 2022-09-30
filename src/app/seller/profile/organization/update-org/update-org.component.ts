@@ -56,11 +56,7 @@ export class UpdateOrgComponent implements OnInit {
           // console.log(res);
           this.toaster.success('Organixzation Details Upadetd');
           this._dialogRef.close();
-        },
-        error: (err: any) => {
-          console.log(err);
-          Swal.fire(err.error.message);
-        },
+        }
       });
       // this.httpservice.updateOrg(data).subscribe({
       //   next: (res: any) => {

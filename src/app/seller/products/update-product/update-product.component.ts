@@ -83,17 +83,10 @@ export class UpdateProductComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            this.toaster.success('Product Details Upadted')
+            this.toaster.success('Product Details Updated')
             this.updateProductForm.reset();
             this._dialogRef.close();
-          },
-          error: (err) => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
-          },
+          }
         });
     } else {
       this.incomplete = true;

@@ -84,10 +84,7 @@ export class AddProductComponent implements OnInit {
           this.toster.success('Product Added');
           this.addProductForm.reset();
           this.reset();
-        },
-        error: (err) => {
-          this.toster.error(err);
-        },
+        }
       });
     } else {
       this.incomplete = true;

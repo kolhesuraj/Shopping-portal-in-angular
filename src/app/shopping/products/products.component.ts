@@ -63,10 +63,7 @@ export class ProductsComponent implements OnInit {
             this.suggestion.push(element.name);
           }
         });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
+      }
     });
   }
   getProfile() {
@@ -76,10 +73,7 @@ export class ProductsComponent implements OnInit {
         next: (res) => {
           // console.log(res);
           this.profile = res;
-        },
-        error: (err) => {
-          console.log(err);
-        },
+        }
       });
     }
   }
@@ -102,9 +96,6 @@ export class ProductsComponent implements OnInit {
           this.getSuggetion();
           this.token = 1;
         }
-      },
-      error: (err) => {
-        console.log(err);
       },
     });
   }

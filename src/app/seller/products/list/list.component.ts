@@ -62,10 +62,7 @@ export class ListComponent implements OnInit {
             this.suggestion.push(element.name);
           }
         });
-      },
-      error: (err) => {
-        console.log(err);
-      },
+      }
     });
   }
   openNav() {
@@ -95,10 +92,7 @@ export class ListComponent implements OnInit {
           this.token = 1;
         }
         // console.log(this.list);
-      },
-      error: (err) => {
-        console.log(err);
-      },
+      }
     });
   }
 
@@ -154,11 +148,7 @@ export class ListComponent implements OnInit {
           next: () => {
             this.toaster.success('Product Deleted ');
             this.getProducts();
-          },
-          error: (err: any) => {
-            console.log(err);
-            this.toaster.error('Error while Deletion',err);
-          },
+          }
         });
       }
     });

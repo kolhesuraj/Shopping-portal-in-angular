@@ -75,12 +75,7 @@ export class LoginComponent implements OnInit {
             this.route.navigate(['/shop/products']);
             this.tocken = 0;
           }, 1500);
-        },
-        error: (err) => {
-          this.refreshCaptcha();
-          console.log(err);
-          Swal.fire(err.error.message);
-        },
+        }
       });
     }
   }

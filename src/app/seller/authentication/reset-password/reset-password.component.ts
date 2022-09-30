@@ -51,11 +51,7 @@ export class ResetPasswordComponent implements OnInit {
             console.log('reset');
             Swal.fire('Password reset successfully');
             this.route.navigate(['./auth']);
-          },
-          error: (err: any) => {
-            console.log(err);
-            console.log('err');
-          },
+          }
         });
       // this.httpservice
       //   .resetPassword(this.resetPassowrdform.value, this.token)

@@ -26,10 +26,6 @@ export class VarifyEmailComponent implements OnInit {
           console.warn(res);
           this.verify = 1;
         },
-        error: (err: any) => {
-          console.log(err);
-          this.verify = 0;
-        },
       });
     // this.httpservice.finalVerifyEmail(this.verificationToken).subscribe({
     //   next: (res: any) => {

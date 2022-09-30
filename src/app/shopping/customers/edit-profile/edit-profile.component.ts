@@ -62,15 +62,7 @@ export class EditProfileComponent implements OnInit {
           next: (res: any) => {
             this.toster.success('Profile Picture Removed!');
             this.getProfile();
-          },
-          error: (err: any) => {
-            console.log(err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `Something went wrong! ${err}`,
-            });
-          },
+          }
         });
       }
     });
@@ -89,12 +81,9 @@ export class EditProfileComponent implements OnInit {
         .subscribe({
           next: (res) => {
             console.log(res);
-            this.toster.success('Profile Details Upadetd');
+            this.toster.success('Profile Details Updated');
             this.getProfile();
-          },
-          error: (err) => {
-            console.log(err);
-          },
+          }
         });
     }
   }
@@ -129,14 +118,11 @@ export class EditProfileComponent implements OnInit {
     this.http.post('customers/profile-picture', formData).subscribe({
       next: (res) => {
         console.log(res);
-        this.toster.success('Profile Picture Updated')
+        this.toster.success('Profile Picture Updated');
         this.imageChangedEvent = '';
         this.open = true;
         this.getProfile();
-      },
-      error: (err) => {
-        console.log(err);
-      },
+      }
     });
   }
 }

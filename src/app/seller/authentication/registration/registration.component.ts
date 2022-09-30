@@ -75,41 +75,7 @@ export class RegistrationComponent implements OnInit {
                 this.route.navigate(['/login']);
               }, 1500);
             },
-            error: (err) => {
-              // console.log(err);
-              this.errorFromserver = err.error.message;
-            },
           });
-
-          // this.httpService.register(dataSent).subscribe({
-          //   next: (res) => {
-          //     // localStorage.setItem('registrationToken', res.token);
-          //     // console.log(res);
-          //     // this.httpService.sendVerrification(res.token).subscribe({
-          //     //   next: (res: any) => {
-          //     //     // console.log(res);
-          //     //     Swal.fire(
-          //     //       'registerd Successfully',
-          //     //       'please check email to verify'
-          //     //     );
-          //       },
-          //       error: (err) => {
-          //         // console.log(err);
-          //         this.errorFromserver = err.error.message;
-          //       },
-          //     });
-
-          // console.log(res);
-          // localStorage.setItem('registrationToken', JSON.stringify(res));
-          // this.tocken = 1;
-          // setTimeout(() => {
-          //   this.tocken = 0;
-          //   this.route.navigate(['/login']);
-          // }, 1500);
-        },
-        error: (err) => {
-          // console.log(err);
-          this.errorFromserver = err.error.message;
         },
       });
     } else {
@@ -130,6 +96,32 @@ export class RegistrationComponent implements OnInit {
       });
   }
 }
+
+// this.httpService.register(dataSent).subscribe({
+//   next: (res) => {
+//     // localStorage.setItem('registrationToken', res.token);
+//     // console.log(res);
+//     // this.httpService.sendVerrification(res.token).subscribe({
+//     //   next: (res: any) => {
+//     //     // console.log(res);
+//     //     Swal.fire(
+//     //       'registerd Successfully',
+//     //       'please check email to verify'
+//     //     );
+//       },
+//       error: (err) => {
+//         // console.log(err);
+//         this.errorFromserver = err.error.message;
+//       },
+//     });
+
+// console.log(res);
+// localStorage.setItem('registrationToken', JSON.stringify(res));
+// this.tocken = 1;
+// setTimeout(() => {
+//   this.tocken = 0;
+//   this.route.navigate(['/login']);
+// }, 1500);
 
 // registerLogin() {
 //   if (this.register.valid) {
