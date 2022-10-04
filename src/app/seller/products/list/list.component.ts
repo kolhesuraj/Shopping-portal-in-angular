@@ -55,7 +55,7 @@ export class ListComponent implements OnInit {
     const data = `limit=${this.list.totalResults}`;
     this.httpservice.get(`products?${data}`).subscribe({
       next: (res: any) => {
-        console.log(res);
+        // console.log(res);
         res.results.forEach((element: any) => {
           if (this.suggestion.includes(element.name)) {
           } else {

@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit {
   socialLogin(user: any) {
     let data: any;
     let provider!: String;
-    if (user.provider == 'GOOGLE') {
+    if (user?.provider == 'GOOGLE') {
       provider = 'google';
       data = {
         token: user.idToken,
