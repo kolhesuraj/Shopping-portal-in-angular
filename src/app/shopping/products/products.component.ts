@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map, Observable, startWith } from 'rxjs';
+import { debounce, debounceTime, map, Observable, startWith } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 import { CustomersService } from '../services/customers.service';
@@ -33,16 +33,19 @@ export class ProductsComponent implements OnInit {
     private route: Router,
     private service: CustomersService
   ) {
-        this.getProfile();
-        this.getProducts();
+    this.getProfile();
+    this.getProducts();
   }
 
   ngOnInit(): void {
-
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(' '),
       map((value: string | null) => this._filter(value || ''))
     );
+
+    this.myControl.valueChanges.pipe(debounceTime(500)).subscribe((data) => {
+      this.getProducts();
+    });
   }
 
   _filter(value: string): string[] {
@@ -63,7 +66,7 @@ export class ProductsComponent implements OnInit {
             this.suggestion.push(element.name);
           }
         });
-      }
+      },
     });
   }
   getProfile() {
@@ -73,7 +76,7 @@ export class ProductsComponent implements OnInit {
         next: (res) => {
           // console.log(res);
           this.profile = res;
-        }
+        },
       });
     }
   }
@@ -131,7 +134,6 @@ export class ProductsComponent implements OnInit {
     } else {
       this.search = '';
     }
-    this.getProducts();
   }
   gotoPage(page: number) {
     this.pagenumber = page;

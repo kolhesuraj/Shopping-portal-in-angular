@@ -33,7 +33,7 @@ export class HttpsInterceptor implements HttpInterceptor {
     this.ls.showloader();
     // console.log(request);
     const url = request.url;
-    if (this.isAuthRequaire(request.url) == false) {
+    if (this.isAuthRequaire(url) == false) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${
@@ -88,6 +88,7 @@ export class HttpsInterceptor implements HttpInterceptor {
     });
     return result;
   }
+
   isSeller() {
         let route: any = this.activateRoute.snapshot;
     // console.log(route._routerState.url);

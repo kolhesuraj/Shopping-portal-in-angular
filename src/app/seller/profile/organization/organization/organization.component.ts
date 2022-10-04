@@ -6,7 +6,7 @@ import { UpdateOrgComponent } from '../update-org/update-org.component';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import Swal from 'sweetalert2';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
-import { map, Observable, startWith } from 'rxjs';
+import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -53,6 +53,9 @@ export class OrganizationComponent implements OnInit {
       startWith(' '),
       map((value: string | null) => this._filter(value || ''))
     );
+    this.myControl.valueChanges.pipe(debounceTime(500)).subscribe((data) => {
+      this.getUsers();
+    });
   }
 
   _filter(value: string): string[] {
@@ -131,7 +134,7 @@ export class OrganizationComponent implements OnInit {
           this.getSuggetion();
           this.flag = 1;
         }
-      }
+      },
     });
   }
 
@@ -148,7 +151,7 @@ export class OrganizationComponent implements OnInit {
             this.suggestion.push(element.name);
           }
         });
-      }
+      },
     });
   }
 
@@ -218,7 +221,7 @@ export class OrganizationComponent implements OnInit {
             next: (res: any) => {
               this.toaster.success('User Deleted !');
               this.getUsers();
-            }
+            },
           });
         }
       });
@@ -291,7 +294,6 @@ export class OrganizationComponent implements OnInit {
     } else {
       this.search = '';
     }
-    this.getUsers();
   }
 
   editRole(id: any) {
@@ -315,7 +317,7 @@ export class OrganizationComponent implements OnInit {
               next: (res: any) => {
                 Swal.fire('user role changed successfully');
                 this.getUsers();
-              }
+              },
             });
           } else {
             Swal.fire('role must be admin or user');

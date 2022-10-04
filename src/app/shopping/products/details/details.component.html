@@ -90,15 +90,16 @@
     </ul>
   </div>
 </nav>
-<div class="container mt-2 border-dark border rounded-2 p-5">
-  <div class="mx-auto w-25">
+<div class="container-fluid container-lg mt-2 border-dark border rounded-2 p-5">
+  <div class="d-flex justify-content-center">
     <img [src]="show?.url" [alt]="show?.public_id" height="250px" />
   </div>
 
-  <div class="mt-5 mx-auto w-50">
+  <div class="mt-5 d-flex justify-content-center">
     <img
       *ngFor="let image of item?.images; let i = index"
-      class="border border-dark m-3 p-2 w-auto"
+      [class.bg-dark]="show === image"
+      class="border border-dark m-3 p-1"
       (click)="show = image"
       style="cursor: pointer"
       [src]="image.url"
@@ -119,3 +120,4 @@
     <h4 [innerHTML]="item?.description | dompurify"></h4>
   </div>
 </div>
+<hr class="mt-3" />

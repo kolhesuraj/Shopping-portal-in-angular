@@ -7,3 +7,29 @@ Oprators:
         create observable from an array an array-like objects
         students : Observable<string> = form['data','data2','data3'];
         
+    -FROM EVENT
+        create an observable that emits of specific type comming from targeted EVENT
+        ex(
+            in ts make @viewchild 
+                @viewchild('ChildName')
+                ChildName: ElementRef; it gives reference to ChildName
+            in html make Event like click, change, mouseOver, etc;
+                <button #ChildName (click)= "MethodName()"> Example </button>
+            in ts make it observable
+                MethodName(){
+                    const btnObservable = fromEvent(this.ChildName.nativeElement,'click');
+                    btnObservable.subscibe(data=> {
+                        console.log(data);
+                    });
+                }
+                fromEvent fisr one is native element and second is Event
+
+        )
+
+    -INTERVAL
+        create observable that emits SEQUENTIAL numbers every specific INTERVAL of time.
+        const Number = interval(10000) 1000 reference period
+
+
+    -DEBOUNCETIME
+        
