@@ -2,6 +2,7 @@
   position: fixed;
   margin-top: 50vh;
   left: 45vw;
-  background-color: rgba(240, 248, 255, 0.493);
-  z-index: 100;
+  background-color: rgb(78, 80, 82);
+  z-index: 99999;
+  
 }
