@@ -74,8 +74,9 @@
         Please Add All Details
       </div>
       <div class="mt-5">
-        <button type="submit" mat-flat-button color="primary">
-          Update Details
+        <button type="submit" mat-flat-button color="primary" [disabled]="updating">
+         <span *ngIf="updating; else elseBlock"> Loading ....</span>
+         <ng-template #elseBlock>Update Details</ng-template>
         </button>
         <button
           type="reset"

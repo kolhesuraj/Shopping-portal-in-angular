@@ -27,8 +27,7 @@
         class="form-control d-inline ms-4"
         [value]="Name"
         [class.is-invalid]="
-          (name?.invalid && name?.touched) ||
-          (submited && name?.touched)
+          (name?.invalid && name?.touched) || (submited && name?.touched)
         "
       />
       <small
@@ -42,8 +41,15 @@
         >please fill all details</small
       >
     </div>
-    <button type="submit" mat-stroked-button color="warn" class="ms-5 mt-3">
-      Update
+    <button
+      type="submit"
+      mat-stroked-button
+      color="warn"
+      class="ms-5 mt-3"
+      [disabled]="updating"
+    >
+      <span *ngIf="updating; else elseBlock"> Loading ....</span>
+      <ng-template #elseBlock>Save Details</ng-template>
     </button>
     <button
       type="button"

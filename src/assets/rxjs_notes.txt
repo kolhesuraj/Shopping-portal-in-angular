@@ -32,4 +32,39 @@ Oprators:
 
 
     -DEBOUNCETIME
+        Emits a notification or data after some time
+        It usefull for task that run after some specific time.
+
+    -TAKE
+        IT takes only count values from observable
+        take(2),
+
+    -TAKEWHILE
+        Emits value upto it satisfying the condition
+        takWhile((value)=> {value < 3}),
+
+    -TAKELAST
+        after obsrervable compete emiting then take N value 
+            from emited values.
+        takeLast(2),
+
+    -FIRST
+        It is totally opposiye to the takeLast
+        it give first value that emited by observable
+        takeFirst(),
+
+    -LAST
+        it give last value that emits from observable
+        last(),
+
+    -ELEMENTAT
+        it give values from specific position
+        elementAt(5),
+
+    -FILTER
+        filter the values on basic of predicate function or
+            condition.
+        filter((v)=> {
+            condition
+        })
         

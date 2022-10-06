@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   accessToken!: string;
   captcha: any;
   counter: boolean = false;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -71,13 +72,17 @@ export class LoginComponent implements OnInit {
   errMassage!: string;
   submit() {
     // console.log(this.loginForm.value);
-    this.recaptchaV3Service
+    if (this.loginForm.valid) {
+      this.updating = true;
+       this.recaptchaV3Service
       .execute('importantAction')
       .subscribe((token: string) => {
         console.debug(`Token [${token}] generated`);
         this.loginForm.patchValue({ captcha: token });
         this.sendlogin();
       });
+    }
+   
   }
 
   sendlogin() {

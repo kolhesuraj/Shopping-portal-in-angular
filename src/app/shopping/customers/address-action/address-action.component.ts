@@ -17,6 +17,7 @@ export class AddressActionComponent implements OnInit {
   addressFrom!: FormGroup;
   submited: boolean = false;
   errorFromserver: any;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private _matDialog: MatDialogRef<AddressActionComponent>,
@@ -68,6 +69,7 @@ export class AddressActionComponent implements OnInit {
   saveAddress() {
     if (this.addressFrom.valid) {
       this.submited = false;
+      this.updating = true;
       if (this.data) {
         this.http
           .put(`customers/address/${this.data._id}`, this.addressFrom.value)

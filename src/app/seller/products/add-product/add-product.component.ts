@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
-import Swal from 'sweetalert2';
 import { Editor, Toolbar } from 'ngx-editor';
 import { HotToastService } from '@ngneat/hot-toast';
 
@@ -17,7 +16,7 @@ export class AddProductComponent implements OnInit {
   incomplete: boolean = false;
   imageSrc: any = [];
   editor!: Editor;
-
+  updating:boolean = false;
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
@@ -69,6 +68,7 @@ export class AddProductComponent implements OnInit {
   addProduct() {
     if (this.addProductForm.valid) {
       this.incomplete = false;
+      this.updating = true;
       /* Creating a formdata object and appending the values to it. */
       const formdata: FormData = new FormData();
       formdata.append('name', this.addProductForm.value.name);
@@ -84,10 +84,14 @@ export class AddProductComponent implements OnInit {
           this.toster.success('Product Added');
           this.addProductForm.reset();
           this.reset();
+          this.route.navigate(['seller/products/list']);
+        }, error: (err) => {
+          this.updating = false;
         }
       });
     } else {
       this.incomplete = true;
+      this.updating = false;
     }
   }
   logout() {

@@ -49,8 +49,10 @@
           color="primary"
           class="submit"
           (click)="submit()"
+          [disabled]="updating"
         >
-          Login
+           <span *ngIf="updating; else elseBlock"> Loading ....</span>
+         <ng-template #elseBlock>Login</ng-template>
         </button>
 
         <hr />

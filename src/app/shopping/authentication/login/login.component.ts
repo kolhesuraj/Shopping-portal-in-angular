@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   accessToken!: string;
   captcha: any;
   counter: boolean = false;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -58,25 +59,23 @@ export class LoginComponent implements OnInit {
   errMassage!: string;
 
   submit() {
-    if (
-      this.emailControl?.value == '' &&
-      this.passwordFormControl?.value == ''
-    ) {
-      this.massage = true;
-      this.loginFaildMssage = false;
-    } else {
+    if (this.loginForm.valid) {
+      this.updating = true;
       this.loginForm.patchValue({ captcha: this.captcha });
       this.httpservice.post('shop/auth/login', this.loginForm.value).subscribe({
         next: (res: any) => {
           console.log(res);
-          localStorage.setItem('token',res.token);
+          localStorage.setItem('token', res.token);
           this.tocken = 1;
           setTimeout(() => {
             this.route.navigate(['/shop/products']);
             this.tocken = 0;
           }, 1500);
-        }
+        },
       });
+    } else {
+            this.massage = true;
+            this.loginFaildMssage = false;
     }
   }
 

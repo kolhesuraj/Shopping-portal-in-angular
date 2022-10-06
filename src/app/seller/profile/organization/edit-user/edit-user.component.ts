@@ -22,7 +22,7 @@ export class EditUserComponent implements OnInit {
   Company_Name!: string;
   Email!: string;
   First_Name!: string;
-
+  updating: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: dataform,
     private fb: FormBuilder,
@@ -51,6 +51,7 @@ export class EditUserComponent implements OnInit {
   save() {
     if (this.editForm.valid) {
       // console.log(this.editForm.value);
+      this.updating = true;
       this.httpservice
         .patch(`users/${this.data.id}`, this.editForm.value)
         .subscribe({
@@ -71,6 +72,7 @@ export class EditUserComponent implements OnInit {
       // });
     } else {
       this.submited = true;
+      this.updating = false;
     }
   }
 }

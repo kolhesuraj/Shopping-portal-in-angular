@@ -15,6 +15,9 @@ export class EditProfileComponent implements OnInit {
   profile: any;
   editProfile!: FormGroup;
   profileGet: any;
+  updatingImage: boolean = false;
+  updatingDetails: boolean = false;
+  updating: boolean = false;
 
   constructor(
     private http: HttpServiceService,
@@ -36,6 +39,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   getProfile() {
+    this.updatingImage = false;
+    this.updatingDetails = false;
+    this.updating = false;
     this.http.get('shop/auth/self').subscribe({
       next: (res) => {
         console.log(res);
@@ -58,11 +64,12 @@ export class EditProfileComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
+        this.updating = true;
         this.http.delete('customers/profile-picture').subscribe({
           next: (res: any) => {
             this.toster.success('Profile Picture Removed!');
             this.getProfile();
-          }
+          },
         });
       }
     });
@@ -76,6 +83,7 @@ export class EditProfileComponent implements OnInit {
 
   update() {
     if (this.editProfile.valid) {
+      this.updatingDetails = true;
       this.http
         .patch('customers/update-profile', this.editProfile.value)
         .subscribe({
@@ -83,7 +91,7 @@ export class EditProfileComponent implements OnInit {
             console.log(res);
             this.toster.success('Profile Details Updated');
             this.getProfile();
-          }
+          },
         });
     }
   }
@@ -113,6 +121,7 @@ export class EditProfileComponent implements OnInit {
     this.imageChangedEvent = '';
   }
   uploadeImage() {
+    this.updatingImage = true;
     const formData = new FormData();
     formData.append('picture', this.ImageReady);
     this.http.post('customers/profile-picture', formData).subscribe({
@@ -122,7 +131,10 @@ export class EditProfileComponent implements OnInit {
         this.imageChangedEvent = '';
         this.open = true;
         this.getProfile();
-      }
+      },
+      error: () => {
+        this.updatingImage = false;
+      },
     });
   }
 }

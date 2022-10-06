@@ -13,6 +13,7 @@ import { passwordValidator } from '../../services/password.Validator';
 export class ChangePasswordComponent implements OnInit {
   changePasswordForm!: FormGroup;
   submmited: boolean = false;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private http: HttpServiceService,
@@ -44,6 +45,7 @@ export class ChangePasswordComponent implements OnInit {
   savePassword() {
     if (this.changePasswordForm.valid) {
       delete this.changePasswordForm.value.confirm_password;
+      this.updating = true;
       this.submmited = false;
       this.http
         .post('customers/auth/change-password', this.changePasswordForm.value)

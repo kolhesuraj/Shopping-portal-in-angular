@@ -46,9 +46,16 @@
       class="w-50 form-control d-inline"
       (change)="imageSelected($event)"
     /> -->
-    <button class="btn btn-primary w-auto ms-3" (click)="update()">
-      Update
+    <button
+      class="btn btn-primary w-auto ms-3"
+      (click)="update()"
+      [disabled]="updating"
+    >
+      <span *ngIf="updating; else elseBlock"> Loading ....</span>
+      <ng-template #elseBlock>Update Images</ng-template>
     </button>
-    <button class="btn btn-danger w-auto ms-3" mat-dialog-close="true"> cancel</button>
+    <button class="btn btn-danger w-auto ms-3" mat-dialog-close="true">
+      cancel
+    </button>
   </div>
 </div>

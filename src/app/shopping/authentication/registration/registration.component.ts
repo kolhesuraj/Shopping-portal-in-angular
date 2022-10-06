@@ -18,6 +18,7 @@ export class RegistrationComponent implements OnInit {
   tocken: number = 0;
   emailExist = false;
   captcha!: string;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -103,6 +104,7 @@ export class RegistrationComponent implements OnInit {
 
     if (this.register.valid) {
       this.submited = false;
+      this.updating = true;
       const dataSent = this.register.value;
       delete dataSent.ConfirmPassword;
       this.httpService.post('shop/auth/register', dataSent).subscribe({
@@ -113,7 +115,7 @@ export class RegistrationComponent implements OnInit {
             this.tocken = 0;
             this.route.navigate(['/shop/auth/login']);
           }, 1500);
-        }
+        },
       });
     } else {
       this.submited = true;

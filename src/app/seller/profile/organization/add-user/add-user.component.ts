@@ -14,6 +14,7 @@ export class AddUserComponent implements OnInit {
   register!: FormGroup;
   data: any = [];
   tocken: number = 0;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -52,6 +53,7 @@ export class AddUserComponent implements OnInit {
   addUser() {
     if (this.register.valid) {
       this.submited = false;
+      this.updating = true;
       // const data = {
       //   name: this.register?.value.Name,
       //   email: this.register?.value.Email,
@@ -78,6 +80,7 @@ export class AddUserComponent implements OnInit {
       // });
     } else {
       this.submited = true;
+      this.updating = false;
     }
   }
   reset() {

@@ -15,6 +15,7 @@ export class ResetPasswordComponent implements OnInit {
   resetPassowrdform!: FormGroup;
   Message!: boolean;
   token: any;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -38,6 +39,7 @@ export class ResetPasswordComponent implements OnInit {
   submit() {
     if (this.resetPassowrdform.valid) {
       console.log(this.token);
+      this.updating = true;
       delete this.resetPassowrdform.value.confirmPassword;
       // console.log(this.resetPassowrdform.value);
       this.httpservice

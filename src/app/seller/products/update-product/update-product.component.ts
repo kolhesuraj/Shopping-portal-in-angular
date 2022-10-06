@@ -23,7 +23,7 @@ export class UpdateProductComponent implements OnInit {
   updateProductForm!: FormGroup;
   incomplete: boolean = false;
   editor!: Editor;
-
+  updating:boolean = false;
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
@@ -74,6 +74,7 @@ export class UpdateProductComponent implements OnInit {
   updateDetils() {
     if (this.updateProductForm.valid) {
       this.incomplete = false;
+      this.updating = true;
       /* Creating a formdata object and appending the values to it. */
 
       this.httpservice
@@ -83,13 +84,15 @@ export class UpdateProductComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            this.toaster.success('Product Details Updated')
+            this.toaster.success('Product Details Updated');
             this.updateProductForm.reset();
             this._dialogRef.close();
-          }
+          },
         });
     } else {
       this.incomplete = true;
+      this.updating = false;
+
     }
   }
 

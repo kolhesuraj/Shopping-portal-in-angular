@@ -17,6 +17,7 @@ export class RegistrationComponent implements OnInit {
   data: any = [];
   tocken: number = 0;
   emailExist = false;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -61,6 +62,7 @@ export class RegistrationComponent implements OnInit {
     console.log(this.register.value);
     if (this.register.valid) {
       this.submited = false;
+      this.updating = true;
       const dataSent = this.register.value;
       delete dataSent.ConfirmPassword;
       this.httpService.post('auth/register', dataSent).subscribe({

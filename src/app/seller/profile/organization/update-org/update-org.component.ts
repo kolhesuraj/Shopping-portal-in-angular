@@ -19,7 +19,7 @@ export class UpdateOrgComponent implements OnInit {
   editForm!: FormGroup;
   Name!: string;
   Email!: string;
-
+  updating: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: dialogdata,
     private fb: FormBuilder,
@@ -50,13 +50,14 @@ export class UpdateOrgComponent implements OnInit {
   submited = false;
   update() {
     if (this.editForm.valid) {
+      this.updating = true;
       // console.log(this.editForm.value);
       this.httpservice.patch('users/org', this.editForm.value).subscribe({
         next: (res: any) => {
           // console.log(res);
           this.toaster.success('Organixzation Details Upadetd');
           this._dialogRef.close();
-        }
+        },
       });
       // this.httpservice.updateOrg(data).subscribe({
       //   next: (res: any) => {

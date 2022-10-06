@@ -1,9 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
-import { elementAt } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
-import Swal from 'sweetalert2';
 interface dialogdata {
   product: any;
 }
@@ -18,17 +16,19 @@ export class UpdateImagesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: dialogdata,
     private httpservice: HttpServiceService,
     private _dialogRef: MatDialogRef<UpdateImagesComponent>,
-    private toaster: HotToastService,
+    private toaster: HotToastService
   ) {}
   product: any;
   deletearray: any[] = [];
   imageSrc: any = [];
   images: File[] = [];
+  updating: boolean = false;
   ngOnInit(): void {
     console.log(this.data);
     this.product = this.data.product;
   }
   update() {
+    this.updating = true;
     let formdata = new FormData();
     this.deletearray.forEach((element) => {
       formdata.append('delete', element);
@@ -41,9 +41,9 @@ export class UpdateImagesComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-         this.toaster.success("Images Updated")
+          this.toaster.success('Images Updated');
           this._dialogRef.close();
-        }
+        },
       });
   }
   deleteimg(id: number) {
@@ -95,12 +95,12 @@ export class UpdateImagesComponent implements OnInit {
   // }
   files: File[] = [];
 
-  onSelect(event:any) {
+  onSelect(event: any) {
     console.log(event);
     this.files.push(...event.addedFiles);
   }
 
-  onRemove(event:any) {
+  onRemove(event: any) {
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }

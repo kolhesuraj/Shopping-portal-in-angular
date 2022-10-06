@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm!: FormGroup;
   Message: boolean = false;
+  updating: boolean = false;
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -32,6 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
   submit() {
     if (this.forgotPasswordForm.valid) {
+      this.updating = true;
       this.recaptchaV3Service
         .execute('importantAction')
         .subscribe((token: string) => {

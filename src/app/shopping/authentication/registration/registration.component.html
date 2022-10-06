@@ -209,8 +209,14 @@
         }}</small>
         <div class="mt-3 row text-center">
           <div class="col w-25">
-            <button mat-raised-button color="primary" type="submit">
-              Register
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="updating"
+            >
+              <span *ngIf="updating; else elseBlock"> Loading ....</span>
+              <ng-template #elseBlock>Register</ng-template>
             </button>
             <button
               mat-flat-button
