@@ -59,9 +59,9 @@ export class LoginComponent implements OnInit {
   errMassage!: string;
 
   submit() {
+    this.loginForm.patchValue({ captcha: this.captcha });
     if (this.loginForm.valid) {
       this.updating = true;
-      this.loginForm.patchValue({ captcha: this.captcha });
       this.httpservice.post('shop/auth/login', this.loginForm.value).subscribe({
         next: (res: any) => {
           console.log(res);
@@ -74,8 +74,8 @@ export class LoginComponent implements OnInit {
         },
       });
     } else {
-            this.massage = true;
-            this.loginFaildMssage = false;
+      this.massage = true;
+      this.loginFaildMssage = false;
     }
   }
 

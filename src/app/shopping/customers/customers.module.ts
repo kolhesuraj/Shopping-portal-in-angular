@@ -11,6 +11,11 @@ import { AddressActionComponent } from './address-action/address-action.componen
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { CartComponent } from './cart/cart.component';
+import { CheckOutComponent } from './check-out/check-out.component';
+import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -18,6 +23,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     EditProfileComponent,
     ChangePasswordComponent,
     AddressActionComponent,
+    CartComponent,
+    CheckOutComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +34,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     MatButtonModule,
     MatDialogModule,
     ImageCropperModule,
+    NgDompurifyModule,
+    MatStepperModule,
+    MatFormFieldModule
   ],
 })
 export class CustemersModule {}

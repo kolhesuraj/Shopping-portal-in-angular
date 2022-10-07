@@ -1,0 +1,108 @@
+<ng-container [ngSwitch]="stepperOrientation | async">
+  <div *ngSwitchCase="'horizontal'">
+    <!-- Make your screen smaller to see a vertical stepper -->
+  </div>
+  <div *ngSwitchCase="'vertical'">
+    <!-- Make your screen larger to see a horizontal stepper -->
+  </div>
+</ng-container>
+
+<mat-stepper
+  class="example-stepper"
+  [orientation]="(stepperOrientation | async)!"
+>
+  <mat-step label="Products for CheckOut">
+    <div *ngIf="products.length >= 1; else elseBlock">
+      <div class="accordion" id="accordionExample">
+        <div
+          class="accordion-item"
+          *ngFor="let item of products; let I = index"
+        >
+          <h2 class="accordion-header" attr.id="heading{{ I }}">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              attr.data-bs-target="#collapse{{ I }}"
+              aria-expanded="true"
+              attr.aria-controls="collapse{{ I }}"
+            >
+              {{ item?.name }}
+            </button>
+          </h2>
+          <div
+            attr.id="collapse{{ I }}"
+            class="accordion-collapse collapse"
+            [class.show]="products.length == 1"
+            attr.aria-labelledby="heading{{ I }}"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              <div
+                class="container-fluid container-lg mt-2 border-dark border rounded-2 p-5 d-flex"
+              >
+                <div class="">
+                  <img
+                    [src]="show[I]?.url"
+                    [alt]="show[I]?.public_id"
+                    width="250px"
+                  />
+                </div>
+
+                <div class="ms-2">
+                  <img
+                    *ngFor="let image of item?.images; let i = index"
+                    [class.bg-dark]="show === image"
+                    class="border d-block border-dark m-2 p-1"
+                    (click)="show[I] = image"
+                    style="cursor: pointer"
+                    [src]="image?.url"
+                    [alt]="image?.public_id"
+                    height="50px"
+                  />
+                </div>
+                <div class="m-auto">
+                  <h1>{{ item?.name }}</h1>
+                  <h2>Rs. {{ item?.price }}</h2>
+                  <div>
+                    <button
+                      class="btn btn-outline-secondary me-2"
+                      (click)="minusCount(I)"
+                      [disabled]="item?.qty < 2"
+                    >
+                      -
+                    </button>
+                    {{ item?.qty }}
+                    <button
+                      class="btn btn-outline-secondary ms-2"
+                      (click)="addCount(I)"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div class="ms-auto">
+                  <i
+                    class="fa-solid fa-trash text-danger"
+                    style="cursor: pointer"
+                    (click)="deleteProduct(I)"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseBlock><h2>Nothing to Show !</h2></ng-template>
+  </mat-step>
+  <mat-step label="Fill out your address"> </mat-step>
+  <mat-step label="Fill out your phone number"> </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+</mat-stepper>

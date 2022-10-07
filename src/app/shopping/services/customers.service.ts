@@ -4,9 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CustomersService {
-  customer:any;
+  customer: any;
+  
+  checkOut: any = [];
   constructor() {
-   }
+  }
+  
    getCustomer(){
     return this.customer = localStorage.getItem('token');
    }

@@ -24,6 +24,7 @@
     "@angular/router": "^14.0.0",
     "@ngneat/hot-toast": "^4.1.0",
     "@ngneat/overview": "^3.0.0",
+    "@ngrx/store": "^14.3.2",
     "@tinkoff/ng-dompurify": "^3.0.0",
     "angular-responsive-carousel": "^2.1.2",
     "dompurify": "^2.4.0",

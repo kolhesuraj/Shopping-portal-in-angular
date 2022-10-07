@@ -5,7 +5,7 @@
   >
   <div class="navbar navbar-dark ms-auto">
     <ul class="navbar-nav ms-lg-auto ps-lg-4">
-      <li class="nav-item">
+      <li class="nav-item" routerLink="../customer/cart">
         <a class="nav-link me-5">
           <mat-icon
             aria-hidden="false"
@@ -202,7 +202,7 @@
       <button class="btn btn-primary" (click)="addToCart(item._id)">
         Add to Cart
       </button>
-      <button class="btn btn-danger ms-2" (click)="BuyNow(item._id)">
+      <button class="btn btn-danger ms-2" (click)="BuyNow(item)">
         Buy Now
       </button>
     </div>

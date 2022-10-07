@@ -1,0 +1,1 @@
+const initialstate = { counter : 0 ,products:[] }

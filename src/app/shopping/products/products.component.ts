@@ -142,7 +142,19 @@ export class ProductsComponent implements OnInit {
   addToCart(id: any) {
     console.log(id);
   }
-  BuyNow(product_id: any) {
-    console.log(product_id);
+  BuyNow(product: any) {
+    // console.log(product);
+    this.service.checkOut = [
+      {
+        productId: product._id,
+        name: product.name,
+        price: product.price,
+        qty: 1,
+        subTotal: product.price * 1,
+        images: product.images,
+      },
+    ];
+    console.log(this.service.checkOut)
+    this.route.navigate(['/shop/customer/check-out']);
   }
 }
