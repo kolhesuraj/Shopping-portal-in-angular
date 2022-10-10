@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounce, debounceTime, map, Observable, startWith } from 'rxjs';
+import { HotToastService } from '@ngneat/hot-toast';
+import { Store } from '@ngrx/store';
+import { Toast } from 'ngx-toastr';
+import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
-import Swal from 'sweetalert2';
-import { CustomersService } from '../services/customers.service';
+import { CustomersService } from '../../services/customers.service';
+import { addItem, increaseCounter } from '../../State/cart.action';
+import { cart, cartInterface } from '../../State/cart.state';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css'],
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css'],
 })
-export class ProductsComponent implements OnInit {
+export class ListComponent implements OnInit {
   list: any = {};
   result!: any[];
   data!: string;
@@ -26,14 +30,14 @@ export class ProductsComponent implements OnInit {
   suggestion: string[] = [''];
   filteredOptions: Observable<string[]> | undefined;
   token: number = 0;
-  customer: any;
-  profile: any;
+  cart: cartInterface[] | undefined;
   constructor(
     private http: HttpServiceService,
     private route: Router,
-    private service: CustomersService
+    private service: CustomersService,
+    private store: Store<{ cart: cart }>,
+    private toaster: HotToastService,
   ) {
-    this.getProfile();
     this.getProducts();
   }
 
@@ -45,6 +49,12 @@ export class ProductsComponent implements OnInit {
 
     this.myControl.valueChanges.pipe(debounceTime(500)).subscribe((data) => {
       this.getProducts();
+    });
+    this.store.subscribe({
+      next: (res) => {
+        console.log(res.cart.products);
+        this.cart = res.cart.products;
+      },
     });
   }
 
@@ -69,17 +79,7 @@ export class ProductsComponent implements OnInit {
       },
     });
   }
-  getProfile() {
-    this.customer = this.service.getCustomer();
-    if (this.customer) {
-      this.http.get('shop/auth/self').subscribe({
-        next: (res) => {
-          // console.log(res);
-          this.profile = res;
-        },
-      });
-    }
-  }
+ 
   getProducts() {
     let query: string;
     if (this.search == '' || this.search == ' ') {
@@ -103,10 +103,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  Logout() {
-    localStorage.removeItem('token');
-    this.getProfile();
-  }
+
 
   openNav() {
     this.flag = true;
@@ -139,9 +136,21 @@ export class ProductsComponent implements OnInit {
     this.pagenumber = page;
     this.getProducts();
   }
-  addToCart(id: any) {
-    console.log(id);
+  addToCart(product: any) {
+    // console.log(product);
+    let addProduct: cartInterface = {
+      productId: product._id,
+      name: product.name,
+      price: product.price,
+      qty: 1,
+      subTotal: product.price * 1,
+      images: product.images,
+    };
+    if (!this.isInCart(addProduct)) {
+      this.store.dispatch(addItem({ products: addProduct }));
+    }
   }
+
   BuyNow(product: any) {
     // console.log(product);
     this.service.checkOut = [
@@ -154,7 +163,27 @@ export class ProductsComponent implements OnInit {
         images: product.images,
       },
     ];
-    console.log(this.service.checkOut)
+    console.log(this.service.checkOut);
     this.route.navigate(['/shop/customer/check-out']);
+  }
+
+  isInCart(product: cartInterface) {
+    let isAvailbe: Boolean = false;
+    this.cart?.forEach((element) => {
+      if (element.productId === product.productId) {
+        this.toaster.info("product already in cart")
+        let updateProduct: cartInterface = {
+          productId: element.productId,
+          name: element.name,
+          price: element.price,
+          qty: element.qty + 1,
+          subTotal: element.qty * product.price,
+          images: product.images,
+        };
+        this.store.dispatch(increaseCounter({ products: updateProduct }));
+        isAvailbe = true;
+      }
+    });
+    return isAvailbe;
   }
 }

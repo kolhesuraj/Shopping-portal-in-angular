@@ -1,84 +1,4 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark p-4 sticky-top">
-  <a class="navbar-brand text-white ms-5"
-    ><img src="../../../assets/AngularMindsLogo.png" height="50rem" />Angular
-    Shopping</a
-  >
-  <div class="navbar navbar-dark ms-auto">
-    <ul class="navbar-nav ms-lg-auto ps-lg-4">
-      <li class="nav-item" routerLink="../customer/cart">
-        <a class="nav-link me-5">
-          <mat-icon
-            aria-hidden="false"
-            aria-label="shopping_cart"
-            fontIcon="shopping_cart"
-            class="d-block"
-          ></mat-icon>
-          <span>Cart</span>
-        </a>
-      </li>
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link me-5 dropdown-toggle"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <span [class.d-none]="!customer">
-            <img
-              [src]="profile?.picture"
-              height="30rem"
-              class="d-block mx-auto rounded-circle"
-            />
-            <span class="">{{ profile?.name }}</span>
-          </span>
-          <span [class.d-none]="customer != null">
-            <mat-icon
-              aria-hidden="false"
-              aria-label="Example add profile icon"
-              fontIcon="person"
-              class="d-block"
-            ></mat-icon>
-            <span class="">user</span>
-          </span>
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li>
-            <a
-              class="dropdown-item"
-              [class.d-none]="customer == null"
-              routerLink="/shop/customer/profile"
-              >profile</a
-            >
-          </li>
-          <li>
-            <a
-              class="dropdown-item"
-              [class.d-none]="customer == null"
-              (click)="Logout()"
-              >Logout</a
-            >
-          </li>
-          <li>
-            <a
-              class="dropdown-item"
-              [class.d-none]="customer != null"
-              routerLink="/shop/auth"
-              >Sign In</a
-            >
-          </li>
-          <li>
-            <a
-              class="dropdown-item"
-              [class.d-none]="customer != null"
-              routerLink="/shop/auth/register"
-              >Register</a
-            >
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+<app-header ></app-header>
 <div id="mySidenav" class="sidenav mt-3" [style.width]="flag ? '150px' : '0px'">
   <a class="closebtn" (click)="closeNav()">&times;</a>
   <a href="#submenu1" data-bs-toggle="collapse" class="align-middle">
@@ -141,7 +61,10 @@
   </form>
 </div>
 
-<div class="row d-flex justify-content-around" [style.margin-left]="flag ? '250px' : '16px'">
+<div
+  class="row d-flex justify-content-around"
+  [style.margin-left]="flag ? '250px' : '16px'"
+>
   <div
     class="card mb-5 border border-dark ms-4 me-4 col-1"
     style="width: 20rem; height: 30rem"
@@ -185,7 +108,12 @@
       </div>
     </div>
     <ng-template #elseBlock>
-      <div style="height: 18rem" class="d-flex justify-content-center align-items-center">No Images for Preview</div>
+      <div
+        style="height: 18rem"
+        class="d-flex justify-content-center align-items-center"
+      >
+        No Images for Preview
+      </div>
     </ng-template>
 
     <div class="card-body mt-1">
@@ -193,13 +121,14 @@
         <h3 class="card-title d-block" style="font-weight: 500">
           {{ item.name }}
         </h3>
-        <p class="card-text desc" [innerHTML]="item?.description | dompurify">
-         
-        </p>
+        <p
+          class="card-text desc"
+          [innerHTML]="item?.description | dompurify"
+        ></p>
         <h2 class="card-text">Rs.{{ item.price }}</h2>
       </div>
 
-      <button class="btn btn-primary" (click)="addToCart(item._id)">
+      <button class="btn btn-primary" (click)="addToCart(item)">
         Add to Cart
       </button>
       <button class="btn btn-danger ms-2" (click)="BuyNow(item)">

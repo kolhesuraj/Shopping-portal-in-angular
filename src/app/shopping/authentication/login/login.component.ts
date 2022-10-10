@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', res.token);
           this.tocken = 1;
           setTimeout(() => {
-            this.route.navigate(['/shop/products']);
+            this.route.navigate(['/shop']);
             this.tocken = 0;
           }, 1500);
         },

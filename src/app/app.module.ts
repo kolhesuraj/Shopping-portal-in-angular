@@ -16,6 +16,8 @@ import {
 } from '@abacritt/angularx-social-login';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpsInterceptor } from './services/http/http.interceptor';
+import { cartAction } from './shopping/State/cart.reducer';
+import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { HttpsInterceptor } from './services/http/http.interceptor';
     HttpClientModule,
     HotToastModule.forRoot(),
     RecaptchaV3Module,
+    StoreModule.forRoot({cart: cartAction})
   ],
   providers: [
     {
