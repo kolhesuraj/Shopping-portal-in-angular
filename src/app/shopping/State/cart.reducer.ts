@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { addItem, increaseCounter, removeItem } from './cart.action';
-import { cart, cartInterface, initialstate } from './cart.state';
+import { addCheckoutItem, addItem, Counter, removeItem,removeCheckoutItem } from './cart.action';
+import { initialstate } from './cart.state';
 
 const cartState = createReducer(
   initialstate,
@@ -20,16 +20,32 @@ const cartState = createReducer(
       products: newCart,
     };
   }),
-  on(increaseCounter, (state, action) => {
-    // console.log("incresee", action.products)
-    let newProductsArray = state.products.map((element) => {
-      return element.productId === action.products.productId
-        ? action.products
+  on(addCheckoutItem, (state, action) => {
+    console.log(action.checkOut);
+    return {
+      ...state,
+      checkOut: [action.checkOut],
+    };
+  }),
+  on(removeCheckoutItem, (state, action) => {
+    let newCheckOutArray = state.checkOut.filter((product) => {
+      return product.productId !== action.checkOut.productId;
+    });
+
+    return {
+      ...state,
+      checkOut: newCheckOutArray,
+    };
+  }),
+  on(Counter, (state, action) => {
+    let newProductsArray = state.checkOut.map((element) => {
+      return element.productId === action.checkOut.productId
+        ? action.checkOut
         : element;
     });
     return {
       ...state,
-      products: newProductsArray,
+      checkOut: newProductsArray,
     };
   })
 );

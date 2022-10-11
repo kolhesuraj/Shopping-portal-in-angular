@@ -1,14 +1,12 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { cart, cartInterface } from "./cart.state";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { cart } from './cart.state';
 
-const getCartState = createFeatureSelector<cartInterface>('cart');
-
+const getCartState = createFeatureSelector<cart>('cart');
 
 export const getCartProducts = createSelector(getCartState, (state) => {
-    return state
+  return state.products;
+});
+
+export const getCheckOut= createSelector(getCartState, (state) => {
+    return state.checkOut;
 })
-
-
-// export const getChannelName = createSelector(getCartState, (state) => {
-//     return state.
-// })

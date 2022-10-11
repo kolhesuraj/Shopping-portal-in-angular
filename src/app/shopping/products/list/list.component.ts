@@ -7,7 +7,8 @@ import { Toast } from 'ngx-toastr';
 import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { CustomersService } from '../../services/customers.service';
-import { addItem, increaseCounter } from '../../State/cart.action';
+import { addCheckoutItem, addItem, Counter } from '../../State/cart.action';
+import { getCartProducts } from '../../State/cart.selector';
 import { cart, cartInterface } from '../../State/cart.state';
 
 @Component({
@@ -50,10 +51,9 @@ export class ListComponent implements OnInit {
     this.myControl.valueChanges.pipe(debounceTime(500)).subscribe((data) => {
       this.getProducts();
     });
-    this.store.subscribe({
+    this.store.select(getCartProducts).subscribe({
       next: (res) => {
-        console.log(res.cart.products);
-        this.cart = res.cart.products;
+        this.cart = res;
       },
     });
   }
@@ -153,17 +153,15 @@ export class ListComponent implements OnInit {
 
   BuyNow(product: any) {
     // console.log(product);
-    this.service.checkOut = [
-      {
+    const checkOut:cartInterface = {
         productId: product._id,
         name: product.name,
         price: product.price,
         qty: 1,
         subTotal: product.price * 1,
         images: product.images,
-      },
-    ];
-    console.log(this.service.checkOut);
+    }
+    this.store.dispatch(addCheckoutItem ({checkOut: checkOut}))
     this.route.navigate(['/shop/customer/check-out']);
   }
 
@@ -172,15 +170,6 @@ export class ListComponent implements OnInit {
     this.cart?.forEach((element) => {
       if (element.productId === product.productId) {
         this.toaster.info("product already in cart")
-        let updateProduct: cartInterface = {
-          productId: element.productId,
-          name: element.name,
-          price: element.price,
-          qty: element.qty + 1,
-          subTotal: element.qty * product.price,
-          images: product.images,
-        };
-        this.store.dispatch(increaseCounter({ products: updateProduct }));
         isAvailbe = true;
       }
     });

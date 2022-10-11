@@ -1,16 +1,18 @@
 export const initialstate:cart = {
-  products:[],
+  products: [],
+  checkOut: [],
 };
 
 export interface cart{
-    products: cartInterface[],
+  products: cartInterface[],
+  checkOut: cartInterface[],
 }
 
 export interface cartInterface {
-      images: [{}];
-      name: string;
-      price: number;
-      productId: string;
-      qty: number;
-      subTotal: number;
+  images: [{ url: string; public_id: string }];
+  name: string;
+  price: number;
+  productId: string;
+  qty: number;
+  subTotal: number;
 };

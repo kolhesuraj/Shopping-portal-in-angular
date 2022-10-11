@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { map, Observable } from 'rxjs';
 import { CustomersService } from '../../services/customers.service';
 import { StepperOrientation } from '@angular/material/stepper';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { cart, cartInterface } from '../../State/cart.state';
+import { Store } from '@ngrx/store';
+import { Counter, removeCheckoutItem } from '../../State/cart.action';
+import { getCheckOut } from '../../State/cart.selector';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { Validators } from 'ngx-editor';
+import { AddressActionComponent } from '../address-action/address-action.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-check-out',
@@ -11,39 +19,88 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrls: ['./check-out.component.css'],
 })
 export class CheckOutComponent implements OnInit {
+  cart!: cartInterface[];
+  addressFormGroup!: FormGroup;
+  show: any = [];
+  stepperOrientation: Observable<StepperOrientation>;
+  addresses: any;
   constructor(
-    private service: CustomersService,
-    private _formBuilder: FormBuilder,
-    breakpointObserver: BreakpointObserver
+    breakpointObserver: BreakpointObserver,
+    private store: Store<{ cart: cart }>,
+    private fb: FormBuilder,
+    private matDialog: MatDialog,
+    private http: HttpServiceService
   ) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-  }
-  products: any = [];
-  show: any = [];
-  stepperOrientation: Observable<StepperOrientation>;
-
-  ngOnInit(): void {
     this.getProducts();
-    console.log(this.products);
+    this.addressFormGroup = this.fb.group({
+      address: ['', [Validators.required]],
+    });
+    this.getAddress();
+  }
+
+  ngOnInit(): void {}
+  getAddress() {
+    this.http.get('customers/address').subscribe({
+      next: (res) => {
+        console.log(res);
+        this.addresses = res;
+      },
+    });
   }
   getProducts() {
-    this.products = this.service.checkOut;
-    // this.show = this.products.images;
-    this.products.forEach((element: any, index: number) => {
+    this.store.select(getCheckOut).subscribe((data) => (this.cart = data));
+    this.cart.forEach((element: any, index: number) => {
       this.show[index] = element.images[0];
     });
   }
-  minusCount(index: number) {
-    this.products[index].qty -= 1;
+  minusCount(product: cartInterface) {
+    this.cart?.forEach((element) => {
+      if (element.productId === product.productId) {
+        let updateProduct: cartInterface = {
+          productId: element.productId,
+          name: element.name,
+          price: element.price,
+          qty: element.qty - 1,
+          subTotal: (element.qty - 1) * element.price,
+          images: element.images,
+        };
+        this.store.dispatch(Counter({ checkOut: updateProduct }));
+      }
+    });
   }
-  addCount(index: number) {
-    this.products[index].qty += 1;
+  addCount(product: cartInterface) {
+    this.cart?.forEach((element) => {
+      if (element.productId === product.productId) {
+        let updateProduct: cartInterface = {
+          productId: element.productId,
+          name: element.name,
+          price: element.price,
+          qty: element.qty + 1,
+          subTotal: (element.qty + 1) * element.price,
+          images: element.images,
+        };
+        console.log(updateProduct);
+        this.store.dispatch(Counter({ checkOut: updateProduct }));
+      }
+    });
   }
-  deleteProduct(index: number) {
-    console.log(this.products)
-    this.products.splice(index, 1);
-    console.log(this.products)
+  deleteProduct(product: cartInterface) {
+    this.store.dispatch(removeCheckoutItem({ checkOut: product }));
+  }
+  addAddress() {
+    const _dialog = this.matDialog.open(AddressActionComponent, {
+      data: null,
+    });
+    _dialog.afterOpened().subscribe({
+      next: () => {},
+    });
+    _dialog.afterClosed().subscribe({
+      next: () => {
+        this.getAddress();
+      },
+    });
   }
 }

@@ -1,3 +1,32 @@
+<!-- <ng-container [ngSwitch]="stepperOrientation | async">
+  <div *ngSwitchCase="'horizontal'">
+    Make your screen smaller to see a vertical stepper
+  </div>
+  <div *ngSwitchCase="'vertical'">
+    Make your screen larger to see a horizontal stepper
+  </div>
+</ng-container>
+
+<mat-stepper
+  class="example-stepper"
+  [orientation]="(stepperOrientation | async)!"
+  linear="false"
+>
+  <mat-step label="Products for CheckOut"> </mat-step>
+  <mat-step label="Fill out your address"> </mat-step>
+  <mat-step label="Fill out your phone number"> </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+</mat-stepper> -->
+<!-- 
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button> -->
 <ng-container [ngSwitch]="stepperOrientation | async">
   <div *ngSwitchCase="'horizontal'">
     <!-- Make your screen smaller to see a vertical stepper -->
@@ -6,18 +35,15 @@
     <!-- Make your screen larger to see a horizontal stepper -->
   </div>
 </ng-container>
-
 <mat-stepper
-  class="example-stepper"
+  linear="true"
+  #stepper
   [orientation]="(stepperOrientation | async)!"
 >
-  <mat-step label="Products for CheckOut">
-    <div *ngIf="products.length >= 1; else elseBlock">
+  <mat-step label="Product For Checkout">
+    <div *ngIf="cart.length >= 1; else elseBlock">
       <div class="accordion" id="accordionExample">
-        <div
-          class="accordion-item"
-          *ngFor="let item of products; let I = index"
-        >
+        <div class="accordion-item" *ngFor="let item of cart; let I = index">
           <h2 class="accordion-header" attr.id="heading{{ I }}">
             <button
               class="accordion-button"
@@ -33,7 +59,7 @@
           <div
             attr.id="collapse{{ I }}"
             class="accordion-collapse collapse"
-            [class.show]="products.length == 1"
+            [class.show]="cart.length == 1"
             attr.aria-labelledby="heading{{ I }}"
             data-bs-parent="#accordionExample"
           >
@@ -56,26 +82,28 @@
                     class="border d-block border-dark m-2 p-1"
                     (click)="show[I] = image"
                     style="cursor: pointer"
-                    [src]="image?.url"
-                    [alt]="image?.public_id"
+                    [src]="image.url"
+                    [alt]="image.public_id"
                     height="50px"
                   />
                 </div>
                 <div class="m-auto">
                   <h1>{{ item?.name }}</h1>
                   <h2>Rs. {{ item?.price }}</h2>
+                  <h4>Total: {{ item?.subTotal}}</h4>
+
                   <div>
                     <button
                       class="btn btn-outline-secondary me-2"
-                      (click)="minusCount(I)"
-                      [disabled]="item?.qty < 2"
+                      (click)="minusCount(item)"
+                      [disabled]="item.qty < 2"
                     >
                       -
                     </button>
                     {{ item?.qty }}
                     <button
                       class="btn btn-outline-secondary ms-2"
-                      (click)="addCount(I)"
+                      (click)="addCount(item)"
                     >
                       +
                     </button>
@@ -85,7 +113,7 @@
                   <i
                     class="fa-solid fa-trash text-danger"
                     style="cursor: pointer"
-                    (click)="deleteProduct(I)"
+                    (click)="deleteProduct(item)"
                   ></i>
                 </div>
               </div>
@@ -95,14 +123,69 @@
       </div>
     </div>
     <ng-template #elseBlock><h2>Nothing to Show !</h2></ng-template>
+    <button mat-button matStepperNext>Next</button>
   </mat-step>
-  <mat-step label="Fill out your address"> </mat-step>
-  <mat-step label="Fill out your phone number"> </mat-step>
+  <mat-step label="Fill out your address" [stepControl]="addressFormGroup">
+    <form [formGroup]="addressFormGroup">
+      <div class="form-check d-flex">
+        <div *ngFor="let address of addresses; let i = index" class="card mx-3">
+          <div class="card-body">
+            <input
+              required
+              class="form-check-input ms-2 card-title"
+              type="radio"
+              id="flexRadioDefault{{ i }}"
+              [value]="address"
+              formControlName="address"
+            />
+            <label
+              class="form-check-label"
+              for="flexRadioDefault{{ i }}"
+              class="card-text mt-3"
+            >
+              <div>Street : {{ address.street }}</div>
+              <div>
+                Address Line 2 :
+                {{ address.addressLine2 }}
+              </div>
+              <div>City : {{ address.city }}</div>
+              <div>State : {{ address.state }}</div>
+              <div>Pin : {{ address.pin }}</div>
+            </label>
+          </div>
+        </div>
+        <div
+          (click)="addAddress()"
+          role="button"
+          class="card d-flex justify-content-center align-items-center m-3"
+          style="width: 15rem; height: 15rem; background-color: crimson"
+        >
+          <div
+            class="p-3 d-flex justify-content-center align-items-center addIcon"
+            style="width: 50px; height: 50px"
+          >
+            +
+          </div>
+        </div>
+      </div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="addressFormGroup" >
+    <ng-template matStepLabel>Check Out & Payment Method</ng-template>
+
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
 </mat-stepper>

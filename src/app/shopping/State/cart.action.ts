@@ -9,11 +9,15 @@ export const removeItem = createAction(
   'removeItem',
   props<{ products: cartInterface }>()
 );
-export const increaseCounter = createAction(
-  'increaseCounter',
-  props<{ products:cartInterface }>()
+export const addCheckoutItem = createAction(
+  'addCheckoutItem',
+  props<{ checkOut: cartInterface }>()
 );
-export const minusCounter = createAction(
-  'minusCounter',
-  props<{ productID: string }>()
+export const removeCheckoutItem = createAction(
+  'removeCheckoutItem',
+  props<{ checkOut: cartInterface }>()
+);
+export const Counter = createAction(
+  'Counter',
+  props<{ checkOut: cartInterface }>()
 );

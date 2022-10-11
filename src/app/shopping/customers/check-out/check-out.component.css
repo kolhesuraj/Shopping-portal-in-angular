@@ -2,3 +2,8 @@ img{
   max-height: 150px;
   max-width: 150px;
 }
+.addIcon{
+  font-weight: 700;
+  border: 2px dashed black;
+  border-radius: 50%;
+}

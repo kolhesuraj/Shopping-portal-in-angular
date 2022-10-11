@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { CustomersService } from '../../services/customers.service';
+import { getCartProducts } from '../../State/cart.selector';
 import { cart } from '../../State/cart.state';
 
 @Component({
@@ -23,8 +24,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select('cart').subscribe(data => {
-      this.cartLength = data.products.length
+    this.store.select(getCartProducts).subscribe(data => {
+      this.cartLength = data.length
     })
   }
   getProfile() {
