@@ -3,3 +3,7 @@
   left: -10px;
   top: -38px;
 }
+nav div ul li {
+  cursor: pointer;
+  /* margin-left: 30px; */
+}

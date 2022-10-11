@@ -153,14 +153,14 @@ export class ListComponent implements OnInit {
 
   BuyNow(product: any) {
     // console.log(product);
-    const checkOut:cartInterface = {
+    const checkOut:cartInterface[] =[ {
         productId: product._id,
         name: product.name,
         price: product.price,
         qty: 1,
         subTotal: product.price * 1,
         images: product.images,
-    }
+    }]
     this.store.dispatch(addCheckoutItem ({checkOut: checkOut}))
     this.route.navigate(['/shop/customer/check-out']);
   }

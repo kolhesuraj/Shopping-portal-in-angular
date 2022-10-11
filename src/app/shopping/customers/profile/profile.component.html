@@ -1,36 +1,5 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark p-4 sticky-top">
-  <a class="navbar-brand text-white ms-5"
-    ><img src="../../../assets/AngularMindsLogo.png" height="50rem" />Angular
-    Shopping</a
-  >
-  <div class="navbar navbar-dark ms-auto">
-    <ul class="navbar-nav ms-lg-auto ps-lg-4">
-      <li class="nav-item me-5 ps-5 border-start">
-        <a class="nav-link" routerLink="/shop/products">
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Example add profile icon"
-            fontIcon="list_alt"
-            class="d-block mx-auto"
-          ></mat-icon>
-          <span class="">Product List</span></a
-        >
-      </li>
-      <li class="nav-item me-5">
-        <a class="nav-link" (click)="Logout()">
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Example add profile icon"
-            fontIcon="logout"
-            class="d-block mx-auto"
-          ></mat-icon>
-          <span class="">Logout</span></a
-        >
-      </li>
-    </ul>
-  </div>
-</nav>
-<div class="d-flex">
+<app-customer-header [path]="true"></app-customer-header>
+<div class="d-flex mt-2">
   <div class="w-25 mt-2 ms-2 border border-dark rounded-5 p-5">
     <div class="text-center">
       <img

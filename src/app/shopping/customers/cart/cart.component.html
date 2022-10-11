@@ -1,1 +1,69 @@
-<p>cart works!</p>
+<app-customer-header [path]="false"></app-customer-header>
+
+<div class="mt-5">
+  <div class="container-fluid">
+    <button class="btn btn-outline-primary" (click)="checkOut()">
+      Check Out
+    </button>
+  </div>
+  <div
+    *ngIf="cart.length >= 1; else elseBlock"
+    class="d-flex row justify-content-around"
+  >
+    <div
+      class="card mb-5 border border-dark ms-4 me-4 col-1"
+      style="width: 20rem; height: 30rem"
+      *ngFor="let item of cart; let i = index"
+    >
+      <div
+        *ngIf="show[i]; else elseBlock"
+        style="height: 18rem"
+        class="d-flex justify-content-center align-items-center"
+      >
+        <img
+          [src]="show[i]?.url"
+          [alt]="show[i]?.public_id"
+          height="18rem"
+        />
+      </div>
+      <ng-template #elseBlock>
+        <div
+          style="height: 18rem"
+          class="d-flex justify-content-center align-items-center"
+        >
+          No Images for Preview
+        </div>
+      </ng-template>
+
+      <div class="card-body mt-1">
+        <div routerLink="../../products/product/{{ item.productId }}" style="cursor: pointer">
+          <h3 class="card-title d-block" style="font-weight: 500">
+            {{ item.name }}
+          </h3>
+
+          <h2 class="card-text">Rs.{{ item.price }}</h2>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-secondary me-2"
+            (click)="minusCount(item)"
+            [disabled]="item.qty < 2"
+          >
+            -
+          </button>
+          {{ item?.qty }}
+          <button
+            class="btn btn-outline-secondary ms-2"
+            (click)="addCount(item)"
+          >
+            +
+          </button>
+        </div>
+        <button class="btn btn-danger mt-4" (click)="deleteProduct(item)">Remove From Cart</button>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock
+    ><h2 class="text-center">Nothing to Show !</h2></ng-template
+  >
+</div>

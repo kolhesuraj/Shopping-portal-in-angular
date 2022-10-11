@@ -13,6 +13,14 @@ import { Validators } from 'ngx-editor';
 import { AddressActionComponent } from '../address-action/address-action.component';
 import { MatDialog } from '@angular/material/dialog';
 
+// interface address {
+//   street: string;
+//   addressLine2: string;
+//   city: string;
+//   state: string;
+//   pin: string;
+// }
+
 @Component({
   selector: 'app-check-out',
   templateUrl: './check-out.component.html',
@@ -24,6 +32,7 @@ export class CheckOutComponent implements OnInit {
   show: any = [];
   stepperOrientation: Observable<StepperOrientation>;
   addresses: any;
+  address: any;
   constructor(
     breakpointObserver: BreakpointObserver,
     private store: Store<{ cart: cart }>,
@@ -82,13 +91,15 @@ export class CheckOutComponent implements OnInit {
           subTotal: (element.qty + 1) * element.price,
           images: element.images,
         };
-        console.log(updateProduct);
         this.store.dispatch(Counter({ checkOut: updateProduct }));
       }
     });
   }
   deleteProduct(product: cartInterface) {
     this.store.dispatch(removeCheckoutItem({ checkOut: product }));
+  }
+  selectAddress(address: any) {
+    this.address = address;
   }
   addAddress() {
     const _dialog = this.matDialog.open(AddressActionComponent, {

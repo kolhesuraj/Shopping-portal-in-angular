@@ -1,5 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
-import { addCheckoutItem, addItem, Counter, removeItem,removeCheckoutItem } from './cart.action';
+import {
+  addCheckoutItem,
+  addItem,
+  Counter,
+  removeItem,
+  removeCheckoutItem,
+  cartCounter,
+} from './cart.action';
 import { initialstate } from './cart.state';
 
 const cartState = createReducer(
@@ -19,12 +26,22 @@ const cartState = createReducer(
       ...state,
       products: newCart,
     };
+  }), on(cartCounter, (state, action) => {
+    let ProductsArray = state.products.map((element) => {
+      return element.productId === action.products.productId
+      ? action.products
+      : element;
+    });
+    return {
+      ...state,
+      products: ProductsArray,
+    };
   }),
   on(addCheckoutItem, (state, action) => {
     console.log(action.checkOut);
     return {
       ...state,
-      checkOut: [action.checkOut],
+      checkOut: action.checkOut,
     };
   }),
   on(removeCheckoutItem, (state, action) => {

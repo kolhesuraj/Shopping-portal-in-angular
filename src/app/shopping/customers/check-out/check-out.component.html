@@ -1,46 +1,17 @@
-<!-- <ng-container [ngSwitch]="stepperOrientation | async">
-  <div *ngSwitchCase="'horizontal'">
-    Make your screen smaller to see a vertical stepper
-  </div>
-  <div *ngSwitchCase="'vertical'">
-    Make your screen larger to see a horizontal stepper
-  </div>
-</ng-container>
-
-<mat-stepper
-  class="example-stepper"
-  [orientation]="(stepperOrientation | async)!"
-  linear="false"
->
-  <mat-step label="Products for CheckOut"> </mat-step>
-  <mat-step label="Fill out your address"> </mat-step>
-  <mat-step label="Fill out your phone number"> </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-    </div>
-  </mat-step>
-</mat-stepper> -->
-<!-- 
-<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-</button> -->
+<app-customer-header></app-customer-header>
 <ng-container [ngSwitch]="stepperOrientation | async">
   <div *ngSwitchCase="'horizontal'">
-    <!-- Make your screen smaller to see a vertical stepper -->
   </div>
   <div *ngSwitchCase="'vertical'">
-    <!-- Make your screen larger to see a horizontal stepper -->
   </div>
 </ng-container>
 <mat-stepper
   linear="true"
   #stepper
   [orientation]="(stepperOrientation | async)!"
->
+  >
   <mat-step label="Product For Checkout">
+    <button mat-button matStepperNext>Next</button>
     <div *ngIf="cart.length >= 1; else elseBlock">
       <div class="accordion" id="accordionExample">
         <div class="accordion-item" *ngFor="let item of cart; let I = index">
@@ -90,7 +61,7 @@
                 <div class="m-auto">
                   <h1>{{ item?.name }}</h1>
                   <h2>Rs. {{ item?.price }}</h2>
-                  <h4>Total: {{ item?.subTotal}}</h4>
+                  <h4>Total: {{ item?.subTotal }}</h4>
 
                   <div>
                     <button
@@ -123,12 +94,14 @@
       </div>
     </div>
     <ng-template #elseBlock><h2>Nothing to Show !</h2></ng-template>
-    <button mat-button matStepperNext>Next</button>
   </mat-step>
   <mat-step label="Fill out your address" [stepControl]="addressFormGroup">
     <form [formGroup]="addressFormGroup">
-      <div class="form-check d-flex">
-        <div *ngFor="let address of addresses; let i = index" class="card mx-3">
+      <div class="form-check row d-flex justify-content-around row-cols-auto">
+        <div
+          *ngFor="let address of addresses; let i = index"
+          class="card mx-3 mt-3"
+        >
           <div class="card-body">
             <input
               required
@@ -137,6 +110,7 @@
               id="flexRadioDefault{{ i }}"
               [value]="address"
               formControlName="address"
+              (change)="selectAddress(address)"
             />
             <label
               class="form-check-label"
@@ -158,7 +132,7 @@
           (click)="addAddress()"
           role="button"
           class="card d-flex justify-content-center align-items-center m-3"
-          style="width: 15rem; height: 15rem; background-color: crimson"
+          style="width: 18rem; height: 18rem; background-color: crimson"
         >
           <div
             class="p-3 d-flex justify-content-center align-items-center addIcon"
@@ -172,20 +146,52 @@
       <button mat-button matStepperNext>Next</button>
     </form>
   </mat-step>
-  <mat-step [stepControl]="addressFormGroup" >
-    <ng-template matStepLabel>Check Out & Payment Method</ng-template>
-
+  <mat-step [stepControl]="addressFormGroup">
+    <ng-template matStepLabel>Confirm Order</ng-template>
+    <button mat-button matStepperPrevious>Back</button>
+    <!-- <button mat-button matStepperNext>Next</button> -->
+    <button class="btn btn-outline-info m-3 d-block">Proced To Payment</button>
+    <div class="d-flex justify-content-center my-3 fw-bold">Product Summary</div>
+    <div class="row">
+      <div class="col-8">
+        <div class="d-flex justify-content-around">
+          <div>Name</div>
+          <div>Price</div>
+          <div>qty</div>
+          <div>subTotal</div>
+          <div class="d-block"><hr /></div>
+        </div>
+        <div
+          *ngFor="let product of cart"
+          class="border py-2 d-flex justify-content-around"
+        >
+          <div>{{ product.name }}</div>
+          <div>{{ product.price }}</div>
+          <div>{{ product.qty }}</div>
+          <div>{{ product.subTotal }}</div>
+          <div class="d-block"><hr /></div>
+        </div>
+      </div>
+      <div class="col-4 border">
+        <div>Street : {{ address?.street }}</div>
+        <div>
+          Address Line 2 :
+          {{ address?.addressLine2 }}
+        </div>
+        <div>City : {{ address?.city }}</div>
+        <div>State : {{ address?.state }}</div>
+        <div>Pin : {{ address?.pin }}</div>
+      </div>
+    </div>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
     </div>
   </mat-step>
-  <mat-step>
+  <!-- <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
-  </mat-step>
+  </mat-step> -->
 </mat-stepper>

@@ -16,6 +16,7 @@ import { CheckOutComponent } from './check-out/check-out.component';
 import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CustomerHeaderComponent } from './customer-header/customer-header.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     AddressActionComponent,
     CartComponent,
     CheckOutComponent,
+    CustomerHeaderComponent,
   ],
   imports: [
     CommonModule,

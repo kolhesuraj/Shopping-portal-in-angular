@@ -88,10 +88,14 @@
             "
           />
           <small
-            class="ms-5 ps-5 text-danger"
+            class=" text-danger"
             *ngIf="Pin?.errors?.['required'] && Pin?.touched"
             >Pin required</small
           >
+          <small
+            class="text-danger"
+            *ngIf="Pin?.errors?.['minlength'] && Pin?.touched || Pin?.errors?.['maxlength'] && Pin?.dirty "
+          >Pin Must be 6 character length</small>
         </div>
       </div>
     </div>
