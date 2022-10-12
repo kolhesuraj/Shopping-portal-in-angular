@@ -1,9 +1,15 @@
-img{
+img {
   max-height: 150px;
   max-width: 150px;
 }
-.addIcon{
+.addIcon {
   font-weight: 700;
   border: 2px dashed black;
   border-radius: 50%;
+}
+td,
+th {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid black;
 }

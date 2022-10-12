@@ -1,0 +1,73 @@
+<div class="top" style="height: 180px"></div>
+<div class="container box justify-content-center d-flex">
+  <div class="border p-5 bg-white rounded-3 innerBox">
+    <h3 class="text-center">Payment Details</h3>
+    <h4 class="text-center">Payment For: {{ OrderId }}</h4>
+    <form
+      [formGroup]="paymentForm"
+      class="container my-3"
+      style="max-width: 450px"
+    >
+      <div class="row">
+        <div class="col-8 mb-3">
+          <label for="nameOnCard">Name of Card Holder</label>
+          <input
+            type="text"
+            id="nameOnCard"
+            placeholder="card holder name"
+            formControlName="nameOnCard"
+            class="form-control"
+            [class.is-invalid]="nameOnCard?.invalid && nameOnCard?.touched"
+          />
+        </div>
+        <div class="col-4">
+          <label for="expiry">expiry</label>
+          <input
+            type="text"
+            id="expiry"
+            placeholder="mm/yyyy"
+            formControlName="expiry"
+            class="form-control"
+            maxlength="7"
+            [value]="expiry?.value | expiryDate"
+            [class.is-invalid]="expiry?.invalid && expiry?.touched"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-9">
+          <label for="cardNumber">Card Number</label>
+          <input
+            type="text"
+            id="cardNumber"
+            placeholder="card number"
+            formControlName="cardNumber"
+            class="form-control"
+            [class.is-invalid]="cardNumber?.invalid && cardNumber?.touched"
+          />
+        </div>
+
+        <div class="col-3">
+          <label for="cvv">cvv</label>
+          <input
+            type="password"
+            id="cvv"
+            placeholder="cvv"
+            formControlName="cvv"
+            maxlength="3"
+            class="form-control"
+            [class.is-invalid]="cvv?.invalid && cvv?.touched"
+          />
+        </div>
+        <button
+          class="btn btn-success mt-3 rounded-2"
+          (click)="makePayment()"
+          [disabled]="updating"
+        >
+          <span *ngIf="updating; else elseBlock"> Loading ....</span>
+          <ng-template #elseBlock>Make Payment</ng-template>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

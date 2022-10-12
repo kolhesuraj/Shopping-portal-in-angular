@@ -1,5 +1,22 @@
 <app-customer-header [path]="true"></app-customer-header>
-<div class="d-flex mt-2">
+<div class="row" style="height: 50px">
+  <div
+    class="col-6 fw-bold d-flex align-item-center justify-content-center py-3"
+    [class.bg-secondary]="isProfile"
+    (click)="isProfile = true"
+  >
+    Profile
+  </div>
+  <div
+    class="col-6 fw-bold d-flex align-content-center justify-content-center py-3"
+    [class.bg-secondary]="!isProfile"
+    (click)="isProfile = false"
+  >
+    My Orders
+  </div>
+</div>
+<hr />
+<div class="d-flex mt-2" *ngIf="isProfile; else elseBlock">
   <div class="w-25 mt-2 ms-2 border border-dark rounded-5 p-5">
     <div class="text-center">
       <img
@@ -108,3 +125,71 @@
     </div>
   </div>
 </div>
+<ng-template #elseBlock>
+  <div class="d-flex text-center">
+    <span class="ms-3">Order Date</span>
+    <span class="mx-auto me-5 w-25">Order Status</span
+    ><span class="ms-auto me-5 w-25">Payment Status</span>
+  </div>
+  <hr />
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item" *ngFor="let item of cart; let I = index">
+      <h2 class="accordion-header" attr.id="heading{{ I }}">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          attr.data-bs-target="#collapse{{ I }}"
+          aria-expanded="true"
+          attr.aria-controls="collapse{{ I }}"
+        >
+          <span> {{ item?.createdAt | createdDate }}</span>
+
+          <div class="mx-auto ps-5">
+            <span
+              class="ms-5 badge bg-primary"
+              [class.bg-danger]="item.status == 'Cancelled'"
+              >{{ item?.status }}</span
+            >
+          </div>
+          <div class="ms-auto">
+            <span
+              class="badge bg-danger ms-5"
+              *ngIf="item.status != 'Cancelled'; else paymentStatus"
+              >{{ item?.paymentStatus }}</span
+            >
+            <ng-template class="ms-5" #paymentStatus>Cancelled</ng-template>
+          </div>
+        </button>
+      </h2>
+      <div
+        attr.id="collapse{{ I }}"
+        class="accordion-collapse collapse"
+        [class.show]="cart.length == 1"
+        attr.aria-labelledby="heading{{ I }}"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <div class="mt-2 border-dark border rounded-2 p-5 d-flex">
+            <div class="m-auto"></div>
+            <div [class.d-none]="item.status == 'Cancelled'">
+              <button
+                class="btn btn-outline-primary me-3"
+                [class.d-none]="item.paymentStatus == 'Paid'"
+                (click)="makePayment(item._id)"
+              >
+                Make Payment
+              </button>
+              <button
+                class="btn btn-outline-danger"
+                (click)="cancelOrder(item._id)"
+              >
+                Cancel Order
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

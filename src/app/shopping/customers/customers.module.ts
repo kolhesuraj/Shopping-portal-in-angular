@@ -17,6 +17,9 @@ import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CustomerHeaderComponent } from './customer-header/customer-header.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { ExpiryDatePipe } from '../services/expiry-date.pipe';
+import { CreatedDatePipe } from '../services/created-date.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { CustomerHeaderComponent } from './customer-header/customer-header.compo
     CartComponent,
     CheckOutComponent,
     CustomerHeaderComponent,
+    PaymentsComponent,
+    ExpiryDatePipe,
+    CreatedDatePipe,
   ],
   imports: [
     CommonModule,
@@ -38,7 +44,7 @@ import { CustomerHeaderComponent } from './customer-header/customer-header.compo
     ImageCropperModule,
     NgDompurifyModule,
     MatStepperModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ],
 })
 export class CustemersModule {}

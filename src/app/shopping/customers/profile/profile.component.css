@@ -6,8 +6,10 @@ li a{
   cursor: pointer;
 }
 .addIcon{
- 
   font-weight: 700;
   border: 2px dashed black;
   border-radius: 50%;
+}
+.accordion-button::after {
+  margin-left: min(170px);
 }

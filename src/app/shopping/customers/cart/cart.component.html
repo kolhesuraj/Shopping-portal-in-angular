@@ -41,25 +41,28 @@
             {{ item.name }}
           </h3>
 
-          <h2 class="card-text">Rs.{{ item.price }}</h2>
+          <h2 class="card-text">Price per Item:  Rs.{{ item.price }}</h2>
+          
+          
         </div>
-        <div>
+        <div class="mb-2">
           <button
-            class="btn btn-outline-secondary me-2"
-            (click)="minusCount(item)"
+          class="btn btn-outline-secondary me-2"
+          (click)="minusCount(item)"
             [disabled]="item.qty < 2"
-          >
+            >
             -
           </button>
           {{ item?.qty }}
           <button
-            class="btn btn-outline-secondary ms-2"
-            (click)="addCount(item)"
+          class="btn btn-outline-secondary ms-2"
+          (click)="addCount(item)"
           >
-            +
-          </button>
-        </div>
-        <button class="btn btn-danger mt-4" (click)="deleteProduct(item)">Remove From Cart</button>
+          +
+        </button>
+      </div>
+      <h2 class="card-footer">Total:  Rs.{{ item.subTotal }}</h2>
+      <button class="btn btn-danger mt-3" (click)="deleteProduct(item)">Remove From Cart</button>
       </div>
     </div>
   </div>

@@ -16,6 +16,8 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 export class ProfileComponent implements OnInit {
   profile: any;
   addresses: any;
+  isProfile: boolean = true;
+  cart: any;
   constructor(
     private service: CustomersService,
     private http: HttpServiceService,
@@ -26,6 +28,15 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getProfile();
     this.getAddresses();
+    this.getOrders();
+  }
+  getOrders() {
+    this.http.get('shop/orders?limit=100').subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.cart = res.results;
+      },
+    });
   }
   Logout() {
     localStorage.removeItem('token');
@@ -36,7 +47,7 @@ export class ProfileComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.profile = res;
-      }
+      },
     });
   }
   getAddresses() {
@@ -44,7 +55,7 @@ export class ProfileComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.addresses = res;
-      }
+      },
     });
   }
   editProfile() {
@@ -93,7 +104,7 @@ export class ProfileComponent implements OnInit {
             Swal.fire('Deleted!', 'Your profile has been deleted.', 'warning');
             localStorage.removeItem('token');
             this.route.navigate(['/shop/products']);
-          }
+          },
         });
       }
     });
@@ -160,8 +171,19 @@ export class ProfileComponent implements OnInit {
           next: (res: any) => {
             Swal.fire('Deleted!', 'Your address has been deleted.', 'success');
             this.getAddresses();
-          }
+          },
         });
+      }
+    });
+  }
+  makePayment(id: string) {
+    this.route.navigate([`shop/customer/payment/${id}`]);
+  }
+  cancelOrder(id: string) {
+    this.http.patch(`shop/orders/cancel/${id}`, null).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.getOrders();
       }
     });
   }

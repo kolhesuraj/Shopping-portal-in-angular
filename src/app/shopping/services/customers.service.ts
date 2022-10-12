@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class CustomersService {
   customer: any;
   
-  checkOut: any = [];
+  OrderId!:string;
   constructor() {
   }
   

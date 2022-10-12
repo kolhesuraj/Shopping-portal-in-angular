@@ -1,10 +1,4 @@
 <app-customer-header></app-customer-header>
-<ng-container [ngSwitch]="stepperOrientation | async">
-  <div *ngSwitchCase="'horizontal'">
-  </div>
-  <div *ngSwitchCase="'vertical'">
-  </div>
-</ng-container>
 <mat-stepper
   linear="true"
   #stepper
@@ -148,13 +142,13 @@
   </mat-step>
   <mat-step [stepControl]="addressFormGroup">
     <ng-template matStepLabel>Confirm Order</ng-template>
-    <button mat-button matStepperPrevious>Back</button>
+    <!-- <button mat-button matStepperPrevious>Back</button> -->
     <!-- <button mat-button matStepperNext>Next</button> -->
-    <button class="btn btn-outline-info m-3 d-block">Proced To Payment</button>
+    <button class="btn btn-outline-info m-3 d-block" (click)="ProceedToPayment()">Proced To Payment</button>
     <div class="d-flex justify-content-center my-3 fw-bold">Product Summary</div>
     <div class="row">
       <div class="col-8">
-        <div class="d-flex justify-content-around">
+        <!-- <div class="d-flex justify-content-around">
           <div>Name</div>
           <div>Price</div>
           <div>qty</div>
@@ -163,14 +157,30 @@
         </div>
         <div
           *ngFor="let product of cart"
-          class="border py-2 d-flex justify-content-around"
+          class="border py-2 d-flex "
         >
           <div>{{ product.name }}</div>
           <div>{{ product.price }}</div>
           <div>{{ product.qty }}</div>
           <div>{{ product.subTotal }}</div>
           <div class="d-block"><hr /></div>
-        </div>
+        </div> -->
+        <table class="container">
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Sub Total</th>
+          </tr>
+          <tr *ngFor="let item of cart">
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.qty}}</td>
+            <td>{{item.subTotal}}</td>
+
+          </tr>
+        </table>
+        <div class="ms-auto fw-bold w-25" >Payable Amount: {{totalamount}}</div>
       </div>
       <div class="col-4 border">
         <div>Street : {{ address?.street }}</div>
@@ -187,7 +197,7 @@
     </div>
   </mat-step>
   <!-- <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
+    <ng-template matStepLabel>Payment & Confirm</ng-template>
     <p>You are now done.</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
