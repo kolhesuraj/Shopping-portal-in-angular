@@ -20,7 +20,8 @@ import { CustomerHeaderComponent } from './customer-header/customer-header.compo
 import { PaymentsComponent } from './payments/payments.component';
 import { ExpiryDatePipe } from '../services/expiry-date.pipe';
 import { CreatedDatePipe } from '../services/created-date.pipe';
-
+import { OrderDetailsComponent } from './order-details/order-details.component';
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -33,6 +34,7 @@ import { CreatedDatePipe } from '../services/created-date.pipe';
     PaymentsComponent,
     ExpiryDatePipe,
     CreatedDatePipe,
+    OrderDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { CreatedDatePipe } from '../services/created-date.pipe';
     NgDompurifyModule,
     MatStepperModule,
     MatFormFieldModule,
+    MatTabsModule,
   ],
 })
 export class CustemersModule {}

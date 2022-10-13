@@ -1,195 +1,305 @@
 <app-customer-header [path]="true"></app-customer-header>
-<div class="row" style="height: 50px">
-  <div
-    class="col-6 fw-bold d-flex align-item-center justify-content-center py-3"
-    [class.bg-secondary]="isProfile"
-    (click)="isProfile = true"
-  >
-    Profile
-  </div>
-  <div
-    class="col-6 fw-bold d-flex align-content-center justify-content-center py-3"
-    [class.bg-secondary]="!isProfile"
-    (click)="isProfile = false"
-  >
-    My Orders
-  </div>
-</div>
-<hr />
-<div class="d-flex mt-2" *ngIf="isProfile; else elseBlock">
-  <div class="w-25 mt-2 ms-2 border border-dark rounded-5 p-5">
-    <div class="text-center">
-      <img
-        [src]="profile?.picture"
-        height="150rem"
-        class="w-auto rounded-circle"
-      />
-    </div>
-    <hr />
-    <div class="mx-auto w-75 fw-bold text-center">
-      <div class="display2 mb-3">Contact Details</div>
-      Name:
-      <h3>{{ profile?.name }}</h3>
-      Email:
-      <h4>{{ profile?.email }}</h4>
-      <div class="d-inline">
-        <div
-          class="d-inline-block"
-          style="cursor: pointer"
-          (click)="editProfile()"
-        >
-          <mat-icon
-            aria-hidden="false"
-            fontIcon="edit"
-            aria-label="edit"
-            class="text-primary edit"
-          ></mat-icon
-          ><span class="d-block">Edit Profile</span>
-        </div>
-      </div>
-      <div
-        class="ms-4 d-inline-block"
-        style="cursor: pointer"
-        (click)="changePassword()"
-      >
-        <mat-icon
-          aria-hidden="false"
-          fontIcon="password"
-          aria-label="delete"
-          class="text-danger edit"
-        ></mat-icon
-        ><span class="d-block">Change Password</span>
-      </div>
-      <div
-        class="mt-3 d-inline-block"
-        style="cursor: pointer"
-        (click)="deleteProfile()"
-      >
-        <mat-icon
-          aria-hidden="false"
-          fontIcon="delete"
-          aria-label="delete"
-          class="text-danger edit"
-        ></mat-icon
-        ><span class="d-block">Delete Profile</span>
-      </div>
-    </div>
-  </div>
-  <div
-    class="w-75 border-start border-end border-dark rounded-5 mt-2 me-3 pt-5"
-  >
-    <h3 class="fw-bold text-center">Address</h3>
 
-    <div class="pb-5 d-flex justify-content-center row row-cols-auto h-auto">
-      <div
-        class="card d-block p-3"
-        style="width: 15rem"
-        *ngFor="let address of addresses; let i = index"
-      >
-        <div class="card-title text-center">Address {{ i + 1 }}</div>
-        <div class="card-text">
-          <div>Street : {{ address.street }}</div>
-          <div>
-            Address Line 2 :
-            {{ address.addressLine2 }}
-          </div>
-          <div>City : {{ address.city }}</div>
-          <div>State : {{ address.state }}</div>
-          <div>Pin : {{ address.pin }}</div>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Profile">
+    <div class="d-flex mt-2">
+      <div class="w-25 mt-2 ms-2 border border-dark rounded-5 p-5">
+        <div class="text-center">
+          <img
+            [src]="profile?.picture"
+            height="150rem"
+            class="w-auto rounded-circle"
+          />
         </div>
-        <div class="mt-3">
-          <button class="d-inline btn btn-link" (click)="editAddress(address)">
-            Edit
-          </button>
-          <button
-            class="btn text-danger fs-7 d-inline"
-            (click)="deleteAddress(address._id)"
+        <hr />
+        <div class="mx-auto w-75 fw-bold text-center">
+          <div class="display2 mb-3">Contact Details</div>
+          Name:
+          <h3>{{ profile?.name }}</h3>
+          Email:
+          <h4>{{ profile?.email }}</h4>
+          <div class="d-inline">
+            <div
+              class="d-inline-block"
+              style="cursor: pointer"
+              (click)="editProfile()"
+            >
+              <mat-icon
+                aria-hidden="false"
+                fontIcon="edit"
+                aria-label="edit"
+                class="text-primary edit"
+              ></mat-icon
+              ><span class="d-block">Edit Profile</span>
+            </div>
+          </div>
+          <div
+            class="ms-4 d-inline-block"
+            style="cursor: pointer"
+            (click)="changePassword()"
           >
-            Delete
-          </button>
+            <mat-icon
+              aria-hidden="false"
+              fontIcon="password"
+              aria-label="delete"
+              class="text-danger edit"
+            ></mat-icon
+            ><span class="d-block">Change Password</span>
+          </div>
+          <div
+            class="mt-3 d-inline-block"
+            style="cursor: pointer"
+            (click)="deleteProfile()"
+          >
+            <mat-icon
+              aria-hidden="false"
+              fontIcon="delete"
+              aria-label="delete"
+              class="text-danger edit"
+            ></mat-icon
+            ><span class="d-block">Delete Profile</span>
+          </div>
         </div>
       </div>
       <div
-        (click)="addAddress()"
-        role="button"
-        class="card d-flex justify-content-center align-items-center m-3"
-        style="width: 15rem; height: 15rem; background-color: crimson"
+        class="w-75 border-start border-end border-dark rounded-5 mt-2 me-3 pt-5"
       >
-        <div
-          class="p-3 d-flex justify-content-center align-items-center addIcon"
-          style="width: 50px; height: 50px"
-        >
-          +
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<ng-template #elseBlock>
-  <div class="d-flex text-center">
-    <span class="ms-3">Order Date</span>
-    <span class="mx-auto me-5 w-25">Order Status</span
-    ><span class="ms-auto me-5 w-25">Payment Status</span>
-  </div>
-  <hr />
-  <div class="accordion" id="accordionExample">
-    <div class="accordion-item" *ngFor="let item of cart; let I = index">
-      <h2 class="accordion-header" attr.id="heading{{ I }}">
-        <button
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          attr.data-bs-target="#collapse{{ I }}"
-          aria-expanded="true"
-          attr.aria-controls="collapse{{ I }}"
-        >
-          <span> {{ item?.createdAt | createdDate }}</span>
+        <h3 class="fw-bold text-center">Address</h3>
 
-          <div class="mx-auto ps-5">
-            <span
-              class="ms-5 badge bg-primary"
-              [class.bg-danger]="item.status == 'Cancelled'"
-              >{{ item?.status }}</span
-            >
-          </div>
-          <div class="ms-auto">
-            <span
-              class="badge bg-danger ms-5"
-              *ngIf="item.status != 'Cancelled'; else paymentStatus"
-              >{{ item?.paymentStatus }}</span
-            >
-            <ng-template class="ms-5" #paymentStatus>Cancelled</ng-template>
-          </div>
-        </button>
-      </h2>
-      <div
-        attr.id="collapse{{ I }}"
-        class="accordion-collapse collapse"
-        [class.show]="cart.length == 1"
-        attr.aria-labelledby="heading{{ I }}"
-        data-bs-parent="#accordionExample"
-      >
-        <div class="accordion-body">
-          <div class="mt-2 border-dark border rounded-2 p-5 d-flex">
-            <div class="m-auto"></div>
-            <div [class.d-none]="item.status == 'Cancelled'">
+        <div
+          class="pb-5 d-flex justify-content-center row row-cols-auto h-auto"
+        >
+          <div
+            class="card d-block p-3"
+            style="width: 15rem"
+            *ngFor="let address of addresses; let i = index"
+          >
+            <div class="card-title text-center">Address {{ i + 1 }}</div>
+            <div class="card-text">
+              <div>Street : {{ address.street }}</div>
+              <div>
+                Address Line 2 :
+                {{ address.addressLine2 }}
+              </div>
+              <div>City : {{ address.city }}</div>
+              <div>State : {{ address.state }}</div>
+              <div>Pin : {{ address.pin }}</div>
+            </div>
+            <div class="mt-3">
               <button
-                class="btn btn-outline-primary me-3"
-                [class.d-none]="item.paymentStatus == 'Paid'"
-                (click)="makePayment(item._id)"
+                class="d-inline btn btn-link"
+                (click)="editAddress(address)"
               >
-                Make Payment
+                Edit
               </button>
               <button
-                class="btn btn-outline-danger"
-                (click)="cancelOrder(item._id)"
+                class="btn text-danger fs-7 d-inline"
+                (click)="deleteAddress(address._id)"
               >
-                Cancel Order
+                Delete
               </button>
+            </div>
+          </div>
+          <div
+            (click)="addAddress()"
+            role="button"
+            class="card d-flex justify-content-center align-items-center m-3"
+            style="width: 15rem; height: 15rem; background-color: crimson"
+          >
+            <div
+              class="p-3 d-flex justify-content-center align-items-center addIcon"
+              style="width: 50px; height: 50px"
+            >
+              +
             </div>
           </div>
         </div>
       </div>
+    </div></mat-tab
+  >
+  <mat-tab label="Orders">
+    <div class="d-flex text-center mt-3">
+      <span class="ms-3">Order Date</span>
+      <span class="mx-auto me-5 w-25">Order Status</span
+      ><span class="ms-auto me-5 w-25">Payment Status</span>
     </div>
-  </div>
-</ng-template>
+    <hr />
+    <div class="accordion" id="accordionExample">
+      <div
+        class="accordion-item"
+        *ngFor="let item of cart?.results; let I = index"
+      >
+        <h2 class="accordion-header" attr.id="heading{{ I }}">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            attr.data-bs-target="#collapse{{ I }}"
+            aria-expanded="true"
+            attr.aria-controls="collapse{{ I }}"
+          >
+            <span> {{ item?.createdAt | date }}</span>
+
+            <div class="mx-auto ps-5">
+              <span
+                class="ms-5 badge bg-primary"
+                [class.bg-danger]="item.status == 'Cancelled'"
+                >{{ item?.status }}</span
+              >
+            </div>
+            <div class="ms-auto">
+              <div
+                class="ms-5"
+                *ngIf="item.status != 'Cancelled'; else paymentStatus"
+              >
+                <span
+                  class="badge"
+                  [ngClass]="
+                    item.paymentStatus == 'Paid' ? 'bg-success' : 'bg-warning'
+                  "
+                  >{{ item?.paymentStatus }}</span
+                >
+              </div>
+              <ng-template class="ms-5" #paymentStatus>Cancelled</ng-template>
+            </div>
+          </button>
+        </h2>
+        <div
+          attr.id="collapse{{ I }}"
+          class="accordion-collapse collapse"
+          [class.show]="cart.length == 1"
+          attr.aria-labelledby="heading{{ I }}"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <div class="mt-2 border-dark border rounded-2 p-5">
+              <div>
+                <!-- <div *ngFor="let product of item.items">
+                name :{{ product.name }} price :{{ product.price }} qty :
+                {{ product.qty }} subTotal : {{ product.subTotal }}
+              </div> -->
+                <!-- <table class="container w-100">
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Qty</th>
+                  <th>Sub Total</th>
+                </tr>
+                <tr *ngFor="let product of item.items">
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.price }}</td>
+                  <td>{{ product.qty }}</td>
+                  <td>{{ product.subTotal }}</td>
+                </tr>
+              </table> -->
+                <div class="mx-auto fw-bold w-25 mt-3">
+                  Payable Amount: {{ item.total }}
+                  <button
+                    class="btn btn-outline-info"
+                    (click)="orderDetails(item._id)"
+                  >
+                    Order Details
+                  </button>
+                </div>
+              </div>
+              <div
+                [class.d-none]="item.status == 'Cancelled'"
+                class="ms-auto w-25 mt-3"
+              >
+                <button
+                  class="btn btn-outline-primary me-3"
+                  [class.d-none]="item.paymentStatus == 'Paid'"
+                  (click)="makePayment(item._id)"
+                >
+                  Make Payment
+                </button>
+                <button
+                  class="btn btn-outline-danger"
+                  (click)="cancelOrder(item._id)"
+                >
+                  Cancel Order
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height: 55px;"><span></span></div>
+    </div>
+    <div id="footer" class="fixed-bottom bg-body pt-2 border-top">
+      <div class="container w-100">
+        <nav aria-label="page navigation example">
+          <ul class="pagination">
+            <li
+              class="page-item"
+              [class.disabled]="cart?.page - 1 < 1"
+              (click)="cart.page - 1 < 1 ? '' : gotoPage(cart.page - 1)"
+            >
+              <a class="page-link" style="cursor: pointer">&laquo;</a>
+            </li>
+            <li
+              class="page-item"
+              [hidden]="cart?.page - 2 <= 0"
+              (click)="gotoPage(cart?.page - 2)"
+            >
+              <a class="page-link" style="cursor: pointer">{{
+                cart?.page - 2
+              }}</a>
+            </li>
+            <li
+              class="page-item"
+              [hidden]="cart?.page - 1 <= 0"
+              (click)="gotoPage(cart?.page - 1)"
+            >
+              <a class="page-link" style="cursor: pointer">{{
+                cart?.page - 1
+              }}</a>
+            </li>
+            <li class="page-item" (click)="gotoPage(cart?.page)">
+              <a class="page-link" style="cursor: pointer"
+                ><u>{{ cart?.page }}</u></a
+              >
+            </li>
+            <li
+              class="page-item"
+              [hidden]="cart?.page + 1 > cart?.totalPages"
+              (click)="gotoPage(cart?.page + 1)"
+            >
+              <a class="page-link" style="cursor: pointer">{{
+                cart?.page + 1
+              }}</a>
+            </li>
+            <li
+              class="page-item"
+              [hidden]="cart?.page + 2 > cart?.totalPages"
+              (click)="gotoPage(cart?.page + 2)"
+            >
+              <a class="page-link" style="cursor: pointer">{{
+                cart?.page + 2
+              }}</a>
+            </li>
+            <li
+              class="page-item"
+              [class.disabled]="cart?.page + 1 > this.cart?.totalPages"
+              (click)="
+                cart?.page + 1 > this.cart?.totalPages
+                  ? ''
+                  : gotoPage(cart?.page + 1)
+              "
+            >
+              <a class="page-link" style="cursor: pointer">&raquo;</a>
+            </li>
+
+            <li class="ms-auto">
+              <div class="text-secondary mt-3">
+                Showing Result
+                {{ cart?.results ? cart?.results.length : "0" }} Out Of
+                {{ cart?.totalResults }}
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

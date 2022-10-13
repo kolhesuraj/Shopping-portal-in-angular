@@ -1,15 +1,24 @@
-.card{
+.card {
   box-shadow: 0 0 10px rgb(26, 25, 25);
   margin-right: 5px;
 }
-li a{
+li a {
   cursor: pointer;
 }
-.addIcon{
+.addIcon {
   font-weight: 700;
   border: 2px dashed black;
   border-radius: 50%;
 }
 .accordion-button::after {
   margin-left: min(170px);
+}
+.accordion {
+  overflow: scroll;
+  height: 80vh;
+  -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.accordion::-webkit-scrollbar {
+  display: none;
 }

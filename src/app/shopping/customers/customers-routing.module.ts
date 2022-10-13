@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CartGuardGuard } from '../services/cart-guard.guard';
 import { CartComponent } from './cart/cart.component';
 import { CheckOutComponent } from './check-out/check-out.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { ProfileComponent } from './profile/profile.component';
 
@@ -15,6 +16,7 @@ const routes: Routes = [
   },
   { path: 'cart', component: CartComponent },
   { path: 'payment/:id', component: PaymentsComponent },
+  { path: 'order/:id', component: OrderDetailsComponent },
 ];
 
 @NgModule({

@@ -19,7 +19,6 @@ import { HttpsInterceptor } from './services/http/http.interceptor';
 import { cartAction } from './shopping/State/cart.reducer';
 import { StoreModule } from '@ngrx/store';
 
-
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
   imports: [
@@ -29,7 +28,7 @@ import { StoreModule } from '@ngrx/store';
     HttpClientModule,
     HotToastModule.forRoot(),
     RecaptchaV3Module,
-    StoreModule.forRoot({cart: cartAction})
+    StoreModule.forRoot({ cart: cartAction }),
   ],
   providers: [
     {

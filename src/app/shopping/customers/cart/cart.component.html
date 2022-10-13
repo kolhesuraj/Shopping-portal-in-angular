@@ -16,13 +16,13 @@
       *ngFor="let item of cart; let i = index"
     >
       <div
-        *ngIf="show[i]; else elseBlock"
+        *ngIf="item.images[0]; else elseBlock"
         style="height: 18rem"
         class="d-flex justify-content-center align-items-center"
       >
         <img
-          [src]="show[i]?.url"
-          [alt]="show[i]?.public_id"
+          [src]="item.images[0].url"
+          [alt]="item.images[0].public_id"
           height="18rem"
         />
       </div>

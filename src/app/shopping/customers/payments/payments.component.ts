@@ -59,7 +59,7 @@ updating: boolean = false;
     return this.paymentForm.get('expiry');
   }
   makePayment() {
-    console.log(this.paymentForm.value);
+    // console.log(this.paymentForm.value);
     if (this.paymentForm.valid) {
       this.updating = true;
       this.http

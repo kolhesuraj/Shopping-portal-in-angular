@@ -77,6 +77,7 @@ export class CheckOutComponent implements OnInit {
       this.show[index] = element.images[0];
       this.totalamount += element.subTotal;
     });
+    console.log(this.cart.length * 40);
   }
   minusCount(product: cartInterface) {
     this.cart?.forEach((element) => {
@@ -139,6 +140,7 @@ export class CheckOutComponent implements OnInit {
       });
       total += element.subTotal;
     });
+    
     let finalProducts = {
       items: this.finalDetails,
       deliveryFee: this.finalDetails.length * 40,

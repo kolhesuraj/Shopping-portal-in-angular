@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Route, Router } from '@angular/router';
+import {  Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 import { CustomersService } from '../../services/customers.service';
@@ -16,13 +17,13 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 export class ProfileComponent implements OnInit {
   profile: any;
   addresses: any;
-  isProfile: boolean = true;
   cart: any;
+  pagenumber: number = 1;
   constructor(
-    private service: CustomersService,
     private http: HttpServiceService,
     private matDialog: MatDialog,
-    private route: Router
+    private route: Router,
+    private toast: HotToastService
   ) {}
 
   ngOnInit(): void {
@@ -31,10 +32,10 @@ export class ProfileComponent implements OnInit {
     this.getOrders();
   }
   getOrders() {
-    this.http.get('shop/orders?limit=100').subscribe({
+    this.http.get(`shop/orders?page=${this.pagenumber}`).subscribe({
       next: (res: any) => {
         console.log(res);
-        this.cart = res.results;
+        this.cart = res;
       },
     });
   }
@@ -180,11 +181,31 @@ export class ProfileComponent implements OnInit {
     this.route.navigate([`shop/customer/payment/${id}`]);
   }
   cancelOrder(id: string) {
-    this.http.patch(`shop/orders/cancel/${id}`, null).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.getOrders();
+    Swal.fire({
+      title: `Are you sure? <p>Delete Product Id: ${id}</p>`,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.patch(`shop/orders/cancel/${id}`, null).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.toast.success('Your Order has been Canceled');
+            this.getOrders();
+          },
+        });
       }
     });
+  }
+  orderDetails(id: string) {
+    this.route.navigate([`shop/customer/order/${id}`]);
+  }
+  gotoPage(page: number) {
+    this.pagenumber = page;
+    this.getOrders()
   }
 }

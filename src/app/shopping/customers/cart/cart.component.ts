@@ -20,9 +20,6 @@ export class CartComponent implements OnInit {
       this.cart = data;
       console.log(data);
     });
-    this.cart.forEach((element: any, index: number) => {
-      this.show[index] = element.images[0];
-    });
   }
   minusCount(product: cartInterface) {
     this.cart?.forEach((element) => {
