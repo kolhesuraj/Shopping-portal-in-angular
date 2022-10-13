@@ -4,7 +4,11 @@ import { StepperOrientation } from '@angular/material/stepper';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { cart, cartInterface, items } from '../../State/cart.state';
 import { Store } from '@ngrx/store';
-import { Counter, removeCheckoutItem } from '../../State/cart.action';
+import {
+  Counter,
+  removeAllItem,
+  removeCheckoutItem,
+} from '../../State/cart.action';
 import { getCheckOut } from '../../State/cart.selector';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
@@ -47,7 +51,8 @@ export class CheckOutComponent implements OnInit {
     private http: HttpServiceService,
     private service: CustomersService,
     private route: Router,
-    private toast: HotToastService
+    private toast: HotToastService,
+    private state: Store<{ cart: cart }>
   ) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -128,38 +133,45 @@ export class CheckOutComponent implements OnInit {
       },
     });
   }
+  click = false
   ProceedToPayment() {
     let total = 0;
-    this.cart.forEach((element) => {
-      this.finalDetails.push({
-        productId: element.productId,
-        name: element.name,
-        price: element.price,
-        qty: element.qty,
-        subTotal: element.subTotal,
+    this.click = true
+    if (this.cart.length == 0) {
+      this.toast.error("Can't procced without Products");
+    } else {
+      this.cart.forEach((element) => {
+        this.finalDetails.push({
+          productId: element.productId,
+          name: element.name,
+          price: element.price,
+          qty: element.qty,
+          subTotal: element.subTotal,
+        });
+        total += element.subTotal;
       });
-      total += element.subTotal;
-    });
-    
-    let finalProducts = {
-      items: this.finalDetails,
-      deliveryFee: this.finalDetails.length * 40,
-      total: total + this.finalDetails.length * 40,
-      address: this.address,
-    };
-    let Order: any;
-    this.http.post('shop/orders', finalProducts).subscribe({
-      next: (res) => {
-        console.log(res);
-        Order = res;
-        this.service.OrderId = Order;
-        console.log(this.service.OrderId);
-        this.toast.show(`<p>Your Order Has been Placed</p> 
+
+      let finalProducts = {
+        items: this.finalDetails,
+        deliveryFee: this.finalDetails.length * 40,
+        total: total + this.finalDetails.length * 40,
+        address: this.address,
+      };
+      let Order: any;
+      this.http.post('shop/orders', finalProducts).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.state.dispatch(removeAllItem());
+          Order = res;
+          this.service.OrderId = Order;
+          console.log(this.service.OrderId);
+          this.toast.show(`<p>Your Order Has been Placed</p> 
         <p>Order Id : ${Order.order._id}</p>
         <p>Payable amount : ${Order.order.total}</p>
         Please make payment to confirm`);
-        this.route.navigate([`/shop/customer/payment/${Order.order._id}`]);
-      },
-    });
+          this.route.navigate([`/shop/customer/payment/${Order.order._id}`]);
+        },
+      });
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { addCheckoutItem, cartCounter, removeItem } from '../../State/cart.action';
+import { addCheckoutItem, cartCounter, removeAllItem, removeItem } from '../../State/cart.action';
 import { getCartProducts } from '../../State/cart.selector';
 import { cart, cartInterface } from '../../State/cart.state';
 

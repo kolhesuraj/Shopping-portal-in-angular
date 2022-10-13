@@ -6,6 +6,7 @@ import {
   removeItem,
   removeCheckoutItem,
   cartCounter,
+  removeAllItem,
 } from './cart.action';
 import { initialstate } from './cart.state';
 
@@ -17,6 +18,13 @@ const cartState = createReducer(
       products: [...state.products, action.products],
     };
   }),
+  on(removeAllItem, (state, action) => {
+
+    return {
+      ...state,
+      products: [],
+    };
+  }),
   on(removeItem, (state, action) => {
     let newCart = state.products.filter((product) => {
       return product.productId !== action.products.productId;
@@ -26,11 +34,12 @@ const cartState = createReducer(
       ...state,
       products: newCart,
     };
-  }), on(cartCounter, (state, action) => {
+  }),
+  on(cartCounter, (state, action) => {
     let ProductsArray = state.products.map((element) => {
       return element.productId === action.products.productId
-      ? action.products
-      : element;
+        ? action.products
+        : element;
     });
     return {
       ...state,

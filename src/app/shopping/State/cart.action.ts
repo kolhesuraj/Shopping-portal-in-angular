@@ -5,6 +5,7 @@ export const addItem = createAction(
   'addItem',
   props<{ products: cartInterface }>()
 );
+export const removeAllItem = createAction('removeAllItems');
 export const removeItem = createAction(
   'removeItem',
   props<{ products: cartInterface }>()

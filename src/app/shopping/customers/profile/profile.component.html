@@ -142,8 +142,14 @@
 
             <div class="mx-auto ps-5">
               <span
-                class="ms-5 badge bg-primary"
-                [class.bg-danger]="item.status == 'Cancelled'"
+                class="ms-5 badge"
+                [ngClass]="
+                  item.status == 'Cancelled'
+                    ? 'bg-danger'
+                    : item.status == 'Pending'
+                    ? 'bg-warning'
+                    : 'bg-success'
+                "
                 >{{ item?.status }}</span
               >
             </div>
@@ -224,7 +230,7 @@
           </div>
         </div>
       </div>
-      <div style="height: 55px;"><span></span></div>
+      <div style="height: 55px"><span></span></div>
     </div>
     <div id="footer" class="fixed-bottom bg-body pt-2 border-top">
       <div class="container w-100">

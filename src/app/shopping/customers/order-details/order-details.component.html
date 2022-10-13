@@ -1,8 +1,10 @@
-<div class="my-auto h-75 text-center mt-2" id="data">
+<div class="my-auto h-75 text-center pt-5" id="data">
   <h2 class="fw-bold">Order Details</h2>
   <p>Order Date: {{orderDetails?.createdAt | date }}</p>
   <p>Payment Status:{{orderDetails?.paymentStatus}}</p>
   <p>Order Status:{{orderDetails?.status}}</p>
+  <p *ngIf="orderDetails?.transactionNo">Transaction Id:{{orderDetails?.transactionNo}}</p>
+
   <table class="container w-100">
     <tr>
       <th>Name</th>
@@ -22,7 +24,7 @@
     Total Amount: &#8377; {{ orderDetails?.total }}
   </div>
   <div class="container">
-    <h2 class="fw-bold">Address</h2>
+    <h2 class="fw-bold">Delivered To</h2>
     <div>street : {{ orderDetails?.address?.street }}</div>
     <div>addressLine2 : {{ orderDetails?.address?.addressLine2 }}</div>
     <div>city : {{ orderDetails?.address?.city }}</div>
