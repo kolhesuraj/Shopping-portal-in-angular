@@ -42,7 +42,7 @@ export class CheckOutComponent implements OnInit {
   addresses: any;
   address: any;
   finalDetails: items[] = [];
-
+  delivary = 0;
   constructor(
     breakpointObserver: BreakpointObserver,
     private store: Store<{ cart: cart }>,
@@ -77,11 +77,18 @@ export class CheckOutComponent implements OnInit {
     });
   }
   getProducts() {
-    this.store.select(getCheckOut).subscribe((data) => (this.cart = data));
-    this.cart.forEach((element: any, index: number) => {
-      this.show[index] = element.images[0];
-      this.totalamount += element.subTotal;
+    this.store.select(getCheckOut).subscribe((data) => {
+      this.cart = data;
+      console.log(this.cart);
+      this.cart.forEach((element: any, index: number) => {
+        this.show[index] = element.images[0];
+        // console.log(element);
+        this.totalamount = this.totalamount + element.subTotal;
+        this.delivary = this.delivary+( element.qty * 40);
+        console.log(element.qty * 40);
+      });
     });
+
     console.log(this.cart.length * 40);
   }
   minusCount(product: cartInterface) {
@@ -133,10 +140,11 @@ export class CheckOutComponent implements OnInit {
       },
     });
   }
-  click = false
+  click = false;
+
   ProceedToPayment() {
     let total = 0;
-    this.click = true
+    this.click = true;
     if (this.cart.length == 0) {
       this.toast.error("Can't procced without Products");
     } else {
@@ -153,7 +161,7 @@ export class CheckOutComponent implements OnInit {
 
       let finalProducts = {
         items: this.finalDetails,
-        deliveryFee: this.finalDetails.length * 40,
+        deliveryFee: this.delivary,
         total: total + this.finalDetails.length * 40,
         address: this.address,
       };
