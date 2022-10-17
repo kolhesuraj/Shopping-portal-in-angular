@@ -76,6 +76,7 @@ export class DetailsComponent implements OnInit {
       images: product.images,
     };
     if (!this.isInCart(addProduct)) {
+      this.toaster.success(`${addProduct.name} added to cart`)
       this.store.dispatch(addItem({ products: addProduct }));
     }
   }
@@ -100,7 +101,7 @@ export class DetailsComponent implements OnInit {
     let isAvailbe: Boolean = false;
     this.cart?.forEach((element) => {
       if (element.productId === product.productId) {
-        this.toaster.info('product already in cart');
+        this.toaster.info(`${product.name} already in cart`);
         isAvailbe = true;
       }
     });

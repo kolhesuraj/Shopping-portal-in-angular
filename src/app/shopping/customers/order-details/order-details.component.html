@@ -1,36 +1,47 @@
-<div class="my-auto h-75 text-center pt-5" id="data">
-  <h2 class="fw-bold">Order Details</h2>
-  <p>Order Date: {{orderDetails?.createdAt | date }}</p>
-  <p>Payment Status:{{orderDetails?.paymentStatus}}</p>
-  <p>Order Status:{{orderDetails?.status}}</p>
-  <p *ngIf="orderDetails?.transactionNo">Transaction Id:{{orderDetails?.transactionNo}}</p>
+<div>
+  <div class="my-auto text-center pt-5" id="data">
+    <h2 class="fw-bold">Order Details</h2>
+    <p>Order Date: {{ orderDetails?.createdAt | date }}</p>
+    <p>Payment Status:{{ orderDetails?.paymentStatus }}</p>
+    <p>Order Status:{{ orderDetails?.status }}</p>
+    <p *ngIf="orderDetails?.transactionNo">
+      Transaction Id:{{ orderDetails?.transactionNo }}
+    </p>
 
-  <table class="container w-100">
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Qty</th>
-      <th>Sub Total</th>
-    </tr>
-    <tr *ngFor="let product of orderDetails?.items">
-      <td>{{ product?.name }}</td>
-      <td>{{ product?.price }}</td>
-      <td>{{ product?.qty }}</td>
-      <td>{{ product?.subTotal }}</td>
-    </tr>
-  </table>
-  <div class="ms-auto w-25 mt-3">
-    <p>Delivary fee: &#8377; {{orderDetails?.deliveryFee}}</p>
-    Total Amount: &#8377; {{ orderDetails?.total }}
+    <table class="container w-100">
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Sub Total</th>
+      </tr>
+      <tr *ngFor="let product of orderDetails?.items">
+        <td>{{ product?.name }}</td>
+        <td>{{ product?.price }}</td>
+        <td>{{ product?.qty }}</td>
+        <td>{{ product?.subTotal }}</td>
+      </tr>
+    </table>
+    <div class="ms-auto w-25 mt-3">
+      <p>Delivary fee: &#8377; {{ orderDetails?.deliveryFee }}</p>
+      Total Amount: &#8377; {{ orderDetails?.total }}
+    </div>
+    <div class="container">
+      <h2 class="fw-bold">Delivered To</h2>
+      <div>street : {{ orderDetails?.address?.street }}</div>
+      <div>addressLine2 : {{ orderDetails?.address?.addressLine2 }}</div>
+      <div>city : {{ orderDetails?.address?.city }}</div>
+      <div>pin : {{ orderDetails?.address?.pin }}</div>
+      <div>state : {{ orderDetails?.address?.state }}</div>
+    </div>
   </div>
-  <div class="container">
-    <h2 class="fw-bold">Delivered To</h2>
-    <div>street : {{ orderDetails?.address?.street }}</div>
-    <div>addressLine2 : {{ orderDetails?.address?.addressLine2 }}</div>
-    <div>city : {{ orderDetails?.address?.city }}</div>
-    <div>pin : {{ orderDetails?.address?.pin }}</div>
-    <div>state : {{ orderDetails?.address?.state }}</div>
+  <div class="text-center mt-3">
+    <button
+      class="btn btn-outline-secondary mt-3"
+      (click)="openPDF()"
+      [class.d-none]="orderDetails?.paymentStatus != 'Paid'"
+    >
+      Download Receipt
+    </button>
   </div>
 </div>
-<div class="text-center"><button class="btn btn-outline-secondary mt-3" (click)="openPDF()">Download Receipt</button></div>
-

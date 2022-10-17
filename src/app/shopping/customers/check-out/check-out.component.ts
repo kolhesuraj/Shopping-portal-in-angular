@@ -16,7 +16,7 @@ import { Validators } from 'ngx-editor';
 import { AddressActionComponent } from '../address-action/address-action.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomersService } from '../../services/customers.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Toast } from 'ngx-toastr';
 import { HotToastService } from '@ngneat/hot-toast';
 
@@ -43,6 +43,8 @@ export class CheckOutComponent implements OnInit {
   address: any;
   finalDetails: items[] = [];
   delivary = 0;
+  isCart: any;
+
   constructor(
     breakpointObserver: BreakpointObserver,
     private store: Store<{ cart: cart }>,
@@ -52,6 +54,7 @@ export class CheckOutComponent implements OnInit {
     private service: CustomersService,
     private route: Router,
     private toast: HotToastService,
+    private param: ActivatedRoute,
     private state: Store<{ cart: cart }>
   ) {
     this.stepperOrientation = breakpointObserver
@@ -66,8 +69,9 @@ export class CheckOutComponent implements OnInit {
 
     this.getAddress();
   }
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isCart = this.param.snapshot.paramMap.get('isCart');
+  }
   getAddress() {
     this.http.get('customers/address').subscribe({
       next: (res) => {
@@ -84,9 +88,10 @@ export class CheckOutComponent implements OnInit {
         this.show[index] = element.images[0];
         // console.log(element);
         this.totalamount = this.totalamount + element.subTotal;
-        this.delivary = this.delivary+( element.qty * 40);
+        this.delivary = this.delivary + element.qty * 40;
         console.log(element.qty * 40);
       });
+      this.totalamount = this.totalamount + this.delivary;
     });
 
     console.log(this.cart.length * 40);
@@ -162,14 +167,17 @@ export class CheckOutComponent implements OnInit {
       let finalProducts = {
         items: this.finalDetails,
         deliveryFee: this.delivary,
-        total: total + this.finalDetails.length * 40,
+        total: total + this.delivary,
         address: this.address,
       };
+      console.log(finalProducts);
       let Order: any;
       this.http.post('shop/orders', finalProducts).subscribe({
         next: (res) => {
           console.log(res);
-          this.state.dispatch(removeAllItem());
+          if (this.isCart == 'isCart') {
+            this.state.dispatch(removeAllItem());
+          }
           Order = res;
           this.service.OrderId = Order;
           console.log(this.service.OrderId);

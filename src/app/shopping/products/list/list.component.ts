@@ -37,7 +37,7 @@ export class ListComponent implements OnInit {
     private route: Router,
     private service: CustomersService,
     private store: Store<{ cart: cart }>,
-    private toaster: HotToastService,
+    private toaster: HotToastService
   ) {
     this.getProducts();
   }
@@ -61,9 +61,9 @@ export class ListComponent implements OnInit {
   _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.suggestion.filter((option) =>
-      option.toLowerCase().includes(filterValue)
-    );
+    return this.suggestion
+      .filter((option) => option.toLowerCase().includes(filterValue))
+      .sort();
   }
   getSuggetion() {
     const data = `limit=${this.list.totalResults}`;
@@ -79,7 +79,7 @@ export class ListComponent implements OnInit {
       },
     });
   }
- 
+
   getProducts() {
     let query: string;
     if (this.search == '' || this.search == ' ') {
@@ -102,8 +102,6 @@ export class ListComponent implements OnInit {
       },
     });
   }
-
-
 
   openNav() {
     this.flag = true;
@@ -147,21 +145,24 @@ export class ListComponent implements OnInit {
       images: product.images,
     };
     if (!this.isInCart(addProduct)) {
+      this.toaster.success(`${addProduct.name} added to cart`);
       this.store.dispatch(addItem({ products: addProduct }));
     }
   }
 
   BuyNow(product: any) {
     // console.log(product);
-    const checkOut:cartInterface[] =[ {
+    const checkOut: cartInterface[] = [
+      {
         productId: product._id,
         name: product.name,
         price: product.price,
         qty: 1,
         subTotal: product.price * 1,
         images: product.images,
-    }]
-    this.store.dispatch(addCheckoutItem ({checkOut: checkOut}))
+      },
+    ];
+    this.store.dispatch(addCheckoutItem({ checkOut: checkOut }));
     this.route.navigate(['/shop/customer/check-out']);
   }
 
@@ -169,7 +170,7 @@ export class ListComponent implements OnInit {
     let isAvailbe: Boolean = false;
     this.cart?.forEach((element) => {
       if (element.productId === product.productId) {
-        this.toaster.info("product already in cart")
+        this.toaster.info(`${product.name}  already in cart`);
         isAvailbe = true;
       }
     });

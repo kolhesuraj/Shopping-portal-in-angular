@@ -18,7 +18,9 @@
               aria-expanded="true"
               attr.aria-controls="collapse{{ I }}"
             >
-              {{ item?.name }}
+              <span>{{ item?.name }}</span>
+              <span class="mx-auto">{{ item?.qty }}</span>
+              <span class="ms-auto">{{ item?.subTotal }}</span>
             </button>
           </h2>
           <div
@@ -59,17 +61,14 @@
 
                   <div>
                     <button
-                      class="btn btn-outline-secondary me-2"
+                      class="btn btn-sm me-2"
                       (click)="minusCount(item)"
                       [disabled]="item.qty < 2"
                     >
                       -
                     </button>
                     {{ item?.qty }}
-                    <button
-                      class="btn btn-outline-secondary ms-2"
-                      (click)="addCount(item)"
-                    >
+                    <button class="btn btn-sm ms-2" (click)="addCount(item)">
                       +
                     </button>
                   </div>
@@ -146,7 +145,8 @@
     <!-- <button mat-button matStepperNext>Next</button> -->
     <button
       class="btn btn-outline-info m-3 d-block"
-      (click)="ProceedToPayment()" [disabled]="click"
+      (click)="ProceedToPayment()"
+      [disabled]="click"
     >
       Proced To Payment
     </button>
@@ -187,7 +187,7 @@
           </tr>
         </table>
         <div class="ms-auto fw-bold w-50">
-          <span class=" ms-auto">Dilevary Fee: {{ delivary }}</span>
+          <span class="ms-auto">Dilevary Fee: {{ delivary }}</span>
           <span class="d-block"> Payable Amount: {{ totalamount }}</span>
         </div>
       </div>

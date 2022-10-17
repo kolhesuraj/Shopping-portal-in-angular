@@ -14,6 +14,11 @@ const routes: Routes = [
     component: CheckOutComponent,
     canActivate: [CartGuardGuard],
   },
+  {
+    path: 'check-out/:isCart',
+    component: CheckOutComponent,
+    canActivate: [CartGuardGuard],
+  },
   { path: 'cart', component: CartComponent },
   { path: 'payment/:id', component: PaymentsComponent },
   { path: 'order/:id', component: OrderDetailsComponent },

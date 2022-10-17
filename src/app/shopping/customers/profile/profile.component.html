@@ -119,7 +119,8 @@
   >
   <mat-tab label="Orders">
     <div class="d-flex text-center mt-3">
-      <span class="ms-3">Order Date</span>
+      <span class="ms-3">Sr. No.</span>
+      <span class="ms-5">Order Date</span>
       <span class="mx-auto me-5 w-25">Order Status</span
       ><span class="ms-auto me-5 w-25">Payment Status</span>
     </div>
@@ -138,7 +139,8 @@
             aria-expanded="true"
             attr.aria-controls="collapse{{ I }}"
           >
-            <span> {{ item?.createdAt | date }}</span>
+          <span class="ms-3">{{I+1}}</span>
+            <span class="ms-5"> {{ item?.createdAt | date }}</span>
 
             <div class="mx-auto ps-5">
               <span

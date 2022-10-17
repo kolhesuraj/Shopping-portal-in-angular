@@ -57,6 +57,6 @@ export class CartComponent implements OnInit {
 
   checkOut() {
     this.state.dispatch(addCheckoutItem({ checkOut: this.cart }));
-    this.route.navigate(['/shop/customer/check-out']);
+    this.route.navigate([`/shop/customer/check-out/${'isCart'}`]);
   }
 }

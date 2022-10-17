@@ -11,3 +11,7 @@ img {
 nav div ul li {
   cursor: pointer;
 }
+.images {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
