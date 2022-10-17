@@ -43,6 +43,8 @@
             placeholder="card number"
             formControlName="cardNumber"
             class="form-control"
+            maxlength="19"
+            [value]="cardNumber?.value | cardNumber"
             [class.is-invalid]="cardNumber?.invalid && cardNumber?.touched"
           />
         </div>

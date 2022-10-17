@@ -38,13 +38,14 @@ export class CheckOutComponent implements OnInit {
   addressFormGroup!: FormGroup;
   show: any = [];
   totalamount: number = 0;
+  total: number = 0;
   stepperOrientation: Observable<StepperOrientation>;
   addresses: any;
   address: any;
   finalDetails: items[] = [];
   delivary = 0;
   isCart: any;
-
+  totalItem: number = 0;
   constructor(
     breakpointObserver: BreakpointObserver,
     private store: Store<{ cart: cart }>,
@@ -68,6 +69,7 @@ export class CheckOutComponent implements OnInit {
     });
 
     this.getAddress();
+
   }
   ngOnInit(): void {
     this.isCart = this.param.snapshot.paramMap.get('isCart');
@@ -87,10 +89,12 @@ export class CheckOutComponent implements OnInit {
       this.cart.forEach((element: any, index: number) => {
         this.show[index] = element.images[0];
         // console.log(element);
+        this.totalItem += 1;
         this.totalamount = this.totalamount + element.subTotal;
         this.delivary = this.delivary + element.qty * 40;
-        console.log(element.qty * 40);
+        // console.log(element.qty * 40);
       });
+      this.total = this.totalamount;
       this.totalamount = this.totalamount + this.delivary;
     });
 
@@ -142,6 +146,7 @@ export class CheckOutComponent implements OnInit {
     _dialog.afterClosed().subscribe({
       next: () => {
         this.getAddress();
+        this.addressFormGroup.value.address =  this.addresses[this.addAddress.length - 1]
       },
     });
   }
@@ -189,5 +194,18 @@ export class CheckOutComponent implements OnInit {
         },
       });
     }
+  }
+  editAddress(address: any) {
+    let dialog = this.matDialog.open(AddressActionComponent, {
+      data: address,
+    });
+    dialog.afterOpened().subscribe({
+      next: () => {},
+    });
+    dialog.afterClosed().subscribe({
+      next: () => {
+        this.getAddress();
+      },
+    });
   }
 }

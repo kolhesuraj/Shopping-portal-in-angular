@@ -1,9 +1,12 @@
 <app-customer-header [path]="false"></app-customer-header>
 
 <div class="mt-5">
-  <div class="container-fluid">
-    <button class="btn btn-outline-primary" (click)="checkOut()">
+  <div class="container-fluid d-flex justify-content-between">
+    <button class="btn btn-outline-primary" [disabled]="cart.length < 1" (click)="checkOut()">
       Check Out
+    </button>
+      <button class="btn btn-outline-danger " [disabled]="cart.length < 1" (click)="clearCart()">
+      Clear Cart
     </button>
   </div>
   <div
@@ -11,8 +14,8 @@
     class="d-flex row justify-content-around"
   >
     <div
-      class="card mb-5 border border-dark ms-4 me-4 col-1"
-      style="width: 20rem; height: 30rem"
+      class="card mb-5 ms-4 me-4 col-1"
+      style="width: 20rem; height: 28rem"
       *ngFor="let item of cart; let i = index"
     >
       <div
@@ -34,35 +37,33 @@
           No Images for Preview
         </div>
       </ng-template>
-
-      <div class="card-body mt-1">
-        <div routerLink="../../products/product/{{ item.productId }}" style="cursor: pointer">
-          <h3 class="card-title d-block" style="font-weight: 500">
-            {{ item.name }}
-          </h3>
-
-          <h2 class="card-text">Price per Item:  Rs.{{ item.price }}</h2>
-          
-          
-        </div>
+      
+      <div class="card-body mt-1 text-center">
+        <div
+        routerLink="../../products/product/{{ item.productId }}"
+        style="cursor: pointer"
+        >
+        <h3 class="card-title d-block" style="font-weight: 500">
+          {{ item.name }}
+        </h3>
+        
+        <h3 class="card-text">Price: &#8377; {{ item.price }}</h3>
+        <h3 class="">Total: &#8377; {{ item.subTotal }}</h3>
+      </div>
         <div class="mb-2">
           <button
-          class="btn  btn-sm me-2"
-          (click)="minusCount(item)"
+            class="btn btn-sm me-2 rounded-5"
+            (click)="minusCount(item)"
             [disabled]="item.qty < 2"
-            >
+          >
             -
           </button>
           {{ item?.qty }}
-          <button
-          class="btn btn-sm ms-2"
-          (click)="addCount(item)"
-          >
-          +
+          <button class="btn btn-sm ms-2 rounded-5" (click)="addCount(item)">+</button>
+        </div>
+        <button class="btn btn-danger" (click)="deleteProduct(item)">
+          Remove
         </button>
-      </div>
-      <h2 class="card-footer">Total:  Rs.{{ item.subTotal }}</h2>
-      <button class="btn btn-danger mt-3" (click)="deleteProduct(item)">Remove From Cart</button>
       </div>
     </div>
   </div>

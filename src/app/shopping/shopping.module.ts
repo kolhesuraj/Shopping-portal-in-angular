@@ -12,8 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgDompurifyModule } from '@tinkoff/ng-dompurify';
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     ShoppingRoutingModule,

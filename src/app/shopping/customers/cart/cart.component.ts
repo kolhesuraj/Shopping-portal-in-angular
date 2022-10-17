@@ -14,12 +14,15 @@ export class CartComponent implements OnInit {
   show: any = [];
   cart!: cartInterface[];
   constructor(private state: Store<{ cart: cart }>, private route: Router) {}
-
+  
   ngOnInit(): void {
     this.state.select(getCartProducts).subscribe((data) => {
       this.cart = data;
       console.log(data);
     });
+  }
+  clearCart() {
+  this.state.dispatch(removeAllItem());
   }
   minusCount(product: cartInterface) {
     this.cart?.forEach((element) => {

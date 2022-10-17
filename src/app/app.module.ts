@@ -17,8 +17,10 @@ import {
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpsInterceptor } from './services/http/http.interceptor';
 import { cartAction } from './shopping/State/cart.reducer';
-import { StoreModule } from '@ngrx/store';
+import { MetaReducer, StoreModule } from '@ngrx/store';
+import { hydrationMetaReducer } from './shopping/State/hydrate.state';
 
+export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
   imports: [
@@ -28,7 +30,7 @@ import { StoreModule } from '@ngrx/store';
     HttpClientModule,
     HotToastModule.forRoot(),
     RecaptchaV3Module,
-    StoreModule.forRoot({ cart: cartAction }),
+    StoreModule.forRoot({ cart: cartAction },{metaReducers}),
   ],
   providers: [
     {

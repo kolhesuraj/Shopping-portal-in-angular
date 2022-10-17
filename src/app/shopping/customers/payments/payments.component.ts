@@ -35,8 +35,8 @@ updating: boolean = false;
         '',
         [
           Validators.required,
-          Validators.minLength(16),
-          Validators.maxLength(16),
+          Validators.minLength(19),
+          Validators.maxLength(19),
         ],
       ],
       expiry: ['', [Validators.required,Validators.maxLength(7)]],
@@ -59,6 +59,8 @@ updating: boolean = false;
     return this.paymentForm.get('expiry');
   }
   makePayment() {
+    // console.log(this.paymentForm.value.cardNumber.split(" ").join(""))
+    this.paymentForm.value.cardNumber = this.paymentForm.value.cardNumber.split(" ").join("")
     // console.log(this.paymentForm.value);
     if (this.paymentForm.valid) {
       this.updating = true;

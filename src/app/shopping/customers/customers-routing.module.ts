@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CartGuardGuard } from '../services/cart-guard.guard';
+import { CartGuardGuard } from '../services/Guard/cart-guard.guard';
 import { CartComponent } from './cart/cart.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';

@@ -9,7 +9,7 @@ export class ExpiryDatePipe implements PipeTransform {
     let MM = value.slice(0, 2);
     let YY = value.slice(3, 7);
 
-    if (MM > 12 ||MM <= 0) {
+    if (MM > 12 || MM <= 0) {
       value = '07' + value.slice(3);
     }
     if (value.length == 2 && checkNumber(MM)) {

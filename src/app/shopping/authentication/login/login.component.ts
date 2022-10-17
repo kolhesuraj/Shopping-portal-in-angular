@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
-import Swal from 'sweetalert2';
 import { CustomersService } from '../../services/customers.service';
 
 @Component({

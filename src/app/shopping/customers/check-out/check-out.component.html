@@ -4,88 +4,47 @@
   #stepper
   [orientation]="(stepperOrientation | async)!"
 >
-  <mat-step label="Product For Checkout">
-    <button mat-button matStepperNext>Next</button>
-    <div *ngIf="cart.length >= 1; else elseBlock">
-      <div class="accordion" id="accordionExample">
-        <div class="accordion-item" *ngFor="let item of cart; let I = index">
-          <h2 class="accordion-header" attr.id="heading{{ I }}">
-            <button
-              class="accordion-button"
-              type="button"
-              data-bs-toggle="collapse"
-              attr.data-bs-target="#collapse{{ I }}"
-              aria-expanded="true"
-              attr.aria-controls="collapse{{ I }}"
-            >
-              <span>{{ item?.name }}</span>
-              <span class="mx-auto">{{ item?.qty }}</span>
-              <span class="ms-auto">{{ item?.subTotal }}</span>
-            </button>
-          </h2>
-          <div
-            attr.id="collapse{{ I }}"
-            class="accordion-collapse collapse"
-            [class.show]="cart.length == 1"
-            attr.aria-labelledby="heading{{ I }}"
-            data-bs-parent="#accordionExample"
-          >
-            <div class="accordion-body">
-              <div
-                class="container-fluid container-lg mt-2 border-dark border rounded-2 p-5 d-flex"
+  <mat-step label="Product For Checkout" >
+    <div *ngIf="cart.length >= 1; else elseBlock" class="">
+      <table class="container">
+        <tr>
+          <th>Name</th>
+          <th>Price(per/piece)</th>
+          <th>Qty</th>
+          <th>Sub Total</th>
+        </tr>
+        <tr *ngFor="let item of cart">
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td>
+            <div>
+              <button
+                class="btn btn-sm me-2"
+                (click)="minusCount(item)"
+                [disabled]="item.qty < 2"
               >
-                <div class="">
-                  <img
-                    [src]="show[I]?.url"
-                    [alt]="show[I]?.public_id"
-                    width="250px"
-                  />
-                </div>
-
-                <div class="ms-2">
-                  <img
-                    *ngFor="let image of item?.images; let i = index"
-                    [class.bg-dark]="show === image"
-                    class="border d-block border-dark m-2 p-1"
-                    (click)="show[I] = image"
-                    style="cursor: pointer"
-                    [src]="image.url"
-                    [alt]="image.public_id"
-                    height="50px"
-                  />
-                </div>
-                <div class="m-auto">
-                  <h1>{{ item?.name }}</h1>
-                  <h2>Rs. {{ item?.price }}</h2>
-                  <h4>Total: {{ item?.subTotal }}</h4>
-
-                  <div>
-                    <button
-                      class="btn btn-sm me-2"
-                      (click)="minusCount(item)"
-                      [disabled]="item.qty < 2"
-                    >
-                      -
-                    </button>
-                    {{ item?.qty }}
-                    <button class="btn btn-sm ms-2" (click)="addCount(item)">
-                      +
-                    </button>
-                  </div>
-                </div>
-                <div class="ms-auto">
-                  <i
-                    class="fa-solid fa-trash text-danger"
-                    style="cursor: pointer"
-                    (click)="deleteProduct(item)"
-                  ></i>
-                </div>
-              </div>
+                -
+              </button>
+              {{ item?.qty }}
+              <button class="btn btn-sm ms-2" (click)="addCount(item)">
+                +
+              </button>
             </div>
-          </div>
-        </div>
+          </td>
+          <td>{{ item.subTotal }}</td>
+        </tr>
+      </table>
+      <div class="ms-auto w-25 mt-3">
+        <span>delivary fee: &#8377;{{ delivary }}</span>
+        <span class="d-block"
+          >Total Amount: &#8377;{{ total }}</span
+        >
+      </div>
+      <div class="text-end">
+        <button mat-flat-button color="primary" class="me-5" matStepperNext>Next</button>
       </div>
     </div>
+
     <ng-template #elseBlock><h2>Nothing to Show !</h2></ng-template>
   </mat-step>
   <mat-step label="Fill out your address" [stepControl]="addressFormGroup">
@@ -94,6 +53,11 @@
         <div
           *ngFor="let address of addresses; let i = index"
           class="card mx-3 mt-3"
+          [ngClass]="
+            addressFormGroup.value.address == address
+              ? 'border-primary'
+              : 'border-dark'
+          "
         >
           <div class="card-body">
             <input
@@ -119,13 +83,16 @@
               <div>State : {{ address.state }}</div>
               <div>Pin : {{ address.pin }}</div>
             </label>
+            <button mat-raised-button (click)="editAddress(address)">
+              edit
+            </button>
           </div>
         </div>
         <div
           (click)="addAddress()"
           role="button"
           class="card d-flex justify-content-center align-items-center m-3"
-          style="width: 18rem; height: 18rem; background-color: crimson"
+          style="width: 18rem; min-height: 140px; background-color: crimson"
         >
           <div
             class="p-3 d-flex justify-content-center align-items-center addIcon"
@@ -135,64 +102,39 @@
           </div>
         </div>
       </div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
+      <div class="d-flex justify-content-around mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious>
+          Back
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          matStepperNext
+          [disabled]="!addressFormGroup.valid"
+        >
+          Next
+        </button>
+      </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="addressFormGroup">
     <ng-template matStepLabel>Confirm Order</ng-template>
     <!-- <button mat-button matStepperPrevious>Back</button> -->
     <!-- <button mat-button matStepperNext>Next</button> -->
-    <button
-      class="btn btn-outline-info m-3 d-block"
-      (click)="ProceedToPayment()"
-      [disabled]="click"
-    >
-      Proced To Payment
-    </button>
-    <div class="d-flex justify-content-center my-3 fw-bold">
-      Product Summary
-    </div>
+    <div class="card mt-3 mx-auto w-75 p-5">
+    <div class="d-flex justify-content-center my-3 lead">Product Summary</div>
     <div class="row">
-      <div class="col-8">
-        <!-- <div class="d-flex justify-content-around">
-          <div>Name</div>
-          <div>Price</div>
-          <div>qty</div>
-          <div>subTotal</div>
-          <div class="d-block"><hr /></div>
-        </div>
-        <div
-          *ngFor="let product of cart"
-          class="border py-2 d-flex "
-        >
-          <div>{{ product.name }}</div>
-          <div>{{ product.price }}</div>
-          <div>{{ product.qty }}</div>
-          <div>{{ product.subTotal }}</div>
-          <div class="d-block"><hr /></div>
-        </div> -->
-        <table class="container">
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Sub Total</th>
-          </tr>
-          <tr *ngFor="let item of cart">
-            <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.qty }}</td>
-            <td>{{ item.subTotal }}</td>
-          </tr>
-        </table>
-        <div class="ms-auto fw-bold w-50">
-          <span class="ms-auto">Dilevary Fee: {{ delivary }}</span>
-          <span class="d-block"> Payable Amount: {{ totalamount }}</span>
+      <div class="col-6 p-3">
+        <div class="text-center">
+          <span class="d-block">Total Items: {{ totalItem }} </span>
+          <span class="d-block">Total Amount: &#8377;{{ total }} </span>
+          <span class="ms-auto">Delivery Fee: &#8377;{{ delivary }}</span>
+          <span class="d-block">Payable Amount: &#8377;{{ totalamount }}</span>
         </div>
       </div>
-      <div class="col-4 border">
-        <div>Street : {{ address?.street }}</div>
+      <div class="col-4  p-3">
+        <span class="lead">Address</span>
+        <div class="mt-3">Street : {{ address?.street }}</div>
         <div>
           Address Line 2 :
           {{ address?.addressLine2 }}
@@ -202,7 +144,18 @@
         <div>Pin : {{ address?.pin }}</div>
       </div>
     </div>
-    <div></div>
+    </div>
+    <div class="d-flex justify-content-around mt-3">
+      <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="ProceedToPayment()"
+        [disabled]="click"
+      >
+        Proceed To Pay
+      </button>
+    </div>
   </mat-step>
   <!-- <mat-step>
     <ng-template matStepLabel>Payment & Confirm</ng-template>

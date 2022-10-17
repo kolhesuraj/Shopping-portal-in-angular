@@ -18,10 +18,11 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CustomerHeaderComponent } from './customer-header/customer-header.component';
 import { PaymentsComponent } from './payments/payments.component';
-import { ExpiryDatePipe } from '../services/expiry-date.pipe';
-import { CreatedDatePipe } from '../services/created-date.pipe';
+import { CreatedDatePipe } from '../services/Pipes/created-date.pipe';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ExpiryDatePipe } from '../services/Pipes/expiry-date.pipe';
+import { CardNumberPipe } from '../services/Pipes/card-number.pipe';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -35,6 +36,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     ExpiryDatePipe,
     CreatedDatePipe,
     OrderDetailsComponent,
+    CardNumberPipe
   ],
   imports: [
     CommonModule,
