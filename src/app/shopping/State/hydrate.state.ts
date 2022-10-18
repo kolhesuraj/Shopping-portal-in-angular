@@ -12,12 +12,12 @@ export const hydrationMetaReducer = (
         try {
           return JSON.parse(storageValue);
         } catch {
-          localStorage.removeItem('state');
+          sessionStorage.removeItem('state');
         }
       }
     }
     const nextState = reducer(state, action);
-    localStorage.setItem('state', JSON.stringify(nextState));
+    sessionStorage.setItem('state', JSON.stringify(nextState));
     return nextState;
   };
 };

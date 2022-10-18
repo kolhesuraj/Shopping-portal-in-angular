@@ -1,6 +1,6 @@
 img {
   width: auto;
-  height: 150px;
+  height: 100px;
 }
 .row {
   position: relative;
@@ -8,4 +8,18 @@ img {
 }
 .card{
   box-shadow: 2px 0px 10px black;
+}
+
+tr{
+margin-top: 5px;
+padding: 5px;
+}
+th{
+  color: beige;
+  background-color: rgb(187, 37, 37);
+  margin-bottom: 5px;
+  padding: 5px;
+}
+td{
+  border-bottom: 1px solid black;
 }
