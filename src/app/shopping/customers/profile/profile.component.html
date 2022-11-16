@@ -67,12 +67,12 @@
         class="w-lg-75 d-sm-block w-100 border-start border-end border-dark rounded-5 mt-2 me-3 pt-5"
       >
         <h3 class="fw-bold text-center">Address</h3>
-
+        <hr />
         <div
           class="pb-5 d-flex justify-content-center row row-cols-auto h-auto"
         >
           <div
-            class="card d-block p-3"
+            class="card d-block p-3 mt-3"
             style="width: 15rem"
             *ngFor="let address of addresses; let i = index"
           >
@@ -165,7 +165,11 @@
                 <span
                   class="badge"
                   [ngClass]="
-                    item.paymentStatus == 'Paid' ? 'bg-success' : item.paymentStatus =='Failed'? 'bg-danger':'bg-warning'
+                    item.paymentStatus == 'Paid'
+                      ? 'bg-success'
+                      : item.paymentStatus == 'Failed'
+                      ? 'bg-danger'
+                      : 'bg-warning'
                   "
                   >{{ item?.paymentStatus }}</span
                 >
@@ -184,24 +188,6 @@
           <div class="accordion-body">
             <div class="mt-2 border-dark border rounded-2 p-5">
               <div>
-                <!-- <div *ngFor="let product of item.items">
-                name :{{ product.name }} price :{{ product.price }} qty :
-                {{ product.qty }} subTotal : {{ product.subTotal }}
-              </div> -->
-                <!-- <table class="container w-100">
-                <tr>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Qty</th>
-                  <th>Sub Total</th>
-                </tr>
-                <tr *ngFor="let product of item.items">
-                  <td>{{ product.name }}</td>
-                  <td>{{ product.price }}</td>
-                  <td>{{ product.qty }}</td>
-                  <td>{{ product.subTotal }}</td>
-                </tr>
-              </table> -->
                 <div class="mx-auto w-25 mt-3">
                   Payable Amount: &#8377;{{ item.total }}
                   <button

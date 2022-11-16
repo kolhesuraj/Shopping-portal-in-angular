@@ -1,0 +1,43 @@
+<app-order-nav></app-order-nav>
+<div>
+  <div class="my-auto text-center pt-5" id="data">
+    <h2 class="fw-bold">Order Details</h2>
+    <p>Order Date: {{ orderDetails?.createdAt | date }}</p>
+    <p>
+      Order Status: <u>{{ orderDetails?.status }}</u>
+    </p>
+    <p>Last updated: {{ orderDetails?.updatedAt | date }}</p>
+    <p *ngIf="orderDetails?.transactionNo">
+      Transaction Id: {{ orderDetails?.transactionNo }}
+    </p>
+
+    <table class="container w-100">
+      <tr>
+        <th>Product Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Sub Total</th>
+      </tr>
+      <tr *ngFor="let product of orderDetails?.items">
+        <td>{{ product?._id }}</td>
+        <td>{{ product?.name }}</td>
+        <td>{{ product?.price }}</td>
+        <td>{{ product?.qty }}</td>
+        <td>{{ product?.subTotal }}</td>
+      </tr>
+    </table>
+    <div class="ms-auto w-25 mt-3">
+      Total Amount: &#8377; {{ orderDetails?.total }}
+    </div>
+    <div class="container">
+      <h2 class="fw-bold">Delivered To</h2>
+      <p>customer Id: {{orderDetails?.createdBy}}</p>
+      <p>street : {{ orderDetails?.address?.street }}</p>
+      <p>addressLine2 : {{ orderDetails?.address?.addressLine2 }}</p>
+      <p>city : {{ orderDetails?.address?.city }}</p>
+      <p>state : {{ orderDetails?.address?.state }}</p>
+      <p>pin : {{ orderDetails?.address?.pin }}</p>
+    </div>
+  </div>
+</div>

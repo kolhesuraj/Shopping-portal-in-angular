@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4 sticky-top">
+  <a class="navbar-brand text-white ms-5">Products</a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto ms-lg-auto border-start ps-lg-4">
+      <li class="nav-item">
+        <a class="nav-link me-5" routerLink="/seller/profile">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example edit icon"
+            fontIcon="person"
+            class="d-lg-block d-none mx-lg-auto"
+          ></mat-icon>
+          <span class="">Profile Page</span>
+        </a>
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" routerLink="/seller/products/add_product">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="widgets"
+            class="d-lg-block d-none m-lg-auto"
+          ></mat-icon>
+          <span class="">Add Product</span></a
+        >
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" routerLink="/seller/products">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="list_alt"
+            class="d-lg-block d-none m-lg-auto"
+          ></mat-icon>
+          <span class="">Products</span></a
+        >
+      </li>
+      <li class="nav-item me-5">
+        <a class="nav-link" (click)="logout()">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example logout icon"
+            fontIcon="logout"
+            class="d-lg-block d-none"
+          ></mat-icon>
+          <span class="">Logout</span></a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
