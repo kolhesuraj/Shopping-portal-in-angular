@@ -10,7 +10,9 @@ export class HttpServiceService {
   // loginUrl = 'https://ngminds.herokuapp.com/auth/login?captcha=false';
   // profileUrl = 'https://ngminds.herokuapp.com/auth/self';
   // sendVarrification = ' https://ngminds.herokuapp.com/auth/send-verification-email';
-  url = 'https://ngminds.herokuapp.com/';
+  // url = 'https://ngminds.herokuapp.com/';
+  
+  url = "https://shop-api.ngminds.com/"; 
 
   constructor(private http: HttpClient) {}
 
