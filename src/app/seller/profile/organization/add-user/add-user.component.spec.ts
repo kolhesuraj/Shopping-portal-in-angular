@@ -1,4 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 
 import { AddUserComponent } from './add-user.component';
 
@@ -8,9 +11,10 @@ describe('AddUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddUserComponent ]
-    })
-    .compileComponents();
+      declarations: [AddUserComponent],
+      imports: [HttpClientModule,ReactiveFormsModule],
+      providers: [HttpServiceService],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddUserComponent);
     component = fixture.componentInstance;

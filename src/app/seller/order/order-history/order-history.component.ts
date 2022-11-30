@@ -1,4 +1,3 @@
-import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -25,7 +24,7 @@ export class OrderHistoryComponent implements OnInit {
   getOrder(): void {
     this.http.get(`orders?page=${this.pagenumber}`).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.orders = res;
       },
     });
@@ -40,7 +39,7 @@ export class OrderHistoryComponent implements OnInit {
   dispatchOrder(id: any) {
     this.http.patch(`orders/dispatch/${id}`, null).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.toast.success('Order Marked as Dispatched!!');
         this.getOrder();
       },
@@ -49,7 +48,7 @@ export class OrderHistoryComponent implements OnInit {
   deliveredOrder(id: any) {
     this.http.patch(`orders/deliver/${id}`, null).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.toast.success('Order Marked as Delivered!!');
         this.getOrder();
       },
@@ -58,7 +57,7 @@ export class OrderHistoryComponent implements OnInit {
   cancleOrder(id: any) {
     this.http.patch(`orders/cancel/${id}`, null).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.toast.error('Order Canceled!!');
         this.getOrder();
       },

@@ -16,7 +16,6 @@ export class HomePageComponent implements OnInit {
   data: any = {};
   loginrole: any;
   constructor(
-    // private _dialog: MatDialog,
     private ls: LoginService,
     private httpService: HttpServiceService,
     private route: Router,
@@ -48,40 +47,13 @@ export class HomePageComponent implements OnInit {
       .post('auth/send-verification-email?captcha=false', null)
       .subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           Swal.fire('Email send successfully', 'please check email and verify');
         }
       });
-    // this.httpService.sendVerrification(token).subscribe({
-    //   next: (res: any) => {
-    //     console.log(res);
-    //     Swal.fire('Email send successfully', 'please check email and verify');
-    //   },
-    //   error: (err: any) => {
-    //     console.log(err);
-    //     Swal.fire('Email send failed');
-    //   },
-    // });
   }
 
-  // editProfile() {
-  //   const dialogRef = this._dialog.open(EditProfileComponent, {
-  //     width: '37%',
-  //     backdropClass: 'dialog-bg-trans',
-  //   });
-  //   this.setData();
-  // }import { AddUserComponent } from '../organization/add-user/add-user.component';
-
-  //         // console.log(result)
-  //         // console.log(data);
-
-  //         this.FirstName = data.FirstName;
-  //         this.LastName = data.LastName;
-  //         this.CompanyName = data.CompanyName;
-  //         this.Email = data.Email;
-  //       })
-
-  // }
+ 
   setData() {
     this.httpService.get('auth/self').subscribe({
       next: (res: any) => {
@@ -89,15 +61,7 @@ export class HomePageComponent implements OnInit {
         this.ls.LogIndata.next(res);
       }
     });
-    // this.httpService.profileView().subscribe({
-    //   next: (res: any) => {
-    //     // console.log(res);
-    //     this.ls.LogIndata.next(res);
-    //   },
-    //   error: (err: any) => {
-    //     console.log(err);
-    //   },
-    // });
+
   }
 
   changePassword() {

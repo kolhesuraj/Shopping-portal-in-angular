@@ -19,6 +19,7 @@ import { HttpsInterceptor } from './services/http/http.interceptor';
 import { cartAction } from './shopping/State/cart.reducer';
 import { MetaReducer, StoreModule } from '@ngrx/store';
 import { hydrationMetaReducer } from './shopping/State/hydrate.state';
+import { ExpiryDatePipe } from './shopping/services/Pipes/expiry-date.pipe';
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 @NgModule({
@@ -30,7 +31,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
     HttpClientModule,
     HotToastModule.forRoot(),
     RecaptchaV3Module,
-    StoreModule.forRoot({ cart: cartAction },{metaReducers}),
+    StoreModule.forRoot({ cart: cartAction }, { metaReducers }),
   ],
   providers: [
     {

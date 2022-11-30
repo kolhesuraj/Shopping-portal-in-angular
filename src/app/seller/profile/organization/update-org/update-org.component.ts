@@ -3,11 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
-import { LoginService } from 'src/app/services/login.service';
-import Swal from 'sweetalert2';
 interface dialogdata {
-  name: string;
   email: string;
+  name: string;
 }
 
 @Component({
@@ -35,10 +33,7 @@ export class UpdateOrgComponent implements OnInit {
       name: ['', [Validators.required]],
     });
     // console.log(this.Email);
-    this.editForm.setValue({
-      email: this.data.email,
-      name: this.data.name,
-    });
+    this.editForm.patchValue({ email: this.data.email, name: this.data.name });
   }
   get email() {
     return this.editForm.get('email');

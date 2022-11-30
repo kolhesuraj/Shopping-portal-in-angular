@@ -34,7 +34,7 @@ import { HotToastService } from '@ngneat/hot-toast';
   styleUrls: ['./check-out.component.css'],
 })
 export class CheckOutComponent implements OnInit {
-  cart!: cartInterface[];
+  cart: cartInterface[] = [];
   addressFormGroup!: FormGroup;
   show: any = [];
   totalamount: number = 0;
@@ -69,7 +69,6 @@ export class CheckOutComponent implements OnInit {
     });
 
     this.getAddress();
-
   }
   ngOnInit(): void {
     this.isCart = this.param.snapshot.paramMap.get('isCart');
@@ -98,7 +97,7 @@ export class CheckOutComponent implements OnInit {
       this.totalamount = this.totalamount + this.delivary;
     });
 
-    console.log(this.cart.length * 40);
+    // console.log(this.cart.length * 40);
   }
   minusCount(product: cartInterface) {
     this.cart?.forEach((element) => {
@@ -146,7 +145,8 @@ export class CheckOutComponent implements OnInit {
     _dialog.afterClosed().subscribe({
       next: () => {
         this.getAddress();
-        this.addressFormGroup.value.address =  this.addresses[this.addAddress.length - 1]
+        this.addressFormGroup.value.address =
+          this.addresses[this.addAddress.length - 1];
       },
     });
   }

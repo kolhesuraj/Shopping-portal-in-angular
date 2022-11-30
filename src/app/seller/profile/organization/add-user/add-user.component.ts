@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { passwordValidator } from 'src/app/services/password.Validator';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
@@ -17,7 +16,6 @@ export class AddUserComponent implements OnInit {
   updating: boolean = false;
   constructor(
     private fb: FormBuilder,
-    private route: Router,
     private httpService: HttpServiceService
   ) {}
 

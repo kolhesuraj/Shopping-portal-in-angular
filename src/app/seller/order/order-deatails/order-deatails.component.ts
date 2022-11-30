@@ -17,16 +17,16 @@ export class OrderDeatailsComponent implements OnInit {
     private router: Router,
     private authService: SocialAuthService
   ) {
-    this.getDeatils();
+   
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { this.getDeatils();}
 
   getDeatils() {
     this.orderId = this.route.snapshot.paramMap.get('id');
     this.http.get(`orders/${this.orderId}`).subscribe({
-      next: (res:any) => {
-        console.log(res);
+      next: (res: any) => {
+        // console.log(res);
         this.orderDetails = res[0];
       },
     });

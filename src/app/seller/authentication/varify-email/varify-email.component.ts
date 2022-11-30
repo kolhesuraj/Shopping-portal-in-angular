@@ -23,7 +23,7 @@ export class VarifyEmailComponent implements OnInit {
       .post(`auth/verify-email?token=${this.verificationToken}`, null)
       .subscribe({
         next: (res: any) => {
-          console.warn(res);
+          // console.warn(res);
           this.verify = 1;
         },
       });

@@ -1,4 +1,3 @@
-import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -37,7 +36,6 @@ export class ForgotPasswordComponent implements OnInit {
       this.recaptchaV3Service
         .execute('importantAction')
         .subscribe((token: string) => {
-          console.debug(`Token [${token}] generated`);
           this.forgotPasswordForm.patchValue({ captcha: token });
           this.sendEmail();
         });
@@ -52,8 +50,6 @@ export class ForgotPasswordComponent implements OnInit {
         .post('auth/forgot-password', this.forgotPasswordForm.value)
         .subscribe({
           next: (res: any) => {
-            // console.log(res);
-            // console.log('emailsend');
             Swal.fire('Link send vai Email', 'please check email');
             this.forgotPasswordForm.reset();
           }

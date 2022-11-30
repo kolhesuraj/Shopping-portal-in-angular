@@ -4,7 +4,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { passwordValidator } from 'src/app/shopping/services/password.Validator';
-import Swal from 'sweetalert2';
 import { EditUserComponent } from '../organization/edit-user/edit-user.component';
 
 @Component({
@@ -55,18 +54,7 @@ export class ChangePasswordComponent implements OnInit {
             this._dialogRef.close();
           }
         });
-      // this.httpService.changePassword(this.changePassword.value).subscribe({
-      //   next: (res: any) => {
-      //     console.log(res);
-      //     Swal.fire('changed');
-      //     console.log('Response');
-      //     this._dialogRef.close();
-      //   },
-      //   error: (err: any) => {
-      //     console.log(err);
-      //     console.log('error');
-      //   },
-      // });
+
     } else {
       this.Message = true;
     }

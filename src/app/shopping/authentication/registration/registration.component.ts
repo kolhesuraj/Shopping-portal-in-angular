@@ -22,8 +22,6 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: Router,
-    // private ls: LoginService,
-    // private http: HttpClient
     private httpService: HttpServiceService,
     private recaptchaV3Service: ReCaptchaV3Service
   ) {}
@@ -31,7 +29,7 @@ export class RegistrationComponent implements OnInit {
     this.recaptchaV3Service
       .execute('importantAction')
       .subscribe((token: string) => {
-        console.debug(`Token [${token}] generated`);
+        // console.debug(`Token [${token}] generated`);
         this.captcha = token;
       });
   }
@@ -109,7 +107,7 @@ export class RegistrationComponent implements OnInit {
       delete dataSent.ConfirmPassword;
       this.httpService.post('shop/auth/register', dataSent).subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           this.tocken = 1;
           setTimeout(() => {
             this.tocken = 0;

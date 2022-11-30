@@ -21,8 +21,7 @@ export class AddressActionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _matDialog: MatDialogRef<AddressActionComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private http: HttpServiceService
   ) {}
 
@@ -57,7 +56,7 @@ export class AddressActionComponent implements OnInit {
   }
   setValue() {
     if (this.data) {
-      this.addressFrom.setValue({
+      this.addressFrom.patchValue({
         street: this.data.street,
         addressLine2: this.data.addressLine2,
         city: this.data.city,

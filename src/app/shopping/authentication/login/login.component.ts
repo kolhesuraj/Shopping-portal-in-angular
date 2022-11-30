@@ -25,14 +25,13 @@ export class LoginComponent implements OnInit {
     private httpservice: HttpServiceService,
     private recaptchaV3Service: ReCaptchaV3Service,
     private authService: SocialAuthService,
-    private service: CustomersService
   ) {}
 
   refreshCaptcha() {
     this.recaptchaV3Service
       .execute('importantAction')
       .subscribe((token: string) => {
-        console.debug(`Token [${token}] generated`);
+        // console.debug(`Token [${token}] generated`);
         this.captcha = token;
       });
   }

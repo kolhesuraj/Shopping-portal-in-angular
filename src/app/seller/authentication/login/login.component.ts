@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: Router,
-    private ls: LoginService,
     private httpservice: HttpServiceService,
     private recaptchaV3Service: ReCaptchaV3Service,
     private authService: SocialAuthService
@@ -42,7 +41,7 @@ export class LoginComponent implements OnInit {
       captcha: [''],
     });
 
-    this.refreshCaptcha();
+    // this.refreshCaptcha();
     this.authService.authState.subscribe((user) => {
       this.counter = true;
       // console.log(user);
@@ -51,14 +50,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  refreshCaptcha() {
-    this.recaptchaV3Service
-      .execute('importantAction')
-      .subscribe((token: string) => {
-        console.debug(`Token [${token}] generated`);
-        this.captcha = token;
-      });
-  }
+  // refreshCaptcha() {
+  //   this.recaptchaV3Service
+  //     .execute('importantAction')
+  //     .subscribe((token: string) => {
+  //       this.captcha = token;
+  //     });
+  // }
 
   get emailControl() {
     return this.loginForm.get('email');
@@ -71,33 +69,28 @@ export class LoginComponent implements OnInit {
   tocken = 0;
   errMassage!: string;
   submit() {
-    // console.log(this.loginForm.value);
     if (this.loginForm.valid) {
       this.updating = true;
-       this.recaptchaV3Service
-      .execute('importantAction')
-      .subscribe((token: string) => {
-        console.debug(`Token [${token}] generated`);
-        this.loginForm.patchValue({ captcha: token });
-        this.sendlogin();
-      });
+      this.recaptchaV3Service
+        .execute('importantAction')
+        .subscribe((token: string) => {
+          this.loginForm.patchValue({ captcha: token });
+
+          this.sendlogin();
+        });
     }
-   
   }
 
   sendlogin() {
-    if (
-      this.emailControl?.value == '' &&
-      this.passwordFormControl?.value == ''
-    ) {
+    if (this.loginForm.invalid) {
       this.massage = true;
       this.loginFaildMssage = false;
     } else {
       this.httpservice.post('auth/login', this.loginForm.value).subscribe({
         next: (res: any) => {
           this.validation(res);
-          this.refreshCaptcha();
-        }
+          // this.refreshCaptcha();
+        },
       });
     }
   }
@@ -121,8 +114,8 @@ export class LoginComponent implements OnInit {
     this.httpservice.post(`auth/login/${provider}`, data).subscribe({
       next: (res: any) => {
         this.validation(res);
-        this.refreshCaptcha();
-      }
+        // this.refreshCaptcha();
+      },
     });
 
     // this.httpservice.socialLogin(user, this.captcha).subscribe({
@@ -145,7 +138,7 @@ export class LoginComponent implements OnInit {
         this.tocken = 0;
       }, 1500);
     } else {
-      Swal.fire('email not varified', ' please varify');
+      Swal.fire('email not verified', ' please verify');
       setTimeout(() => {
         this.route.navigate(['/seller/products']);
         this.tocken = 0;
@@ -162,16 +155,10 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithFB(): void {
-    this.refreshCaptcha();
+    // this.refreshCaptcha();
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
-  register() {
-    this.route.navigate(['/seller/auth/register']);
-  }
-  forgot() {
-    this.route.navigate(['/seller/auth/forgot-password']);
-  }
   signOut(): void {
     this.authService.signOut();
   }

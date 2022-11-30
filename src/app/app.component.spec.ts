@@ -1,35 +1,34 @@
-import { TestBed } from '@angular/core/testing';
+import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { LoginService } from './services/login.service';
 
 describe('AppComponent', () => {
+  let loader: LoginService;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule, MatDialogModule],
+      declarations: [AppComponent],
+      providers: [LoginService],
     }).compileComponents();
+    loader = TestBed.inject(LoginService);
   });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
+    
   });
-
-  it(`should have as title 'Project'`, () => {
+  it('loader should exicutable', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Project');
-  });
+    app.ngOnInit();
+    // app.ls.loader.subscribe((data) => {
+    //   app.spinner = data;
+    // });
+    expect(app.spinner).toBe(false);
+  })
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('Project app is running!');
-  });
-});
+})

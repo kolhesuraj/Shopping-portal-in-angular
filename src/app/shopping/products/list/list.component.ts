@@ -35,7 +35,6 @@ export class ListComponent implements OnInit {
   constructor(
     private http: HttpServiceService,
     private route: Router,
-    private service: CustomersService,
     private store: Store<{ cart: cart }>,
     private toaster: HotToastService
   ) {

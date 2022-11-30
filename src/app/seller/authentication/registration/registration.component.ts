@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { passwordValidator } from '../../../services/password.Validator';
-import Swal from 'sweetalert2';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -59,7 +58,7 @@ export class RegistrationComponent implements OnInit {
 
   errorFromserver: any;
   registerLogin() {
-    console.log(this.register.value);
+    // console.log(this.register.value);
     if (this.register.valid) {
       this.submited = false;
       this.updating = true;
@@ -67,23 +66,28 @@ export class RegistrationComponent implements OnInit {
       delete dataSent.ConfirmPassword;
       this.httpService.post('auth/register', dataSent).subscribe({
         next: (res: any) => {
-          console.log(res);
-          this.httpService.sendVerrification(res.token).subscribe({
-            next: (res: any) => {
-              console.log(res);
-              this.toaster.success('User Registered Successfully');
-              setTimeout(() => {
-                this.tocken = 0;
-                this.route.navigate(['/login']);
-              }, 1500);
-            },
-          });
+          // console.log(res);
+          this.sendVerificationEmail(res)
         },
       });
     } else {
       this.submited = true;
     }
   }
+
+  sendVerificationEmail(res:any) {
+  this.httpService.sendVerrification(res.token).subscribe({
+    next: (res: any) => {
+      // console.log(res);
+      this.toaster.success('User Registered Successfully');
+      setTimeout(() => {
+        this.tocken = 0;
+        this.route.navigate(['/login']);
+      }, 1500);
+    },
+  });
+}
+
   reset() {
     this.errorFromserver = '';
     this.submited = false;
@@ -93,7 +97,6 @@ export class RegistrationComponent implements OnInit {
     this.recaptchaV3Service
       .execute('importantAction')
       .subscribe((token: string) => {
-        console.debug(`Token [${token}] generated`);
         this.register.patchValue({ captcha: token });
       });
   }

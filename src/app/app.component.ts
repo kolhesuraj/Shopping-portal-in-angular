@@ -1,5 +1,5 @@
+import { HttpRequest } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { LoginService } from './services/login.service';
 
 @Component({
@@ -18,4 +18,5 @@ export class AppComponent implements OnInit {
     })
   }
   title = 'Project';
+  
 }

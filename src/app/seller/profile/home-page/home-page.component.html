@@ -70,17 +70,17 @@
           alt="Profile"
           class="w-25 rounded-circle"
           data-toggle="tooltip"
-          title="Name: {{ data.name }} _ created on: {{
-            data.createdAt | date
+          title="Name: {{ data?.name }} _ created on: {{
+            data?.createdAt | date
           }}"
         />
       </div>
       <div class="m-auto w-auto mt-5">
         <div class="fs-5 mt-3">
           Name
-          <span style="margin-left: 120px">{{ data.name }}</span>
+          <span style="margin-left: 120px">{{ data?.name }}</span>
           <div
-            *ngIf="data.isEmailVerified; else notverified"
+            *ngIf="data?.isEmailVerified; else notverified"
             class="ms-1 d-inline"
             data-toggle="tooltip"
             title="verified"

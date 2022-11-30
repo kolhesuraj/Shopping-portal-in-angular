@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
 import { passwordValidator } from '../../../services/password.Validator';
@@ -49,8 +48,8 @@ export class ResetPasswordComponent implements OnInit {
         )
         .subscribe({
           next: (res: any) => {
-            console.log(res);
-            console.log('reset');
+            // console.log(res);
+            // console.log('reset');
             Swal.fire('Password reset successfully');
             this.route.navigate(['./auth']);
           }

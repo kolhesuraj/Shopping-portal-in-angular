@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { CustomersService } from '../../services/customers.service';
 import { getCartProducts } from '../../State/cart.selector';

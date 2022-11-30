@@ -6,7 +6,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
   styleUrls: ['./page-not-found.component.css'],
 })
 export class PageNotFoundComponent implements OnInit {
-  constructor(private elementRef: ElementRef) {}
+  constructor() {}
   ngAfterViewInit() {
     // this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
     //   '#ffb703';

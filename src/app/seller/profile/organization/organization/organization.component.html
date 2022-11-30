@@ -125,7 +125,7 @@
             placeholder="search by name"
             matInput
             #search
-            [formControl]="myControl"
+            formControlName="myControl"
             (keyup)="searchinput(search.value)"
             [matAutocomplete]="auto"
           />

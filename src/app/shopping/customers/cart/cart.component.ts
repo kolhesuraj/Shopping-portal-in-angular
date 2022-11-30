@@ -13,11 +13,13 @@ import { cart, cartInterface } from '../../State/cart.state';
 export class CartComponent implements OnInit {
   show: any = [];
   cart!: cartInterface[];
+  length:number = 0
   constructor(private state: Store<{ cart: cart }>, private route: Router) {}
   
   ngOnInit(): void {
     this.state.select(getCartProducts).subscribe((data) => {
       this.cart = data;
+      this.length = this.cart.length
       console.log(data);
     });
   }
@@ -25,7 +27,7 @@ export class CartComponent implements OnInit {
   this.state.dispatch(removeAllItem());
   }
   minusCount(product: cartInterface) {
-    this.cart?.forEach((element) => {
+    this.cart.forEach((element) => {
       if (element.productId === product.productId) {
         let updateProduct: cartInterface = {
           productId: element.productId,
@@ -40,7 +42,7 @@ export class CartComponent implements OnInit {
     });
   }
   addCount(product: cartInterface) {
-    this.cart?.forEach((element) => {
+    this.cart.forEach((element) => {
       if (element.productId === product.productId) {
         let updateProduct: cartInterface = {
           productId: element.productId,

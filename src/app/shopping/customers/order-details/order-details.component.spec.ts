@@ -1,4 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 
 import { OrderDetailsComponent } from './order-details.component';
 
@@ -8,9 +11,10 @@ describe('OrderDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrderDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [OrderDetailsComponent],
+      imports: [RouterTestingModule,HttpClientModule],
+      providers: [HttpServiceService],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OrderDetailsComponent);
     component = fixture.componentInstance;
