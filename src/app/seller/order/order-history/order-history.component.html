@@ -52,7 +52,8 @@
 
               <button
                 class="btn btn-outline-info mt-3"
-                (click)="orderDetails(item._id)"
+                routerLink='seller/orders/order-deatails/{{item.id}}'
+                
               >
                 Order Details
               </button>

@@ -18,24 +18,12 @@ export class VarifyEmailComponent implements OnInit {
     this.activateRoute.queryParams.subscribe((params) => {
       this.verificationToken = params['token'];
     });
-    console.log(this.verificationToken);
     this.httpservice
       .post(`auth/verify-email?token=${this.verificationToken}`, null)
       .subscribe({
         next: (res: any) => {
-          // console.warn(res);
           this.verify = 1;
         },
       });
-    // this.httpservice.finalVerifyEmail(this.verificationToken).subscribe({
-    //   next: (res: any) => {
-    //     console.warn(res);
-    //     this.verify = 1;
-    //   },
-    //   error: (err: any) => {
-    //     console.log(err);
-    //     this.verify = 0;
-    //   },
-    // });
   }
 }

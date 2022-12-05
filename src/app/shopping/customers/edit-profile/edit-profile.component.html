@@ -1,7 +1,11 @@
 <div class="row p-5 text-center">
   <div class="col">
     <div class="w-25 ms-auto">
-      <button class="btn btn-close" type="button" (click)="close()"></button>
+      <button
+        class="btn btn-close"
+        type="button"
+        mat-dialog-close="true"
+      ></button>
     </div>
     <div class="text-center">
       <img [src]="profile?.picture" alt="profile picture" height="150res" />
@@ -78,8 +82,6 @@
       [maintainAspectRatio]="true"
       format="png"
       (imageCropped)="imageCropped($event)"
-      (imageLoaded)="imageLoaded()"
-      (cropperReady)="cropperReady()"
       (loadImageFailed)="loadImageFailed()"
       [class.d-none]="imageChangedEvent == ''"
     ></image-cropper>

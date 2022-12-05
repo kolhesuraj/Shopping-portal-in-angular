@@ -128,12 +128,12 @@ export class AddProductComponent implements OnInit {
   files: File[] = [];
 
   onSelect(event: any) {
-    console.log(event);
+    // console.log(event);
     this.files.push(...event.addedFiles);
   }
 
   onRemove(event: any) {
-    console.log(event);
+    // console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 }

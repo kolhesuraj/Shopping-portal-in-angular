@@ -4,10 +4,11 @@ import {
   SocialAuthServiceConfig,
 } from '@abacritt/angularx-social-login';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HotToastService } from '@ngneat/hot-toast';
-import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
+import { RecaptchaV3Module, ReCaptchaV3Service, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 import { Observable, of } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { environment } from 'src/environments/environment';
@@ -18,27 +19,41 @@ import { RegistrationComponent } from './registration.component';
 const data = {
   user: 1,
 };
-
-class http {
-  post(url: string, body: any): Observable<any> {
+class httpService {
+  sendVerrification(token: any): Observable<any> {
     return of(data);
   }
-  sendVerrification(data: any): Observable<any> {
+  post(url: string): Observable<any> {
     return of(data);
   }
 }
-
+class dummyRecaptchaService {
+  response = [
+    {
+      token: 'token',
+    },
+  ];
+  execute(): Observable<any> {
+    return of(this.response);
+  }
+}
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
   let fixture: ComponentFixture<RegistrationComponent>;
-
+  let http: HttpServiceService;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RegistrationComponent],
-      imports: [RecaptchaV3Module, ReactiveFormsModule, HttpClientModule],
+      imports: [
+        RecaptchaV3Module,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        HttpClientModule
+      ],
       providers: [
         HotToastService,
-        { provider: HttpServiceService, useClass: http },
+        { provide: ReCaptchaV3Service, useClass: dummyRecaptchaService },
+        { provide: HttpServiceService, useClass: httpService },
         {
           provide: RECAPTCHA_V3_SITE_KEY,
           useValue: environment.recaptcha.siteKey,
@@ -70,14 +85,16 @@ describe('RegistrationComponent', () => {
     fixture = TestBed.createComponent(RegistrationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    http = TestBed.inject(HttpServiceService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('getet', () => {
+  it('geter', () => {
     component.ConfirmPassword;
+    expect(component.ConfirmPassword?.valid).toBeTrue();
   });
 
   it('registration sending to API', () => {
@@ -91,7 +108,6 @@ describe('RegistrationComponent', () => {
     expect(component.register.valid).toBeTrue();
     expect(component.submited).toBeFalse();
     expect(component.updating).toBeTrue();
-    // expect(component.sendVerificationEmail(data)).toHaveBeenCalled();
     spyOn(Swal, 'fire').and.callFake((args: any) => {
       return args;
     });
@@ -103,8 +119,11 @@ describe('RegistrationComponent', () => {
 
   it('reset', () => {
     component.reset();
+    expect(component.submited).toBeFalse();
+    expect(component.errorFromserver).toEqual('');
   });
   it('verification', () => {
+    expect(component.tocken).toEqual(0);
     component.sendVerificationEmail(data);
   });
 });

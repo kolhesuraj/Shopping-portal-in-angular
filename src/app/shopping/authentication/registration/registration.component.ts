@@ -97,7 +97,7 @@ export class RegistrationComponent implements OnInit {
 
   errorFromserver: any;
   registerLogin() {
-    console.log(this.register.value);
+    // console.log(this.register.value);
     this.register.patchValue({ captcha: this.captcha });
 
     if (this.register.valid) {

@@ -36,7 +36,7 @@
           <span class="">Add Product</span></a
         >
       </li>
-       <li class="nav-item me-5">
+      <li class="nav-item me-5">
         <a class="nav-link" routerLink="/seller/orders">
           <mat-icon
             aria-hidden="false"
@@ -62,7 +62,7 @@
   </div>
 </nav>
 <div id="mySidenav" class="sidenav" [style.width]="flag ? '150px' : '0px'">
-  <a class="closebtn" (click)="closeNav()">&times;</a>
+  <a class="closebtn" (click)="flag = false">&times;</a>
   <a href="#submenu1" data-bs-toggle="collapse" class="align-middle">
     <i class="fa fa-sort"></i>
     <span class="ms-1 d-none d-sm-inline">Sort By</span></a
@@ -73,7 +73,7 @@
     data-bs-parent="#menu"
     *ngFor="let item of sortByarray; let i = index"
   >
-    <li [class.w-100]="i == 0" (click)="sortBy(item)" (click)="closeNav()">
+    <li [class.w-100]="i == 0" (click)="sortBy(item)" (click)="flag = false">
       <a class="nav-link px-0">{{ item }}</a>
     </li>
   </ul>
@@ -87,7 +87,7 @@
     data-bs-parent="#menu"
     *ngFor="let item of itemPerPage; let i = index"
   >
-    <li [class.w-100]="i == 0" (click)="itemCount(item)" (click)="closeNav()">
+    <li [class.w-100]="i == 0" (click)="itemCount(item)" (click)="flag= false">
       <a class="nav-link px-0">{{ item }}</a>
     </li>
   </ul>
@@ -95,7 +95,7 @@
 
 <div class="d-flex mt-3">
   <span class="d-inline"
-    ><button (click)="openNav()" mat-raised-button class="ms-2">
+    ><button (click)="flag = true" mat-raised-button class="ms-2">
       Filter
     </button></span
   >
@@ -123,7 +123,10 @@
   </form>
 </div>
 
-<div class="row  justify-content-around d-flex" [style.margin-left]="flag ? '250px' : '16px'">
+<div
+  class="row justify-content-around d-flex"
+  [style.margin-left]="flag ? '250px' : '16px'"
+>
   <div
     class="card mb-5 border border-dark ms-4 me-4 col-1"
     style="width: 20rem; height: 30rem"

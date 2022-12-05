@@ -13,6 +13,7 @@ import { LoginService } from '../login.service';
 
 @Injectable()
 export class HttpsInterceptor implements HttpInterceptor {
+  static activateRoute: any;
   constructor(
     private ls: LoginService,
     private route: Router,

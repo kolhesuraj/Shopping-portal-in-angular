@@ -15,7 +15,7 @@ export interface items {
   subTotal: number;
 }
 export interface cartInterface {
-  images: [{ url: string; public_id: string }];
+  images: { url: string; public_id: string }[];
   name: string;
   price: number;
   productId: string;

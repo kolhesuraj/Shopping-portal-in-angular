@@ -76,34 +76,20 @@ export class OrganizationComponent implements OnInit {
         this.orgName = orgData._org.name;
         this.orgEmail = orgData._org.email;
         this.loginRole = orgData.role;
-        var splitted = this.orgName.split(' ', 3);
-        // console.log(splitted);
-        if (splitted.length > 1) {
-          this.org = splitted[0].slice(0, 1).toUpperCase();
-          this.org += splitted[1].slice(0, 1).toUpperCase();
-          // console.log(this.org);
-        } else {
-          this.org = this.orgName.slice(0, 2).toUpperCase();
-        }
+        this.getOrgName();
       },
     });
-    // this.httpService.profileView().subscribe({
-    //   next: (orgData: any) => {
-    //     // console.log(orgData);
-    //     this.orgName = orgData._org.name;
-    //     this.orgEmail = orgData._org.email;
-    //     this.loginRole = orgData.role;
-    //     var splitted = this.orgName.split(' ', 3);
-    //     // console.log(splitted);
-    //     if (splitted.length > 1) {
-    //       this.org = splitted[0].slice(0, 1).toUpperCase();
-    //       this.org += splitted[1].slice(0, 1).toUpperCase();
-    //       // console.log(this.org);
-    //     } else {
-    //       this.org = this.orgName.slice(0, 2).toUpperCase();
-    //     }
-    //   },
-    // });
+  }
+  getOrgName() {
+    var splitted = this.orgName.split(' ', 3);
+    // console.log(splitted);
+    if (splitted.length > 1) {
+      this.org = splitted[0].slice(0, 1).toUpperCase();
+      this.org += splitted[1].slice(0, 1).toUpperCase();
+      // console.log(this.org);
+    } else {
+      this.org = this.orgName.slice(0, 2).toUpperCase();
+    }
   }
   setdata() {
     let data;
@@ -184,20 +170,16 @@ export class OrganizationComponent implements OnInit {
    * This function is used to update the organization details
    */
   updateOrg() {
-    if (this.loginRole == 'admin') {
-      const dialogRef = this._dialog.open(UpdateOrgComponent, {
-        width: '31%',
-        data: {
-          name: this.orgName,
-          email: this.orgEmail,
-        },
-      });
-      dialogRef.afterClosed().subscribe(() => {
-        this.getProfile();
-      });
-    } else {
-      Swal.fire("user cann't change company credintial");
-    }
+    const dialogRef = this._dialog.open(UpdateOrgComponent, {
+      width: '31%',
+      data: {
+        name: this.orgName,
+        email: this.orgEmail,
+      },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.getProfile();
+    });
   }
 
   /**
@@ -205,48 +187,40 @@ export class OrganizationComponent implements OnInit {
    * @param {any} id - any - The id of the user to delete.
    */
   deleteUser(id: any) {
-    // console.log(id);
-    if (this.loginRole == 'admin') {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.httpService.delete(`users/${id}`).subscribe({
-            next: (res: any) => {
-              this.toaster.success('User Deleted !');
-              this.getUsers();
-            },
-          });
-        }
-      });
-    } else {
-      Swal.fire("user cann't delet login");
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.httpService.delete(`users/${id}`).subscribe({
+          next: (res: any) => {
+            this.toaster.success('User Deleted !');
+            this.getUsers();
+          },
+        });
+      }
+    });
   }
 
   updateUser(id: any, name: string, email: String) {
     // console.log(id, name, email);
-    if (this.loginRole == 'admin') {
-      const dialogRef = this._dialog.open(EditUserComponent, {
-        width: '35%',
-        data: {
-          id: id,
-          name: name,
-          email: email,
-        },
-      });
-      dialogRef.afterClosed().subscribe(() => {
-        this.getUsers();
-      });
-    } else {
-      Swal.fire("users cann't update user");
-    }
+
+    const dialogRef = this._dialog.open(EditUserComponent, {
+      width: '35%',
+      data: {
+        id: id,
+        name: name,
+        email: email,
+      },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.getUsers();
+    });
   }
 
   gotoPage(number: number) {
@@ -257,7 +231,7 @@ export class OrganizationComponent implements OnInit {
   }
 
   pagelimit(event: any) {
-    this.limit = parseInt((event.target as HTMLSelectElement).value);
+    this.limit = parseInt(event.target.value);
     this.pagenumber = 1;
     this.getUsers();
   }
@@ -297,35 +271,31 @@ export class OrganizationComponent implements OnInit {
   }
 
   editRole(id: any) {
-    if (this.loginRole == 'admin') {
-      Swal.fire({
-        title: 'Edit Role',
-        showCancelButton: true,
-        confirmButtonText: 'update',
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        html: '<h4>Role must be Admin or User</h4>, <input class="form-control w-50 m-auto mb-1" type="text" id="role">',
-        preConfirm: () => {
-          return (document.getElementById('role') as HTMLInputElement).value;
-        },
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const roleselect = result.value?.toLowerCase();
-          if (roleselect == 'admin' || roleselect == 'user') {
-            const roleget = { role: roleselect };
-            this.httpService.patch(`users/role/${id}`, roleget).subscribe({
-              next: (res: any) => {
-                Swal.fire('user role changed successfully');
-                this.getUsers();
-              },
-            });
-          } else {
-            Swal.fire('role must be admin or user');
-          }
+    Swal.fire({
+      title: 'Edit Role',
+      showCancelButton: true,
+      confirmButtonText: 'update',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      html: '<h4>Role must be Admin or User</h4>, <input class="form-control w-50 m-auto mb-1" type="text" id="role">',
+      preConfirm: () => {
+        return (document.getElementById('role') as HTMLInputElement).value;
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const roleselect = result?.value?.toLowerCase();
+        if (roleselect == 'admin' || roleselect == 'user') {
+          const roleget = { role: roleselect };
+          this.httpService.patch(`users/role/${id}`, roleget).subscribe({
+            next: (res: any) => {
+              Swal.fire('user role changed successfully');
+              this.getUsers();
+            },
+          });
+        } else {
+          Swal.fire('role must be admin or user');
         }
-      });
-    } else {
-      Swal.fire("users cann't change role");
-    }
+      }
+    });
   }
 }

@@ -20,7 +20,7 @@ export class AddressActionComponent implements OnInit {
   updating: boolean = false;
   constructor(
     private fb: FormBuilder,
-    private _matDialog: MatDialogRef<AddressActionComponent>,
+    public _matDialog: MatDialogRef<AddressActionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: HttpServiceService
   ) {}
@@ -74,7 +74,7 @@ export class AddressActionComponent implements OnInit {
           .put(`customers/address/${this.data._id}`, this.addressFrom.value)
           .subscribe({
             next: (res) => {
-              console.log(res);
+              // console.log(res);
               Swal.fire('Address Updated Successfully');
               this.reset();
             }
@@ -82,7 +82,7 @@ export class AddressActionComponent implements OnInit {
       } else {
         this.http.post('customers/address', this.addressFrom.value).subscribe({
           next: (res) => {
-            console.log(res);
+            // console.log(res);
             Swal.fire('Address Added Successfully');
             this.reset();
           }

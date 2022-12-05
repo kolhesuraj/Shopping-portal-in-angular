@@ -11,7 +11,7 @@ export class LoginGuard implements CanActivate {
     //  console.log(localStorage.getItem('LoginUser'));
       return true;
     }
-      this.route.navigate(['seller/auth']);
+      this.route.navigate(['seller/auth/login']);
       return false;
   }
   

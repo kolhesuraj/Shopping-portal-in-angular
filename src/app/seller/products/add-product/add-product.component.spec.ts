@@ -4,6 +4,7 @@ import {
   SocialAuthServiceConfig,
 } from '@abacritt/angularx-social-login';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -14,16 +15,6 @@ import { HttpServiceService } from 'src/app/services/http/http-service.service';
 
 import { AddProductComponent } from './add-product.component';
 
-const data = {
-  user: 1,
-};
-
-class httpservice {
-  post(url: string, data: any): Observable<any> {
-    return of(data);
-  }
-}
-
 describe('AddProductComponent', () => {
   let component: AddProductComponent;
   let fixture: ComponentFixture<AddProductComponent>;
@@ -32,13 +23,12 @@ describe('AddProductComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [AddProductComponent],
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterTestingModule,
         ReactiveFormsModule,
         NgxEditorModule,
       ],
       providers: [
-        { provide: HttpServiceService, useClass: httpservice },
         HotToastService,
         {
           provide: 'SocialAuthServiceConfig',
@@ -77,26 +67,33 @@ describe('AddProductComponent', () => {
     expect(component.addProductForm.invalid).toBeTrue();
   });
 
-  // it('add product with valid form', () => {
-  //   component.addProductForm.patchValue({
-  //     name: 'name',
-  //     description: 'Description',
-  //     price: '100',
-  //   });
-  //   component.addProduct();
-  //   expect(component.addProductForm.valid).toBeTrue();
-  //   expect(component.incomplete).toBeFalse();
-  //   expect(component.updating).toBeTrue();
-  // });
+  it('add product with valid form', () => {
+    component.addProductForm.patchValue({
+      name: 'name',
+      description: 'Description',
+      price: '100',
+    });
+    component.addProduct();
+    expect(component.addProductForm.valid).toBeTrue();
+    expect(component.incomplete).toBeFalse();
+    expect(component.updating).toBeTrue();
+  });
 
   it('one line functions', () => {
     component.logout();
     component.cancel();
   });
-  // it('select method', () => {
-  //   component.onSelect(1);
-  // });
+  it('select method', () => {
+    const a: any = {
+      addedFiles: 'file',
+    };
+    spyOn(component.files, 'push');
+    component.onSelect(a);
+    expect(component.files.push).toHaveBeenCalled();
+  });
   it('remove method', () => {
+    spyOn(component.files, 'splice');
     component.onRemove(1);
+    expect(component.files.splice).toHaveBeenCalled();
   });
 });

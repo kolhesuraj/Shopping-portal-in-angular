@@ -102,12 +102,12 @@ export class ListComponent implements OnInit {
     });
   }
 
-  openNav() {
-    this.flag = true;
-  }
-  closeNav() {
-    this.flag = false;
-  }
+  // openNav() {
+  //   this.flag = true;
+  // }
+  // closeNav() {
+  //   this.flag = false;
+  // }
   setdata(): any {
     this.data = `page=${this.pagenumber}&limit=${this.limit}&sortBy=${this.sort}`;
   }

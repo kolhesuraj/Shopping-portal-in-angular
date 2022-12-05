@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
   getOrders() {
     this.http.get(`shop/orders?page=${this.pagenumber}`).subscribe({
       next: (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.cart = res;
       },
     });
@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
   getProfile() {
     this.http.get('shop/auth/self').subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.profile = res;
       },
     });
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
   getAddresses() {
     this.http.get('customers/address').subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.addresses = res;
       },
     });
@@ -101,7 +101,7 @@ export class ProfileComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.http.delete(`customers/account`).subscribe({
-          next: (res: any) => {
+          next: (_res: any) => {
             Swal.fire('Deleted!', 'Your profile has been deleted.', 'warning');
             localStorage.removeItem('token');
             this.route.navigate(['/shop/products']);
@@ -169,7 +169,7 @@ export class ProfileComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.http.delete(`customers/address/${id}`).subscribe({
-          next: (res: any) => {
+          next: (_res: any) => {
             Swal.fire('Deleted!', 'Your address has been deleted.', 'success');
             this.getAddresses();
           },
@@ -177,9 +177,7 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-  makePayment(id: string) {
-    this.route.navigate([`shop/customer/payment/${id}`]);
-  }
+
   cancelOrder(id: string) {
     Swal.fire({
       title: `Are you sure? <p>Delete Product Id: ${id}</p>`,
@@ -192,8 +190,8 @@ export class ProfileComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.http.patch(`shop/orders/cancel/${id}`, null).subscribe({
-          next: (res) => {
-            console.log(res);
+          next: (_res: any) => {
+            // console.log(res);
             this.toast.success('Your Order has been Canceled');
             this.getOrders();
           },
@@ -201,11 +199,11 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-  orderDetails(id: string) {
-    this.route.navigate([`shop/customer/order/${id}`]);
-  }
+  // orderDetails(id: string) {
+  //   this.route.navigate([`shop/customer/order/${id}`]);
+  // }
   gotoPage(page: number) {
     this.pagenumber = page;
-    this.getOrders()
+    this.getOrders();
   }
 }

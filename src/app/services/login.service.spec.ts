@@ -13,4 +13,14 @@ describe('LoginService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+  it('loader activate', () => {
+    service.showloader();
+    service.hideloader();
+  });
+  it('get profile', () => {
+    let dummy = ['name'];
+    localStorage.setItem('data', JSON.stringify(dummy));
+    let data = service.orgProfile();
+    expect(data).toEqual(dummy);
+  });
 });

@@ -49,9 +49,9 @@ export class ProductComponent implements OnInit {
       width: '100%',
       data: {
         product_id: this.productId,
-        name: this.product.name,
-        description: this.product.description,
-        price: this.product.price,
+        name: this.product?.name,
+        description: this.product?.description,
+        price: this.product?.price,
       },
     });
     dialog.afterClosed().subscribe(() => {
@@ -81,10 +81,10 @@ export class ProductComponent implements OnInit {
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
+      confirmButtonText: 'Yes, delete it!',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
         this.httpservice.delete(`products/${this.productId}`).subscribe({

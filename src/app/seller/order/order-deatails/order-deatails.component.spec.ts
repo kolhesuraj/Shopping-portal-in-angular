@@ -2,8 +2,10 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider,
   SocialAuthServiceConfig,
+  SocialAuthService,
 } from '@abacritt/angularx-social-login';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
@@ -12,25 +14,19 @@ import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { OrderDeatailsComponent } from './order-deatails.component';
 
 const data = {
-  "user": 1,
+  user: 1,
 };
-
-class httpservice {
-  get(url: string,): Observable<any> {
-    return of(data);
-  }
-}
 
 describe('OrderDeatailsComponent', () => {
   let component: OrderDeatailsComponent;
   let fixture: ComponentFixture<OrderDeatailsComponent>;
   let http: HttpServiceService;
+  let auth: SocialAuthService;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [OrderDeatailsComponent],
-      imports: [RouterTestingModule, HttpClientModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
       providers: [
-        { provide: HttpServiceService, useClass: httpservice },
         {
           provide: 'SocialAuthServiceConfig',
           useValue: {
@@ -59,16 +55,15 @@ describe('OrderDeatailsComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     http = TestBed.inject(HttpServiceService);
+    auth = TestBed.inject(SocialAuthService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('logout', () => {
+    spyOn(auth, 'signOut');
     component.logout();
   });
-
-
 });

@@ -25,7 +25,7 @@ export class OrderDetailsComponent implements OnInit {
     this.http.get(`shop/orders/${this.orderId}`).subscribe({
       next: (res: any) => {
         this.orderDetails = res[0];
-        console.log(this.orderDetails);
+        // console.log(this.orderDetails);
       },
     });
   }

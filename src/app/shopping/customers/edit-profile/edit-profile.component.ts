@@ -34,17 +34,13 @@ export class EditProfileComponent implements OnInit {
     this.getProfile();
   }
 
-  close() {
-    this._matDialog.close();
-  }
-
   getProfile() {
     this.updatingImage = false;
     this.updatingDetails = false;
     this.updating = false;
     this.http.get('shop/auth/self').subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.profile = res;
         this.editProfile.setValue({
           name: this.profile?.name,
@@ -87,8 +83,8 @@ export class EditProfileComponent implements OnInit {
       this.http
         .patch('customers/update-profile', this.editProfile.value)
         .subscribe({
-          next: (res) => {
-            console.log(res);
+          next: (res:any) => {
+            // console.log(res);
             this.toster.success('Profile Details Updated');
             this.getProfile();
           },
@@ -109,12 +105,6 @@ export class EditProfileComponent implements OnInit {
     this.croppedImage = event.base64;
     this.ImageReady = base64ToFile(this.croppedImage);
   }
-  imageLoaded() {
-    // show cropper
-  }
-  cropperReady() {
-    // cropper ready
-  }
   loadImageFailed() {
     // show message
     this.toster.error('File format not supported');
@@ -125,8 +115,8 @@ export class EditProfileComponent implements OnInit {
     const formData = new FormData();
     formData.append('picture', this.ImageReady);
     this.http.post('customers/profile-picture', formData).subscribe({
-      next: (res) => {
-        console.log(res);
+      next: (res:any) => {
+        // console.log(res);
         this.toster.success('Profile Picture Updated');
         this.imageChangedEvent = '';
         this.open = true;

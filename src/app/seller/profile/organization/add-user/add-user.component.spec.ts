@@ -1,4 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
@@ -12,7 +13,7 @@ describe('AddUserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AddUserComponent],
-      imports: [HttpClientModule,ReactiveFormsModule],
+      imports: [HttpClientModule,HttpClientTestingModule, ReactiveFormsModule],
       providers: [HttpServiceService],
     }).compileComponents();
 
@@ -23,5 +24,24 @@ describe('AddUserComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    component.ConfirmPassword;
+  });
+  it('reset', () => {
+    component.reset();
+    expect(component.submited).toBeFalse();
+  });
+
+  it('adduser', () => {
+    component.addUser();
+    expect(component.submited).toBeTrue();
+    component.register.patchValue({
+      name: 'name',
+      role: 'role',
+      email: 'email@gmail.com',
+      password: 'password',
+      ConfirmPassword: 'password',
+    });
+    component.addUser();
+    expect(component.register.valid).toBeTrue();
   });
 });

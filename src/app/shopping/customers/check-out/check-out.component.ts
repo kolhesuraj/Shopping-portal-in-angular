@@ -76,7 +76,7 @@ export class CheckOutComponent implements OnInit {
   getAddress() {
     this.http.get('customers/address').subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.addresses = res;
       },
     });
@@ -84,18 +84,21 @@ export class CheckOutComponent implements OnInit {
   getProducts() {
     this.store.select(getCheckOut).subscribe((data) => {
       this.cart = data;
-      console.log(this.cart);
-      this.cart.forEach((element: any, index: number) => {
-        this.show[index] = element.images[0];
-        // console.log(element);
-        this.totalItem += 1;
-        this.totalamount = this.totalamount + element.subTotal;
-        this.delivary = this.delivary + element.qty * 40;
-        // console.log(element.qty * 40);
-      });
-      this.total = this.totalamount;
-      this.totalamount = this.totalamount + this.delivary;
+      this.setcart();
+      // console.log(this.cart);
     });
+  }
+  setcart() {
+    this.cart.forEach((element: any, index: number) => {
+      this.show[index] = element.images[0];
+      // console.log(element);
+      this.totalItem += 1;
+      this.totalamount = this.totalamount + element.subTotal;
+      this.delivary = this.delivary + element.qty * 40;
+      // console.log(element.qty * 40);
+    });
+    this.total = this.totalamount;
+    this.totalamount = this.totalamount + this.delivary;
 
     // console.log(this.cart.length * 40);
   }
@@ -139,9 +142,6 @@ export class CheckOutComponent implements OnInit {
     const _dialog = this.matDialog.open(AddressActionComponent, {
       data: null,
     });
-    _dialog.afterOpened().subscribe({
-      next: () => {},
-    });
     _dialog.afterClosed().subscribe({
       next: () => {
         this.getAddress();
@@ -175,17 +175,17 @@ export class CheckOutComponent implements OnInit {
         total: total + this.delivary,
         address: this.address,
       };
-      console.log(finalProducts);
+      // console.log(finalProducts);
       let Order: any;
       this.http.post('shop/orders', finalProducts).subscribe({
         next: (res) => {
-          console.log(res);
+          // console.log(res);
           if (this.isCart == 'isCart') {
             this.state.dispatch(removeAllItem());
           }
           Order = res;
           this.service.OrderId = Order;
-          console.log(this.service.OrderId);
+          // console.log(this.service.OrderId);
           this.toast.show(`<p>Your Order Has been Placed</p> 
         <p>Order Id : ${Order.order._id}</p>
         <p>Payable amount : ${Order.order.total}</p>

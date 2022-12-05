@@ -1,4 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -11,11 +12,7 @@ import { ResetPasswordComponent } from './reset-password.component';
 const data = {
   user: 1,
 };
-class http {
-  post(url: string, body: any): Observable<any> {
-    return of(data);
-  }
-}
+
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -24,8 +21,13 @@ describe('ResetPasswordComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ResetPasswordComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule],
-      providers: [{ provide: HttpServiceService, useClass: http }],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        HttpClientModule
+      ],
+      providers: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ResetPasswordComponent);

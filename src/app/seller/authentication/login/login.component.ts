@@ -88,6 +88,8 @@ export class LoginComponent implements OnInit {
     } else {
       this.httpservice.post('auth/login', this.loginForm.value).subscribe({
         next: (res: any) => {
+          console.log(res);
+
           this.validation(res);
           // this.refreshCaptcha();
         },
@@ -101,32 +103,21 @@ export class LoginComponent implements OnInit {
     if (user?.provider == 'GOOGLE') {
       provider = 'google';
       data = {
-        token: user.idToken,
+        token: user?.idToken,
         captcha: this.captcha,
       };
     } else {
       provider = 'facebook';
       data = {
-        token: user.authToken,
+        token: user?.authToken,
         captcha: this.captcha,
       };
     }
     this.httpservice.post(`auth/login/${provider}`, data).subscribe({
       next: (res: any) => {
         this.validation(res);
-        // this.refreshCaptcha();
       },
     });
-
-    // this.httpservice.socialLogin(user, this.captcha).subscribe({
-    //   next: (res: any) => {
-    //     // console.log(res);
-    //     this.validation(res);
-    //   },
-    //   error: (err: any) => {
-    //     console.log(err);
-    //   },
-    // });
   }
 
   validation(res: any) {
@@ -155,7 +146,6 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithFB(): void {
-    // this.refreshCaptcha();
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 

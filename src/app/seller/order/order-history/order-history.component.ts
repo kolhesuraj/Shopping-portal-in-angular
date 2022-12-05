@@ -29,9 +29,9 @@ export class OrderHistoryComponent implements OnInit {
       },
     });
   }
-  orderDetails(id: string) {
-    this.route.navigate([`seller/orders/order-deatails/${id}`]);
-  }
+  // orderDetails(id: string) {
+  //   this.route.navigate([`seller/orders/order-deatails/${id}`]);
+  // }
   gotoPage(page: number) {
     this.pagenumber = page;
     this.getOrder();

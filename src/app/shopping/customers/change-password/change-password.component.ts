@@ -51,10 +51,10 @@ export class ChangePasswordComponent implements OnInit {
         .post('customers/auth/change-password', this.changePasswordForm.value)
         .subscribe({
           next: (res) => {
-            console.log(res);
+            // console.log(res);
             this.toaster.success('Password Updated!');
             this._matDialog.close();
-          }
+          },
         });
     } else {
       this.submmited = true;

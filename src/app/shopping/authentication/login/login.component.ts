@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     private route: Router,
     private httpservice: HttpServiceService,
     private recaptchaV3Service: ReCaptchaV3Service,
-    private authService: SocialAuthService,
+    private authService: SocialAuthService
   ) {}
 
   refreshCaptcha() {
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', res.token);
           this.tocken = 1;
           setTimeout(() => {
-            this.route.navigate(['/shop']);
+            this.route.navigate(['shop/products']);
             this.tocken = 0;
           }, 1500);
         },
@@ -77,12 +77,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  register() {
-    this.route.navigate(['/shop/auth/register']);
-  }
-  forgot() {
-    this.route.navigate(['/shop/auth/forgot-password']);
-  }
   signOut(): void {
     this.authService.signOut();
   }

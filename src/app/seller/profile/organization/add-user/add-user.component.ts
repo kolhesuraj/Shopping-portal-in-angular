@@ -52,12 +52,7 @@ export class AddUserComponent implements OnInit {
     if (this.register.valid) {
       this.submited = false;
       this.updating = true;
-      // const data = {
-      //   name: this.register?.value.Name,
-      //   email: this.register?.value.Email,
-      //   role: this.register?.value.Role,
-      //   password: this.register?.value.Password,
-      // };
+
       delete this.register.value.ConfirmPassword;
       this.httpService.post('users', this.register.value).subscribe({
         next: (res) => {
@@ -65,17 +60,6 @@ export class AddUserComponent implements OnInit {
           this.register.reset();
         }
       });
-      // this.httpService.addOrgUser(dataSent).subscribe({
-      //   next: (res) => {
-      //     localStorage.setItem('registrationToken', res.token);
-      //     console.log(res);
-      //     Swal.fire('registerd Successfully');
-      //     this.register.reset();
-      //   },
-      //   error: (err) => {
-      //     console.log(err);
-      //   },
-      // });
     } else {
       this.submited = true;
       this.updating = false;

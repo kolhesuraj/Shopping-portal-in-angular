@@ -50,7 +50,6 @@ export class EditUserComponent implements OnInit {
   submited = false;
   save() {
     if (this.editForm.valid) {
-      // console.log(this.editForm.value);
       this.updating = true;
       this.httpservice
         .patch(`users/${this.data.id}`, this.editForm.value)
@@ -60,16 +59,6 @@ export class EditUserComponent implements OnInit {
             this._dialogRef.close();
           }
         });
-      // this.httpservice.updateUser(this.data.id, name, email).subscribe({
-      //   next: (res: any) => {
-      //     console.log(res);
-      //     Swal.fire('user details updated successfully');
-      //     this._dialogRef.close();
-      //   },
-      //   error: (err: any) => {
-      //     console.log(err);
-      //   },
-      // });
     } else {
       this.submited = true;
       this.updating = false;

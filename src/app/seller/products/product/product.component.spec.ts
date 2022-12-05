@@ -4,11 +4,18 @@ import {
   SocialAuthServiceConfig,
 } from '@abacritt/angularx-social-login';
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDialog, matDialogAnimations, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HotToastService } from '@ngneat/hot-toast';
 import { NgDompurifyPipe } from '@tinkoff/ng-dompurify';
@@ -27,20 +34,35 @@ class httpservice {
   get(url: string): Observable<any> {
     return of(data);
   }
+  delete(): Observable<any> {
+    return of(data);
+  }
 }
 
+class dialogclass {
+  open(): Observable<any> {
+    return of(data);
+  }
+}
+const m = {
+  isConfirmed: true,
+};
+Swal.fire({}).then((m) => {});
 
 describe('ProductComponent', () => {
   let component: ProductComponent;
   let fixture: ComponentFixture<ProductComponent>;
   let http: HttpServiceService;
-  let dialog: MatDialog
+  let dialog: MatDialog;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ProductComponent, NgDompurifyPipe],
       imports: [
         HttpClientModule,
-        RouterTestingModule,
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'products', component: ProductComponent },
+        ]),
         MatDialogModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
@@ -48,6 +70,7 @@ describe('ProductComponent', () => {
       ],
       providers: [
         HotToastService,
+        { provide: MatDialog, useClass: dialogclass },
         { provide: HttpServiceService, useClass: httpservice },
         {
           provide: 'SocialAuthServiceConfig',
@@ -77,7 +100,7 @@ describe('ProductComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     http = TestBed.inject(HttpServiceService);
-    dialog = TestBed.inject(MatDialog)
+    dialog = TestBed.inject(MatDialog);
   });
 
   it('should create', () => {
@@ -89,13 +112,18 @@ describe('ProductComponent', () => {
   // it('update method', () => {
   //   spyOn(dialog, 'open');
   //   component.update();
+  //   let dialogRef = fixture.componentRef.location.nativeElement.dialog
+  //   dialogRef.afterClosed;
+  //   expect(component.getDetails()).toHaveBeenCalled();
   // });
   // it('update Image', () => {
   //   spyOn(dialog, 'open')
   //   component.updateImages();
   // })
-  it('delete product', () => {
-    spyOn(Swal, 'fire');
+  it('delete product', fakeAsync(() => {
+    // spyOn(Router, 'navigate');
     component.deleteProduct();
-  })
+    Swal.clickConfirm();
+    tick(5000);
+  }));
 });

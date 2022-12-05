@@ -23,7 +23,7 @@ export class UpdateProductComponent implements OnInit {
   updateProductForm!: FormGroup;
   incomplete: boolean = false;
   editor!: Editor;
-  updating:boolean = false;
+  updating: boolean = false;
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
@@ -41,7 +41,7 @@ export class UpdateProductComponent implements OnInit {
     private route: Router,
     private authService: SocialAuthService,
     private fb: FormBuilder,
-    private _dialogRef: MatDialogRef<UpdateProductComponent>,
+    public _dialogRef: MatDialogRef<UpdateProductComponent>,
     private toaster: HotToastService
   ) {}
 
@@ -82,17 +82,14 @@ export class UpdateProductComponent implements OnInit {
           `products/${this.data.product_id} `,
           this.updateProductForm.value
         )
-        .subscribe({
-          next: () => {
-            this.toaster.success('Product Details Updated');
-            this.updateProductForm.reset();
-            this._dialogRef.close();
-          },
+        .subscribe(() => {
+          this.toaster.success('Product Details Updated');
+          this.updateProductForm.reset();
+          this._dialogRef.close();
         });
     } else {
       this.incomplete = true;
       this.updating = false;
-
     }
   }
 

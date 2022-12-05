@@ -15,7 +15,7 @@ export class UpdateImagesComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: dialogdata,
     private httpservice: HttpServiceService,
-    private _dialogRef: MatDialogRef<UpdateImagesComponent>,
+    public dialogRef: MatDialogRef<UpdateImagesComponent>,
     private toaster: HotToastService
   ) {}
   product: any;
@@ -42,12 +42,12 @@ export class UpdateImagesComponent implements OnInit {
         next: (res) => {
           console.log(res);
           this.toaster.success('Images Updated');
-          this._dialogRef.close();
+          this.dialogRef.close();
         },
       });
   }
   deleteimg(id: number) {
-    console.log(this.deletearray);
+    // console.log(this.deletearray);
     let token = false;
     if (this.deletearray.length < 1) {
       this.deletearray.push(id);
@@ -66,42 +66,15 @@ export class UpdateImagesComponent implements OnInit {
       }
     }
   }
-  // imageSelected(event: any) {
-  //   // console.log(event.target.files);
-  //   let image: any[] = event.target.files;
-  //   this.readURL(event);
-  //   // this.images = [];
-  //   if (image) {
-  //     console.log(image);
-  //     for (let i = 0; i < image.length; i++) {
-  //       this.images.push(image[i]);
-  //     }
-  //   }
-  // }
-  // readURL(event: any): void {
-  //   this.imageSrc = [];
-  //   if (event.target.files.length > 0) {
-  //     const file = event.target.files;
-  //     [...file].forEach((element: any) => {
-  //       const reader = new FileReader();
-  //       reader.onload = (e) => {
-  //         this.imageSrc.push(reader.result);
-  //       };
-  //       reader.readAsDataURL(element);
-  //     });
-
-  //     console.log(this.imageSrc);
-  //   }
-  // }
   files: File[] = [];
 
   onSelect(event: any) {
-    console.log(event);
+    // console.log(event);
     this.files.push(...event.addedFiles);
   }
 
   onRemove(event: any) {
-    console.log(event);
+    // console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 }

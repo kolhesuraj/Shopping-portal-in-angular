@@ -176,7 +176,7 @@
     <tr *ngFor="let result of result; index as i">
       <td>{{ list.page * list.limit - list.limit + i + 1 }}</td>
       <td>
-        {{ result.name }}
+        {{ result?.name }}
         <div
           *ngIf="result.isEmailVerified; else notverified"
           class="ms-1 d-inline"
@@ -196,15 +196,15 @@
       </td>
       <td
         data-toggle="tooltip"
-        title="created on {{ result.createdAt | date: 'medium' }}"
+        title="created on {{ result.createdAt | date : 'medium' }}"
       >
-        {{ result.email }}
+        {{ result?.email }}
       </td>
       <td>
-        {{ result.updatedAt | date: "medium" }}
+        {{ result.updatedAt | date : "medium" }}
       </td>
       <td class="text-capitalize">
-        {{ result.role }}
+        {{ result?.role }}
         <mat-icon
           [class.d-none]="loginRole == 'user'"
           aria-label="edit"
@@ -212,7 +212,7 @@
           fontIcon="edit"
           style="cursor: pointer; color: rgb(52, 52, 211)"
           title="Edit role"
-          (click)="editRole(result._id)"
+          (click)="editRole(result?._id)"
         ></mat-icon>
       </td>
       <td [class.d-none]="loginRole == 'user'">
@@ -222,7 +222,7 @@
           fontIcon="edit"
           style="cursor: pointer; color: rgb(52, 52, 211)"
           title="Edit Profile"
-          (click)="updateUser(result._id, result.name, result.email)"
+          (click)="updateUser(result?._id, result?.name, result?.email)"
         ></mat-icon>
       </td>
       <td [class.d-none]="loginRole == 'user'">
@@ -233,7 +233,7 @@
           fontIcon="delete"
           style="cursor: pointer"
           title="Delete Profile"
-          (click)="deleteUser(result._id)"
+          (click)="deleteUser(result?._id)"
         ></mat-icon>
       </td>
     </tr>
@@ -249,49 +249,57 @@
         <ul class="pagination">
           <li
             class="page-item"
-            [class.disabled]="list.page - 1 < 1"
-            (click)="list.page - 1 < 1 ? '' : gotoPage(list.page - 1)"
+            [class.disabled]="list?.page - 1 < 1"
+            (click)="list?.page - 1 < 1 ? '' : gotoPage(list?.page - 1)"
           >
             <a class="page-link" style="cursor: pointer">&laquo;</a>
           </li>
           <li
             class="page-item"
-            [hidden]="list.page - 2 <= 0"
-            (click)="gotoPage(list.page - 2)"
+            [hidden]="list?.page - 2 <= 0"
+            (click)="gotoPage(list?.page - 2)"
           >
-            <a class="page-link" style="cursor: pointer">{{ list.page - 2 }}</a>
+            <a class="page-link" style="cursor: pointer">{{
+              list?.page - 2
+            }}</a>
           </li>
           <li
             class="page-item"
-            [hidden]="list.page - 1 <= 0"
-            (click)="gotoPage(list.page - 1)"
+            [hidden]="list?.page - 1 <= 0"
+            (click)="gotoPage(list?.page - 1)"
           >
-            <a class="page-link" style="cursor: pointer">{{ list.page - 1 }}</a>
+            <a class="page-link" style="cursor: pointer">{{
+              list?.page - 1
+            }}</a>
           </li>
-          <li class="page-item" (click)="gotoPage(list.page)">
-            <a class="page-link" style="cursor: pointer">{{ list.page }}</a>
+          <li class="page-item" (click)="gotoPage(list?.page)">
+            <a class="page-link" style="cursor: pointer">{{ list?.page }}</a>
           </li>
           <li
             class="page-item"
-            [hidden]="list.page + 1 > list.totalPages"
-            (click)="gotoPage(list.page + 1)"
+            [hidden]="list?.page + 1 > list?.totalPages"
+            (click)="gotoPage(list?.page + 1)"
           >
-            <a class="page-link" style="cursor: pointer">{{ list.page + 1 }}</a>
+            <a class="page-link" style="cursor: pointer">{{
+              list?.page + 1
+            }}</a>
           </li>
           <li
             class="page-item"
-            [hidden]="list.page + 2 > list.totalPages"
-            (click)="gotoPage(list.page + 2)"
+            [hidden]="list?.page + 2 > list?.totalPages"
+            (click)="gotoPage(list?.page + 2)"
           >
-            <a class="page-link" style="cursor: pointer">{{ list.page + 2 }}</a>
+            <a class="page-link" style="cursor: pointer">{{
+              list?.page + 2
+            }}</a>
           </li>
           <li
             class="page-item"
-            [class.disabled]="list.page + 1 > this.list.totalPages"
+            [class.disabled]="list?.page + 1 > this.list?.totalPages"
             (click)="
-              list.page + 1 > this.list.totalPages
+              list?.page + 1 > this.list?.totalPages
                 ? ''
-                : gotoPage(list.page + 1)
+                : gotoPage(list?.page + 1)
             "
           >
             <a class="page-link" style="cursor: pointer">&raquo;</a>
@@ -310,28 +318,11 @@
               <option value="20" [selected]="limit == 20">20</option>
             </select>
           </li>
-          <!-- <li class="page-item ms-5 d-flex flex-row">
-            <div class="w-75 mt-3 me-1">sortBy</div>
-            <select
-              id="sortBy"
-              name="sortBy"
-              class="form-select"
-              style="width:140px;"
-              (change)="sortby($event)"
-            >
-            <option *ngFor="let sort of sortarray" [value]="sort">{{sort}}</option>
-               <option value="name" [selected]="sortBy == 'name'">name</option>
-              <option value="email" [selected]="sortBy == 'email' ">email</option>
-              <option value="role" [selected]="sortBy == 'role' ">role</option>
-              <option value="createdAt" [selected]="sortBy == 'createdAt' ">createdAt</option>
-              <option value="updated" [selected]="sortBy == 'updated' ">updated</option>
-            </select>
-          </li> -->
 
           <li class="ms-auto">
             <div class="text-secondary mt-3">
               showing result {{ result ? result.length : "0" }} out of
-              {{ list.totalResults }}
+              {{ list?.totalResults }}
             </div>
           </li>
         </ul>

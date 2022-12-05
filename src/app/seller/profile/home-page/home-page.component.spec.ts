@@ -2,8 +2,10 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider,
   SocialAuthServiceConfig,
+  SocialAuthService,
 } from '@abacritt/angularx-social-login';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   MatDialogModule,
@@ -13,17 +15,19 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { LoginService } from 'src/app/services/login.service';
+import Swal from 'sweetalert2';
 
 import { HomePageComponent } from './home-page.component';
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent;
   let fixture: ComponentFixture<HomePageComponent>;
+  let auth: SocialAuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HomePageComponent],
-      imports: [HttpClientModule, RouterTestingModule, MatDialogModule],
+      imports: [HttpClientModule,HttpClientTestingModule, RouterTestingModule, MatDialogModule],
       providers: [
         LoginService,
         HttpServiceService,
@@ -62,9 +66,22 @@ describe('HomePageComponent', () => {
     fixture = TestBed.createComponent(HomePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    auth = TestBed.inject(SocialAuthService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('logout method', () => {
+    spyOn(auth, 'signOut');
+    component.logout();
+  });
+
+  it('sendverificationemail', () => {
+    spyOn(Swal, 'fire');
+    component.sendverificationemail();
+  });
+  it('setData', () => {
+    component.setData();
   });
 });

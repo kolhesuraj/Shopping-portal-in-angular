@@ -41,8 +41,8 @@ export class HomePageComponent implements OnInit {
   }
 
   sendverificationemail() {
-    let token = this.ls.gettoken();
-    console.log(token);
+    // let token = this.ls.gettoken();
+    // console.log(token);
     this.httpService
       .post('auth/send-verification-email?captcha=false', null)
       .subscribe({

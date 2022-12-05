@@ -1,6 +1,6 @@
-<app-header ></app-header>
+<app-header></app-header>
 <div id="mySidenav" class="sidenav mt-3" [style.width]="flag ? '150px' : '0px'">
-  <a class="closebtn" (click)="closeNav()">&times;</a>
+  <a class="closebtn" (click)="flag = false">&times;</a>
   <a href="#submenu1" data-bs-toggle="collapse" class="align-middle">
     <i class="fa fa-sort"></i>
     <span class="ms-1 d-none d-sm-inline">Sort By</span></a
@@ -11,7 +11,7 @@
     data-bs-parent="#menu"
     *ngFor="let item of sortByarray; let i = index"
   >
-    <li [class.w-100]="i == 0" (click)="sortBy(item)" (click)="closeNav()">
+    <li [class.w-100]="i == 0" (click)="sortBy(item)" (click)="flag = false">
       <a class="nav-link px-0">{{ item }}</a>
     </li>
   </ul>
@@ -25,7 +25,7 @@
     data-bs-parent="#menu"
     *ngFor="let item of itemPerPage; let i = index"
   >
-    <li [class.w-100]="i == 0" (click)="itemCount(item)" (click)="closeNav()">
+    <li [class.w-100]="i == 0" (click)="itemCount(item)" (click)="flag = false">
       <a class="nav-link px-0">{{ item }}</a>
     </li>
   </ul>
@@ -33,7 +33,7 @@
 
 <div class="d-flex mt-3">
   <span class="d-inline"
-    ><button (click)="openNav()" mat-raised-button class="ms-2">
+    ><button (click)="flag = true" mat-raised-button class="ms-2">
       Filter
     </button></span
   >
@@ -69,7 +69,7 @@
     class="card mb-5 border border-dark ms-4 me-4 col-1"
     style="width: 20rem; height: 30rem"
     *ngFor="let item of list.results; let i = index"
-   >
+  >
     <div *ngIf="item.images.length >= 1; else elseBlock" style="height: 18rem">
       <div
         id="img{{ i }}"

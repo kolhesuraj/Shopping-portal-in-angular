@@ -30,7 +30,7 @@ export class DetailsComponent implements OnInit {
   ) {
     this.productId = this.activateRoute.snapshot.paramMap.get('id');
     this.getDetails();
-    this.getProfile();
+    // this.getProfile();
   }
 
   ngOnInit(): void {
@@ -49,24 +49,11 @@ export class DetailsComponent implements OnInit {
       },
     });
   }
-  getProfile() {
-    this.customer = this.service.getCustomer();
-    console.log(this.customer);
-    if (this.customer) {
-      this.http.get('shop/auth/self').subscribe({
-        next: (res) => {
-          // console.log(res);
-          this.profile = res;
-        },
-      });
-    }
-  }
+
   Logout() {
     localStorage.removeItem('token');
-    this.getProfile();
   }
   addToCart(product: any) {
-    // console.log(product);
     let addProduct: cartInterface = {
       productId: product._id,
       name: product.name,
@@ -76,13 +63,12 @@ export class DetailsComponent implements OnInit {
       images: product.images,
     };
     if (!this.isInCart(addProduct)) {
-      this.toaster.success(`${addProduct.name} added to cart`)
+      this.toaster.success(`${addProduct.name} added to cart`);
       this.store.dispatch(addItem({ products: addProduct }));
     }
   }
 
   BuyNow(product: any) {
-    // console.log(product);
     const checkOut: cartInterface[] = [
       {
         productId: product._id,
