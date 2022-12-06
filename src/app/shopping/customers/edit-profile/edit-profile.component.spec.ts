@@ -94,7 +94,7 @@ describe('EditProfileComponent', () => {
     component.update();
   });
   it('swal', () => {
-    // spyOn(Swal.fire(), 'then');
+    spyOn(Swal.fire(), 'then');
     component.delete();
     Swal.clickConfirm();
     // expect(component.updating).toBeTrue();

@@ -7,7 +7,7 @@ import { EditUserComponent } from '../edit-user/edit-user.component';
 import Swal from 'sweetalert2';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { debounceTime, map, Observable, startWith } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { HotToastService } from '@ngneat/hot-toast';
 
@@ -17,13 +17,14 @@ import { HotToastService } from '@ngneat/hot-toast';
   styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit {
-  myControl = new FormControl('');
+  searchForm!: FormGroup;
   constructor(
     private httpService: HttpServiceService,
     private _dialog: MatDialog,
     private route: Router,
     private authService: SocialAuthService,
-    private toaster: HotToastService
+    private toaster: HotToastService,
+    private fb: FormBuilder
   ) {
     this.getProfile();
     this.getUsers();
@@ -48,16 +49,23 @@ export class OrganizationComponent implements OnInit {
   rolearray = ['All Employes', 'user', 'admin'];
   sortarray = ['name', 'email', 'ceatedAt', 'updated'];
   ngOnInit(): void {
+    this.searchForm = this.fb.group({
+      myControl: [''],
+    });
+
     /* This is a rxjs operator. It is used to filter the options in the search input. */
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptions = this.searchForm.get('myControl')?.valueChanges.pipe(
       startWith(' '),
       map((value: string | null) => this._filter(value || ''))
     );
-    this.myControl.valueChanges.pipe(debounceTime(500)).subscribe((data) => {
-      this.getUsers();
-    });
+    this.searchForm
+      .get('myControl')
+      ?.valueChanges.pipe(debounceTime(500))
+      .subscribe((data) => {
+        this.getUsers();
+      });
   }
-
+   
   _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
@@ -265,6 +273,7 @@ export class OrganizationComponent implements OnInit {
   searchinput(value: string) {
     if (value) {
       this.search = value;
+      this.getUsers();
     } else {
       this.search = '';
     }
@@ -277,13 +286,15 @@ export class OrganizationComponent implements OnInit {
       confirmButtonText: 'update',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
+      // input: 'text',
       html: '<h4>Role must be Admin or User</h4>, <input class="form-control w-50 m-auto mb-1" type="text" id="role">',
       preConfirm: () => {
         return (document.getElementById('role') as HTMLInputElement).value;
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        const roleselect = result?.value?.toLowerCase();
+        const roleselect = result.value?.toLocaleLowerCase();
+        console.log(result);
         if (roleselect == 'admin' || roleselect == 'user') {
           const roleget = { role: roleselect };
           this.httpService.patch(`users/role/${id}`, roleget).subscribe({

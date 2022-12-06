@@ -12,6 +12,7 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import {
@@ -23,6 +24,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { Observable, of } from 'rxjs';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import Swal from 'sweetalert2';
+import { __values } from 'tslib';
 
 import { OrganizationComponent } from './organization.component';
 const data = {
@@ -65,6 +67,7 @@ describe('OrganizationComponent', () => {
         RouterTestingModule,
         MatDialogModule,
         MatAutocompleteModule,
+        ReactiveFormsModule
       ],
       providers: [
         { provide: HttpServiceService, useClass: httpservice },
@@ -130,11 +133,6 @@ describe('OrganizationComponent', () => {
     component.getUsers();
     let url = 'user';
     component.result = [1, 2, 3];
-    // http.get(url).subscribe({
-    //   next: (res: any) => {
-    //     expect(component.result).toEqual(res.results);
-    //   },
-    // });
   });
 
   it('getProfile', () => {

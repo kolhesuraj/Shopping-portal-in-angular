@@ -118,7 +118,7 @@
         #search
         (keyup)="searchinput(search.value)"
       /> -->
-      <form class="example-form">
+      <form class="example-form" [formGroup]="searchForm">
         <mat-form-field class="example-full-width" appearance="fill">
           <input
             type="text"

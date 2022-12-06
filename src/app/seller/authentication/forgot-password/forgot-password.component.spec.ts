@@ -32,7 +32,7 @@ describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
   let service: HttpServiceService;
-  // let recapcha: ReCaptchaV3Service;
+  let recaptcha: ReCaptchaV3Service;
   let routerSpy = { navigate: jasmine.createSpy('navigate') };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -60,8 +60,8 @@ describe('ForgotPasswordComponent', () => {
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    recaptcha = TestBed.inject(ReCaptchaV3Service);
     service = TestBed.inject(HttpServiceService);
-    // recapcha = TestBed.inject(ReCaptchaV3Service);
     sleep(7000);
   });
 
@@ -80,28 +80,14 @@ describe('ForgotPasswordComponent', () => {
     component.submit();
     expect(component.forgotPasswordForm.valid).toBe(true);
     expect(component.updating).toBe(true);
-    let token = 'data';
-    // spyOn(recapcha, 'execute').and.returnValue(of(token));
   });
 
   it('email wiil be sent', () => {
     component.forgotPasswordForm.patchValue({ email: 'dummy@email.com' });
     let token = 'data';
-    // spyOn(recapcha, 'execute').and.returnValue(of(token));
     spyOn(Swal, 'fire');
     component.sendEmail();
     expect(component.forgotPasswordForm.valid).toBeTrue();
-    // service
-    //   .post('auth/forgot-password', {
-    //     email: 'dummy@email.com',
-    //     captcha: token,
-    //   })
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       // spyOn(Swal, 'fire').and.callFake((args: any) => args.onAfterClose());
-    //       expect(component.forgotPasswordForm.reset()).toBeTruthy();
-    //     },
-    //   });
   });
 
   it('go back', () => {

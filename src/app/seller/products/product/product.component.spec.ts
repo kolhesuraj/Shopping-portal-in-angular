@@ -39,15 +39,18 @@ class httpservice {
   }
 }
 
-class dialogclass {
-  open(): Observable<any> {
-    return of(data);
-  }
-}
 const m = {
   isConfirmed: true,
 };
 Swal.fire({}).then((m) => {});
+
+export class MdDialogMock {
+  open() {
+    return {
+      afterClosed: () => Observable<'R' | undefined>,
+    };
+  }
+}
 
 describe('ProductComponent', () => {
   let component: ProductComponent;
@@ -70,7 +73,7 @@ describe('ProductComponent', () => {
       ],
       providers: [
         HotToastService,
-        { provide: MatDialog, useClass: dialogclass },
+        { provide: MatDialog, useClass: MdDialogMock },
         { provide: HttpServiceService, useClass: httpservice },
         {
           provide: 'SocialAuthServiceConfig',
@@ -112,9 +115,9 @@ describe('ProductComponent', () => {
   // it('update method', () => {
   //   spyOn(dialog, 'open');
   //   component.update();
-  //   let dialogRef = fixture.componentRef.location.nativeElement.dialog
-  //   dialogRef.afterClosed;
-  //   expect(component.getDetails()).toHaveBeenCalled();
+  //   // let dialogRef = fixture.componentRef.location.nativeElement.dialog
+  //   // dialogRef.afterClosed;
+  //   // expect(component.getDetails()).toHaveBeenCalled();
   // });
   // it('update Image', () => {
   //   spyOn(dialog, 'open')
