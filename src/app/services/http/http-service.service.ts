@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,31 +12,27 @@ export class HttpServiceService {
   // profileUrl = 'https://ngminds.herokuapp.com/auth/self';
   // sendVarrification = ' https://ngminds.herokuapp.com/auth/send-verification-email';
   // url = 'https://ngminds.herokuapp.com/';
-  
-  url = "https://shop-api.ngminds.com/"; 
 
   constructor(private http: HttpClient) {}
 
-  
-
   post(url: string, body: any) {
-    return this.http.post(`${this.url}${url}`, body);
+    return this.http.post(`${environment.url}${url}`, body);
   }
 
   get(url: string) {
-    return this.http.get(`${this.url}${url}`);
+    return this.http.get(`${environment.url}${url}`);
   }
 
   delete(url: string) {
-    return this.http.delete(`${this.url}${url}`);
+    return this.http.delete(`${environment.url}${url}`);
   }
 
   patch(url: string, body: any) {
-    return this.http.patch(`${this.url}${url}`, body);
+    return this.http.patch(`${environment.url}${url}`, body);
   }
 
-  put(url:string,body:any){
-    return this.http.put(`${this.url}${url}`,body);
+  put(url: string, body: any) {
+    return this.http.put(`${environment.url}${url}`, body);
   }
 
   /**
@@ -49,10 +46,9 @@ export class HttpServiceService {
       Authorization: `Bearer ${tokenGet}`,
     });
     return this.http.post(
-      this.url + 'auth/send-verification-email?captcha=false',
+      environment.url + 'auth/send-verification-email?captcha=false',
       null,
       { headers: header }
     );
   }
-
 }
