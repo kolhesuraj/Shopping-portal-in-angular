@@ -31,5 +31,6 @@ import { HeaderComponent } from './header/header.component';
     MatInputModule,
     MatButtonModule
   ],
+  exports:[HeaderComponent]
 })
 export class ProductsModule {}
